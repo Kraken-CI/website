@@ -1,12 +1,12 @@
 module.exports = {
   title: 'Kraken CI',
   tagline: 'The same features as in other CI/CD platforms and tools but this time with emphasis on Testing.',
-  url: 'https://kraken.ci',
+  url: 'https://kraken-ci.github.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
-  organizationName: 'kraken-ci',
-  projectName: 'website',
+  organizationName: 'Kraken-CI',
+  projectName: 'Kraken-CI.github.io',
   themeConfig: {
     navbar: {
       title: 'Kraken CI',
