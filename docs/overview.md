@@ -14,7 +14,7 @@ The whole work needs to be defined in workflow schema in Kraken CI that is arran
 Then Kraken CI is executing it for production branches (like main branch or release branches)
 or for developer branches to validate the changes before merging them.
 
-# Features
+## Features
 
 - jobs can report or return 3 kinds of entities:
   - build artifacts - any files like packages, tarballs, RPMs, generated HTML reports
