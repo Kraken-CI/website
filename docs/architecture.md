@@ -43,3 +43,6 @@ or it can encapulate them in e.g. container. Currently there are executors for:
 - direct/bare
 - Docker
 - LXD
+
+
+[Presentation about Kraken Architecture](/arch-ppt/index.html#1)

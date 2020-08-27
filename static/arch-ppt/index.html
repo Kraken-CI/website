@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Kraken CI Architecture</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Kraken CI Architecture
+
+---
+
+# Agenda
+
+1. Architecture
+2. Workflow
+
+---
+
+# Introduction
+
+- Kraken composed of:
+ - web UI
+ - several backend services
+ - distributted agents
+- Backend in Python
+- UI in Typescript/HTML
+- Development based on Docker
+
+---
+
+# Kraken Architecture
+
+![Kraken Architecture](arch-overview.svg)
+
+---
+
+# Web UI
+
+- Angular framework
+- PrimeNG components
+
+---
+
+# API Server
+
+- Serves API requests from:
+ - users (via web UI or programmatically)
+ - other backend services
+- Serves webhooks
+- API defined in Swagger
+
+---
+
+# Controller
+
+- Single instance
+- Planner
+- Scheduler
+- Watchdog
+- Storage
+
+---
+
+# Controller / Planner
+
+- Remembers planned job triggers
+- Fires them at indicated time:
+ - periodically
+ - on given time
+ - according CRON rule
+
+---
+
+# Controller / Scheduler
+
+- Assigns triggered jobs to idle agents
+- FIFO
+
+---
+
+# Controller / Watchdog
+
+- Monitors Runs and their Jobs
+ - Run timeout
+ - Job timeout
+- Executors (agents)
+ - if not responding then disabled to avoid assigning
+
+---
+
+# Controller / Storage
+
+- Serves storage for agents
+- Agents can put or get artifacts
+
+---
+
+# Celery - Background Processing
+
+- Background tasks
+- processes results of a job
+- results history analysis
+- and more
+
+---
+
+# Agent
+
+- Agent runs on a host
+- Jobs are run in executor via tool
+- Executors
+ - Bare
+ - Docker
+ - LXD
+
+---
+
+# Agent / Tool
+
+- Run in executor
+- Provided operations:
+ - shell
+ - git operations
+ - storing/retrieving artifacts
+ - pytest
+ - pylint
+ - ngling
+ - cloc
+
+---
+
+# ELK
+
+- Logstash
+ - backend services and all agents log to Logstash
+ - log entries are assigned to executors/jobs/etc
+- Elasticsearch
+ - allows querying logs
+ - eg. shows all logs associated with given job or stage
+- Kibana
+ - UI to Elasticsearch
+
+---
+
+# PostgreSQL
+
+- main database
+
+---
+
+# Kraken Workflow
+
+![Kraken Workflow](workflow.svg)
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
