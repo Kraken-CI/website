@@ -14,20 +14,24 @@ module.exports = {
         alt: 'Kraken Logo',
         src: 'img/logo-big2.svg',
       },
-      items: [
-        {
+      items: [{
+          to: 'docs/philosophy',
+          label: 'Philosophy',
+          position: 'left'
+      }, {
           to: 'docs/',
           activeBasePath: 'docs',
           label: 'Docs',
           position: 'left',
-        },
-        {to: 'blog', label: 'Blog', position: 'left'},
-        {
+      }, {
+          to: 'blog',
+          label: 'Blog',
+          position: 'left'
+      }, {
           href: 'https://github.com/kraken-ci/kraken',
           label: 'GitHub',
           position: 'right',
-        },
-      ],
+      }],
     },
     footer: {
       style: 'dark',
@@ -68,7 +72,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Michal Nowikowski. Built with Docusaurus. Icons made by <a href="https://www.flaticon.com/authors/freepik">Freepik</a> from <a href="www.flaticon.com">flaticon</a>`,
+      copyright: `Copyright © ${new Date().getFullYear()} Michal Nowikowski. Built with Docusaurus. Icons made by <a href="https://www.flaticon.com/authors/freepik">Freepik</a> from <a href="https://www.flaticon.com">flaticon</a>`,
     },
   },
   presets: [
