@@ -68,7 +68,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Michal Nowikowski. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Michal Nowikowski. Built with Docusaurus. Icons made by <a href="https://www.flaticon.com/authors/freepik">Freepik</a> from <a href="www.flaticon.com">flaticon</a>`,
     },
   },
   presets: [

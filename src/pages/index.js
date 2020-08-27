@@ -9,17 +9,17 @@ import styles from './styles.module.css';
 const features = [
   {
     title: <>Pass or fail? More</>,
-    imageUrl: 'img/undraw_docusaurus_mountain.svg',
+    imageUrl: 'img/trend.svg',
     description: (
       <>
             Failures are boring, now observe regressions and fixes, see behavior of test cases over time on charts.
-            Look on changes, compare with previous results. Unstable tests are marked.
+            Look at changes, compare with previous results. Unstable tests are automatically identified and marked.
       </>
     ),
   },
   {
-    title: <>More dimentions to results</>,
-    imageUrl: 'img/undraw_docusaurus_tree.svg',
+    title: <>More dimensions to results</>,
+    imageUrl: 'img/presentation.svg',
     description: (
       <>
             Performance testing, obviously. Now with support for multiple iterations,
@@ -29,7 +29,7 @@ const features = [
   },
   {
     title: <>Dynamic tests distribution</>,
-    imageUrl: 'img/undraw_docusaurus_react.svg',
+    imageUrl: 'img/power-plant.svg',
     description: (
       <>
             Execution machines are fully utilized. We use dynamic division of your tests content
@@ -37,14 +37,44 @@ const features = [
       </>
     ),
   },
+  {
+    title: <>Realtime insight into product quality</>,
+    imageUrl: 'img/insight.svg',
+    description: (
+      <>
+            Quality of each build is clearly visible through dashboards and evaluated against release criteria.
+            Release tools can be integrated into the workflow, so qualified builds are ready to go to the customer.
+      </>
+    ),
+  },
+  {
+    title: <>Efficient and standardized pre-commit testing</>,
+    imageUrl: 'img/study.svg',
+    description: (
+      <>
+            Reduced risk of regressions. Developers can test their code with the same tests that are used for product validation. No need for expensive individual bench test environments.
+      </>
+    ),
+  },
+  {
+    title: <>Broad spectrum of execution environments</>,
+    imageUrl: 'img/cpu.svg',
+    description: (
+      <>
+            Testing on a standard hardware is easy. What about automated testing on unstable pre-production hardware platforms? 
+            Or in an simulation environment, when real hardware is expensive or does not exist? And with a variety of automatically deployed operating systems.
+      </>
+    ),
+  },
+
 /*
   {
     title: <></>,
     imageUrl: 'img/undraw_docusaurus_react.svg',
     description: (
       <>
-            Do pre-commit testing for your PR or MR branch. Compare results with reference ones from CI.
-            Spot quickly regressions and do not enter them to master branch.
+            Do pre-commit testing for your PR or MR branch. Easily choose tests and their scope. Compare results with reference ones from CI.
+            Spot regressions quickly and do not let them get into production branch.
       </>
     ),
   },
@@ -103,7 +133,8 @@ function Home() {
         )}
       </main>
 
-          <img src="img/kraken-diagram.png" style={{ margin: '20px auto 50px', display: 'block' }}></img>
+      <img src="img/kraken-diagram.png" style={{ margin: '20px auto 50px', display: 'block' }}></img>
+
     </Layout>
   );
 }
