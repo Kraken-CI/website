@@ -4,7 +4,7 @@ title: Installation
 sidebar_label: Installation
 ---
 
-The easiest method for installing Kraken is based on Docker and Docker Compose.
+The easiest method for installing Kraken is based on [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/).
 
 ## Pre-requisites
 
@@ -17,7 +17,7 @@ The operating system must be **Linux based**. Kraken was tested on **Ubuntu 20.0
 but other distributions should be ok.
 
 The next thing is Docker. **Docker Compose** is used to spawn all the Kraken services.
-They are described in [Architecture chapter](architecture.md).
+These services are described in [Architecture chapter](architecture.md).
 
 ## Kraken Download
 
@@ -27,7 +27,7 @@ There are:
 - **kraken-docker-compose-X.Y.yaml** - a services configuration file for Docker Compose
 - **dot-X.Y.env** - an example configuration for Kraken services that is used by Docker Compose file
 
-Docker Compose file is using pre-built Kraken container images.
+Docker Compose file is using pre-built Kraken container images. On first run, it will download and install Kraken image and all required dependencies.
 
 Download these 2 files to your local machine that will host Kraken services. Put them in the same folder.
 Rename `dot-X.Y.env` to `.env` - this is the only way to make it visible to `docker-compose`.
@@ -36,6 +36,8 @@ Rename `dot-X.Y.env` to `.env` - this is the only way to make it visible to `doc
 
 **.env** file contains Kraken basic configuration that is required to start Kraken services.
 Default content of this file looks as follows:
+
+![File](https://raw.githubusercontent.com/Kraken-CI/kraken/master/.env)
 
 ```
 ELASTIC_PASSWORD=changeme
@@ -58,53 +60,60 @@ KRAKEN_STORAGE_DIR=/var/kraken_storage
 KRAKEN_UI_PUBLIC_PORT=8080
 ```
 
-### Configuration for ELK stack
+### Configuration of ELK stack
 
-This is used when [ELK stack](https://www.elastic.co/) is run
+These parameters are used when [ELK stack](https://www.elastic.co/) is run
 internally in Docker together with Kraken services from the same Docker
 Compose file. It is possible to set up ELK externally to Kraken
 services on another machine.
 
-- ELASTIC_PASSWORD - defines a password that is used to access ELK stack
+| Parameter                   | Description / Default value                                                                            |
+|-----------------------------|--------------------------------------------------------------------------------------------------------|
+| `ELASTIC_PASSWORD`          | Password used to access ELK stack<br/>Default: `changeme`                                              |
 
-### Configuration for PostgreSQL database
+### Configuration of PostgreSQL database
 
-This is used when PostgreSQL is run internally in Docker together with
+These parameters are used when [PostgreSQL](https://www.postgresql.org/) is run internally in Docker together with
 Kraken services from the same Docker Compose file. It is possible to
-set up ELK externally to Kraken services on another machine.
+set up PostgreSQL externally to Kraken services on another machine.
 
-- POSTGRES_USER - defines a user that is used to access PostgreSQL database
-- POSTGRES_PASSWORD - defines a user that is used to access PostgreSQL database
-- POSTGRES_DB - defines a user that is used to access PostgreSQL database
+| Parameter                   | Description / Default value                                                                            |
+|-----------------------------|--------------------------------------------------------------------------------------------------------|
+| `POSTGRES_USER`             | User name used to access PostgreSQL database<br/>Default: `kraken`                                     |
+| `POSTGRES_PASSWORD`         | Password used to access PostgreSQL database<br/>Default: `kk123`                                       |
+| `POSTGRES_DB`               | Name of the Kraken's PostgreSQL database<br/>Default: `kraken`                                         |
 
-### Configuration for Kraken services
+### Configuration of Kraken services
 
-- KRAKEN\_REDIS\_ADDR - location of Redis in _address:port_ form
-- KRAKEN\_DB\_URL - location of PostgreSQL database in URL form ie. `postgresql://<user>:<password>@<address>:<port>/<db-name>` e.g.: `postgresql://kraken:kk123@postgres:5432/kraken`
-- KRAKEN\_LOGSTASH\_ADDR - location of ELK Logstash in _address:port_ form
-- KRAKEN\_LOGSTASH\_PORT - port to ELK Logstash, should be the same as in `KRAKEN_LOGSTASH_ADDR`
-- KRAKEN\_ELASTICSEARCH\_URL - location of ELK Elasticsearch in URL form, e.g.: `http://elastic:changeme@elasticsearch:9200`
-- KRAKEN\_ELASTICSEARCH\_PORT - port to ELK Elasticsearch, should be the same as in `KRAKEN_ELASTICSEARCH_URL`
-- KRAKEN\_SERVER\_ADDR - location of Kraken API server in _address:port_ form, it is used by other Kraken services
-- KRAKEN\_SERVER\_PORT - port to Kraken API Server, should be the same as in `KRAKEN_SERVER_ADDR`
-- KRAKEN\_PLANNER\_URL - location of Kraken Planner in URL form, it is used by other Kraken services, e.g.: `http://controller:7997/`
-- KRAKEN\_STORAGE\_ADDR - location of Kraken Storage in _address:port_ form, e.g. `controller:2121`
-- KRAKEN\_STORAGE\_DIR - location of directory for storing artifacts, used by Kraken Storage, e.g.: `/var/kraken_storage`
+| Parameter                   | Description / Default value                                                                            |
+|-----------------------------|--------------------------------------------------------------------------------------------------------|
+| `KRAKEN_REDIS_ADDR`         | Location of Redis in _address:port_ form<br/>Default: `redis`                                          |
+| `KRAKEN_DB_URL`             | URL of the Kraken's PostgreSQL database<br/>Default: `postgresql://kraken:kk123@postgres:5432/kraken`  |
+| `KRAKEN_LOGSTASH_PORT`      | Port of ELK Logstash, should be the same as in `KRAKEN_LOGSTASH_ADDR`<br/>Default: `5959`              |
+| `KRAKEN_LOGSTASH_ADDR`      | Location of ELK Logstash in _address:port_ form<br/>Default: `logstash:5959`                           |
+| `KRAKEN_ELASTICSEARCH_PORT` | Port of ELK Elasticsearch, should be the same as in `KRAKEN_ELASTICSEARCH_URL`<br/>Default: `9200`     |
+| `KRAKEN_ELASTICSEARCH_URL`  | URL of ELK Elasticsearch<br/>Default: `http://elastic:changeme@elasticsearch:9200`                     |
+| `KRAKEN_SERVER_PORT`        | Port of Kraken API Server, should be the same as in `KRAKEN_SERVER_ADDR`<br/>Default: `6000`           |
+| `KRAKEN_SERVER_ADDR`        | Location of Kraken API server in _address:port_ form<br/>Default: `server:6000`                        |
+| `KRAKEN_PLANNER_URL`        | URL of Kraken Planner<br/>Default: `http://controller:7997/`                                           |
+| `KRAKEN_STORAGE_ADDR`       | Location of Kraken Storage in _address:port_ form<br/>Default: `controller:2121`                       |
+| `KRAKEN_STORAGE_DIR`        | Location of directory for storing artifacts, used by Kraken Storage<br/>Default: `/var/kraken_storage` |
+| `KRAKEN_UI_PUBLIC_PORT`     | Public port of Kraken's web UI                                                                         |
 
 Most of these variables do not have to be altered. By default all
 services are defined in one Docker Compose file and they communicate
 with each other internally. Still, it is possible to divide these
 services into a few groups and host them on separate machines. This
 allows handling bigger load by Kraken. The most common approach for
-dividing services is putting on separate machine PostgreSQL database
-and ELK stack. Going further it is possible to setup Kraken API Server
-on separate machine and even put several instances of them to handle
-and load balance huge load of API requests.
+dividing services is putting PostgreSQL database and ELK stack on
+separate machines. Going further it is possible to setup Kraken API Server
+on a separate machine and even put several instances of them to handle
+and load-balance huge load of API requests.
 
 ## Kraken Start
 
-So after downloading Docker Compose file and .env file, and doing some tweaks in these file if needed,
-one can start Kraken services:
+After downloading Docker Compose and .env files and tweaking them if needed,
+Kraken services can be started by:
 
 ```console
 $ docker-compose -f kraken-docker-compose-X.Y.yaml up -d
@@ -123,3 +132,21 @@ docker-compose -f kraken-docker-compose-X.Y.yaml ps
 ```
 
 If all is ok then now it is possible to check Kraken web page: [http://localhost:8080](http://localhost:8080)
+
+## Kraken Stop
+
+Kraken services can be stopped with a command:
+
+```console
+$ docker-compose -f kraken-docker-compose-X.Y.yaml down
+```
+
+In case the services can't be gracefully stopped or need to be shut down immediately,
+they can be killed with a command:
+
+```console
+$ docker-compose -f kraken-docker-compose-X.Y.yaml kill
+```
+
+
+

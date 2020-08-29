@@ -20,7 +20,7 @@ Engineers are generally not against caring about the **quality** of their code.
 
 ![Brain](/img/brain.png)
 
-In environments, where there it is ambiguous what to test, how to test, the testing lasts long and needs constant manual supervision, people are not able to focus on the quality of their work. They will spend time not on writing the code, but on fighting the environment and tools.
+In environments, where it is ambiguous what to test, how to test, the testing lasts long and needs constant manual supervision, people are not able to focus on the quality of their work. They will spend time not on writing the code, but on fighting the environment and tools.
 
 When each commit brings a tough experience, people will minimize the number of commits by creating **big changes**. With big changes, the risk of breaking the production code increases and the effort of fixing it gets high. The **interdependencies** with other developers start to be a problem - integrating large chunks of code is hard and people race who commits the code first. And the **management** is constantly puzzled why there are so many breaks and how to make the developers own the quality of the product they build.
 
