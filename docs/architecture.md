@@ -44,4 +44,4 @@ or it can encapulate them in e.g. container. Currently there are executors for:
 - LXD
 
 
-[Presentation about Kraken Architecture](/arch-ppt/index.html)
+[Presentation about Kraken Architecture](pathname:///arch-ppt/index.html)

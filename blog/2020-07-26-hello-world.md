@@ -1,5 +1,5 @@
 ---
-id: hello-world
+slug: hello-world
 title: Hello
 author: Michal Nowikowski
 author_title: Kraken Founder
