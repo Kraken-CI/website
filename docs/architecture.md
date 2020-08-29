@@ -3,7 +3,6 @@ id: architecture
 title: Architecture
 ---
 
-
 ![Kraken Architecture](https://i.imgur.com/S11Lyfj.png)
 
 ## Server
