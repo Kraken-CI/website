@@ -25,11 +25,12 @@ Kraken installation artifacts can be downloaded from [Kraken GitHub releases pag
 There are:
 
 - **kraken-docker-compose-X.Y.yaml** - a services configuration file for Docker Compose
-- **.env** - an example configuration for Kraken services that is used by Docker Compose file
+- **dot-X.Y.env** - an example configuration for Kraken services that is used by Docker Compose file
 
 Docker Compose file is using pre-built Kraken container images.
 
 Download these 2 files to your local machine that will host Kraken services. Put them in the same folder.
+Rename `dot-X.Y.env` to `.env` - this is the only way to make it visible to `docker-compose`.
 
 ## Kraken Configuration
 
@@ -54,6 +55,7 @@ KRAKEN_SERVER_ADDR=server:6000
 KRAKEN_PLANNER_URL=http://controller:7997/
 KRAKEN_STORAGE_ADDR=controller:2121
 KRAKEN_STORAGE_DIR=/var/kraken_storage
+KRAKEN_UI_PUBLIC_PORT=8080
 ```
 
 ### Configuration for ELK stack
