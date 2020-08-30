@@ -3,7 +3,7 @@ id: architecture
 title: Architecture
 ---
 
-![Kraken Architecture](https://i.imgur.com/S11Lyfj.png)
+![Kraken Architecture](/arch-ppt/arch-overview.svg)
 
 ## Server
 `Server` exposes Kraken ReST API
