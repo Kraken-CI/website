@@ -43,3 +43,91 @@ Example:
             }]
         }]
 ```
+
+### Step
+
+Common step fields:
+
+- `tool`
+- `cwd`
+- `timeout`
+- `attempts`
+- `sleep_time_after_attempt`
+
+
+### Built-in Step Tools
+
+#### Shell
+
+Fields:
+
+- `cmd`
+- `timeout`
+
+Example:
+
+```python
+   "steps": [{
+       "tool": "shell",
+       "cmd": "echo 'Hello World'"
+   }]
+```
+
+#### Git
+
+Fields:
+
+- `checkout`
+- `destination`
+- `ssh-key`
+- `access-token`
+
+Example:
+
+```python
+   "steps": [{
+       "tool": "git",
+       "checkout": "https://github.com/Kraken-CI/kraken.git",
+       "branch": "master"
+   }]
+```
+
+#### Artifacts
+
+Fields:
+
+- `action`
+- `public`
+- `source`
+- `destination`
+
+#### PyLint
+
+Fields:
+
+- `rcfile`
+- `modules_or_packages`
+
+#### PyTest
+
+Fields:
+
+- `params`
+
+
+#### NgLint
+
+No specific fields.
+
+#### Cloc
+
+Fields:
+
+- `not-match-f`
+- `exclude-dir`
+
+#### RndTest
+
+Fields:
+
+- `count`
