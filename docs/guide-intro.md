@@ -43,7 +43,7 @@ def stage(ctx):
             }],
             "environments": [{
                 "system": "ubuntu-18.04",
-                "executor_group": "all",
+                "agents_group": "all",
                 "config": "c1"
             }]
         }],

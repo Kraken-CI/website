@@ -38,7 +38,7 @@ Example:
             }],
             "environments": [{
                 "system": "centos-7",
-                "executor_group": "all",
+                "agents_group": "all",
                 "config": "default"
             }]
         }]

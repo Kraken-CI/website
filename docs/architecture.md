@@ -15,8 +15,8 @@ title: Architecture
 `Controller` is made of 4 services:
 
 - `Planner` - it triggers new flows based on indicated rule in given project's branch
-- `Scheduler` - it assigns jobs to executors
-- `Watchdog` - it checks runs and their jobs if they are in their time limits, it also monitors executors health
+- `Scheduler` - it assigns jobs to agents
+- `Watchdog` - it checks runs and their jobs if they are in their time limits, it also monitors agents and their machines health
 - `Storage` - it stores and serves artifacts which can be uploaded or downloaded by agents
 
 ## Celery

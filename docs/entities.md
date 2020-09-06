@@ -64,7 +64,7 @@ Each `job` contains one or more `steps` that describe operations to be run seque
 #### Job Environments
 
 A `Job` contains definition of multiple `environments`. An `environment` specifies the following conditions for the execution of a `job`:
-- *executors group* - pointing to machines which will be used to run the steps
+- *agents group* - pointing to machines with agents which will be used to run the steps
 - *operating system* - OS that will be used on the machines
 - *configuration* - one of `configurations` defined in the `stage`
 
@@ -136,7 +136,7 @@ def stage(ctx):
             }],
             "environments": [{
                 "system": "ubuntu-18.04",
-                "executor_group": "all",
+                "agents_group": "all",
                 "config": "c1"
             }]
         }],
