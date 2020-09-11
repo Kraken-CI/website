@@ -36,10 +36,10 @@ This is `ELK` stack ie. `Elasticsearch`, `Logstash` and `Kibana`. `Logstash` is 
 `Kibana` is an internal dashboard to `Elasticsearch`.
 
 ## Agent
-Agent is a service that is run on a machine that is expected to execute jobs. Agent can execute jobs directly on the system,
+Agent is a service that is run on a machine that is expected to execute jobs. Agent can execute jobs directly on the system (locally),
 or it can encapulate them in e.g. container. Currently there are executors for:
 
-- direct/bare
+- local
 - Docker
 - LXD
 
