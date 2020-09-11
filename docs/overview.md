@@ -66,6 +66,10 @@ The other features can be grouped in 3 areas: planning, execution and reporting.
     and key-value pairs that storing e.g. performance results (e.g. FPS or MPS)
   - issues - returned by static analyzers, linters, etc
 - tests results and issues are streamed in realtime to Kraken Server so if execution crashes the results are preserved
+- monitoring of machines and agents: if they do not report alive for several minutes then they are disconnected from pool of available
+  machines
+- termination on timeout of stages, jobs and particular commands - this way execution farm is behaving predictably and is not e.g.: blocked
+  by some broken build that hangs machine or by an infinite loop in tests
 
 ### Reporting
 
