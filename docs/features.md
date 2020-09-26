@@ -56,6 +56,7 @@ The other features can be grouped in 3 areas: planning, execution and reporting.
   machines
 - termination on timeout of stages, jobs and particular commands - this way execution farm is behaving predictably and is not e.g.: blocked
   by some broken build that hangs machine or by an infinite loop in tests
+- automatically estimated timeouts for jobs based on passed execution
 
 ## Reporting
 

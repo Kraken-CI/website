@@ -30,7 +30,7 @@ Edit schema:
 def stage(ctx):
     return {
         "parent": "root",
-        "trigger": {
+        "triggers": {
             "parent": True,
         },
         "parameters": [],
@@ -47,7 +47,6 @@ def stage(ctx):
                 "config": "c1"
             }]
         }],
-        "environments"
     }
 ```
 

@@ -63,6 +63,7 @@ Fields:
 
 - `cmd`
 - `timeout`
+- `user` - by default kraken `user` is used, this field allows changing user e.g. to `root`
 
 Example:
 
