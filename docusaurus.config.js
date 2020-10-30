@@ -20,13 +20,18 @@ module.exports = {
           position: 'left'
       }, {
           to: 'docs/',
-          activeBasePath: 'docs',
+          //activeBasePath: 'docs',
           label: 'Docs',
           position: 'left',
       }, {
-          to: 'blog',
-          label: 'Blog',
-          position: 'left'
+          to: 'docs/contrib-kraken',
+          //activeBasePath: 'docs',
+          label: 'Contributing',
+          position: 'left',
+//      }, {
+//          to: 'blog',
+//          label: 'Blog',
+//          position: 'left'
       }, {
           href: 'https://github.com/kraken-ci/kraken',
           label: 'GitHub',
