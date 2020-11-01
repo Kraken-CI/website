@@ -13,6 +13,7 @@ module.exports = {
       ],
       Contributing: [
           'contrib-kraken',
+          'dev-guide',
           'contrib-docs',
       ],
       Guides: ['guide-intro']
