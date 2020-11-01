@@ -50,7 +50,7 @@ This command is using docker-compose.yaml file from the repository.
 This file defines all the services and how to build them.
 So this command builds all services and then spins up their containers.
 
-Now Kraken service is avaiable from http://localhost:8080.
+Now Kraken service is avaiable from [http://localhost:8080](http://localhost:8080).
 
 All containers can be stopped by `Ctrl-C`. You may use this method for
 development. Prepare changes, then `rake docker_up`, check changes
@@ -99,3 +99,6 @@ $ ./start-tmux.sh`
 The effect should look as follows:
 
 ![Kraken in Tmux](/img/tmux.png)
+
+Now we can connect directly to Kraken Angular application. It is available
+on [http://localhost:4200](http://localhost:4200).

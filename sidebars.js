@@ -1,13 +1,16 @@
 module.exports = {
   someSidebar: {
-      Main: [
+      Introduction: [
           'overview',
           'philosophy',
           'features',
           'demo',
           'installation',
           'entities',
-          'architecture',
+          'architecture'
+      ],
+      Usage: [
+          'proj-branches',
           'schema',
           'docker-executor'
       ],
