@@ -104,7 +104,7 @@ Most of these variables do not have to be altered. By default all
 services are defined in one Docker Compose file and they communicate
 with each other internally. Still, it is possible to divide these
 services into a few groups and host them on separate machines. This
-allows handling bigger load by Kraken. The most common approach for
+allows for handling bigger load by Kraken. The most common approach for
 dividing services is putting PostgreSQL database and ELK stack on
 separate machines. Going further it is possible to setup Kraken API Server
 on a separate machine and even put several instances of them to handle
@@ -147,6 +147,3 @@ they can be killed with a command:
 ```console
 $ docker-compose -f kraken-docker-compose-X.Y.yaml kill
 ```
-
-
-

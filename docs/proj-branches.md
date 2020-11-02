@@ -12,7 +12,7 @@ available in other projects.
 To add new project click `New Project` button. Then you are asked for
 a name of the new project. After adding new project on the main page a
 tile for new project should appear. There is a `New Branch` button
-that allows creating a new branch for this project.
+that allows for creating a new branch for this project.
 
 ## Branches
 
@@ -39,6 +39,6 @@ comming from Pull Requests or Merge Requests. So after completing such
 changes they are merged to master branch what triggeres a new `CI
 Flow`.
 
-The workflow schema defined in a branch is used by both `CI Flows` and
-`Dev Flows`. The schema may very by introducing a condition on flow
-type.
+The workflow schema defined in a branch is the same for both `CI
+Flows` and `Dev Flows`. The schema may be differentiated by
+introducing a condition on flow type.

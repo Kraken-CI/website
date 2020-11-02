@@ -39,7 +39,7 @@ In `schema` there can be defines:
 
 `Stage` linking is defined by parents property in a `stage`. `Parameters` can be used to differentiate and parametrize `jobs`;
 their values can be provided by user while starting a `stage` manually otherwise default values are used.
-`Configs` allow defining set of key-value pairs that statically define set of tests variants for execution.
+`Configs` allow for defining set of key-value pairs that statically define set of tests variants for execution.
 `Notifications` can be used to inform users about `stage` result. There are several media available like email or Slack.
 `Timeout` limits the time of whole `stage` executions. These assure us that the `stage` will be terminated if something really
 bad is happening in `jobs` execution (e.g. they are hanging the machines).
@@ -69,7 +69,7 @@ A `Job` contains definition of multiple `environments`. An `environment` specifi
 - *configuration* - one of `configurations` defined in the `stage`
 
 With the help of `environments`, the same `job` can be run on various combinations of target machines, operating systems and configuration parameters.
-So environments allow running the same job:
+So environments allow for running the same job:
 - on several different operating system;
 - on several different hardware, e.g.: one with AMD CPU, another one with Intel CPU;
 - with different tests configurations, e.g.: running the same benchmark but in several different resolutions.

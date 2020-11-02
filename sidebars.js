@@ -14,6 +14,9 @@ module.exports = {
           'schema',
           'docker-executor'
       ],
+      Administration: [
+          'agents'
+      ],
       Contributing: [
           'contrib-kraken',
           'dev-guide',

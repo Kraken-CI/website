@@ -1,13 +1,14 @@
 ---
 id: schema
-title: Schema
+title: Workflow Schema
 ---
 
-## Overview
-
-Stage have a schema that defines what should be done. Schema generally defines jobs for execution,
-execution environment, triggers that start the execution of whole schema, optional parameters
-and execution configuration.
+A branch contains one or several stages. Stages can be independent and
+run in parallel or chained and together can for a tree or a set of
+trees (forest). Stage have a schema that defines what should be
+done. Schema generally defines jobs for execution, execution
+environment, triggers that start the execution of whole schema,
+optional parameters and execution configuration.
 
 ## Schema Elements
 
@@ -63,7 +64,7 @@ Fields:
 
 - `cmd`
 - `timeout`
-- `user` - by default kraken `user` is used, this field allows changing user e.g. to `root`
+- `user` - by default kraken `user` is used, this field allows for changing user e.g. to `root`
 
 Example:
 

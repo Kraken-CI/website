@@ -18,7 +18,7 @@ The other features can be grouped in 3 areas: planning, execution and reporting.
   [Python](https://www.python.org/)/[Starlark](https://github.com/bazelbuild/starlark) language
 - [workflow schema](schema) can be defined directly in Kraken Web UI or
   fetched from project's repositor or from another repository
-- configurations allow running the same set of tests but with different parameters
+- configurations allow for running the same set of tests but with different parameters
 - environments indicate execution machines groups and operating systems that should be used for jobs
 - groups can be defined:
    - statically by manual assignment
@@ -60,7 +60,7 @@ The other features can be grouped in 3 areas: planning, execution and reporting.
 
 ## Reporting
 
-- test results and issues are monitored over time; this allows:
+- test results and issues are monitored over time; this allows for:
   - comparing to previous results and then reporting `regressions` and `fixes`
   - presenting `stability` of test cases so it is easy to spot what test should be improved or removed from testing scope
   - presenting charts of test case history so it can be observed how given test case behaved in the past
