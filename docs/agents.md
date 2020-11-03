@@ -67,3 +67,9 @@ $ ./kraken-agent-install.sh
 This will download the latest agent from Kraken server and install it
 as a SystemD service on the host. Agent's files are installed into
 /opt/kraken directory.
+
+Now the new agent can be authorized in Kraken server. On Discovered
+agents page there should be visible an IP address of the host with the
+new agent. Select checkbox and click `Authorize` button. And then add
+the agent to proper agent's group. Now the new agent will be getting
+jobs for execution.

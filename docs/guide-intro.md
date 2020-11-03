@@ -5,7 +5,8 @@ title: Introductory Guide
 
 ## Assumptions
 
-* We are using fresh Kraken installation using Docker Compose with built-in Agent running in Docker as well.
+We are using fresh Kraken installation using Docker Compose with built-in Agent running in Docker as well.
+Installation instruction can be found in [Installation chapter](installation.md).
 
 ## Project Preparation
 

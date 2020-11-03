@@ -45,7 +45,86 @@ Example:
         }]
 ```
 
-### Step
+## Parent
+
+Parent allows for defining a chain of dependencies between subsequent
+stages. Current stage will be started only when parent stage has been
+finished.  The value of `parent` field is a name of a stage. If it is
+set to special value `root` than it means that the stage does not
+depend on anything and can be started as the first stage or one of the
+first stages, just after triggering a new flow in a branch.
+
+## Triggers
+
+Triggers indicate what events may start a stage and create its new run.
+There are several events:
+
+### parent
+
+A stage is triggered by completion of a parent stage. It is defined as `"parent": True`.
+
+Example:
+
+```json
+   "triggers": {
+      "parent": True
+   }
+```
+
+### interval
+
+Given stage is triggered specified amount of time after competion of
+previous run of this stage.  The duration can be specified in a human
+readable way e.g. `1d` what means one day or `3h 30m` what means 3
+hours and 30 minutes.
+
+Example, start a new stage run every 10 minutes:
+
+```json
+   "triggers": {
+      "interval": "10m"
+   }
+```
+
+### date
+
+Given stage is triggered once, on specified date. The date can be
+provided in human readable way, e.g.: `2012-01-19 17:21:00` or `Sat
+Sep 17 23:26:08 CEST 2016`.
+
+Example, start a new stage run once on indicate date:
+
+```json
+   "triggers": {
+      "date": "2012-01-19 17:21:00"
+   }
+```
+
+### cron
+
+A stage is triggered on specified CRON rule e.g. `* * 10 * *`. There
+are always 5 items. Each item is separated by space. The items meaning
+are as follows: minutes, hours, days, months, dow (day of week).  The
+possible values for each item can be found on
+[Advanced Python Scheduler web page](https://apscheduler.readthedocs.io/en/stable/modules/triggers/cron.html?highlight=cron#introduction)
+
+Example, start a new stage run always half past nine AM:
+
+```json
+   "triggers": {
+      "cron": "30 9 * * *"
+   }
+```
+
+### repository
+
+TODO: repository: url with branch
+
+### webhook
+
+TODO: webhook: from GitHub or GitLab or Bitbucket
+
+## Step
 
 Common step fields:
 
@@ -56,9 +135,9 @@ Common step fields:
 - `sleep_time_after_attempt`
 
 
-### Built-in Step Tools
+## Built-in Step Tools
 
-#### Shell
+### Shell
 
 Fields:
 
@@ -75,7 +154,7 @@ Example:
    }]
 ```
 
-#### Git
+### Git
 
 Fields:
 
@@ -94,7 +173,7 @@ Example:
    }]
 ```
 
-#### Artifacts
+### Artifacts
 
 Fields:
 
@@ -103,32 +182,32 @@ Fields:
 - `source`
 - `destination`
 
-#### PyLint
+### PyLint
 
 Fields:
 
 - `rcfile`
 - `modules_or_packages`
 
-#### PyTest
+### PyTest
 
 Fields:
 
 - `params`
 
 
-#### NgLint
+### NgLint
 
 No specific fields.
 
-#### Cloc
+### Cloc
 
 Fields:
 
 - `not-match-f`
 - `exclude-dir`
 
-#### RndTest
+### RndTest
 
 Fields:
 
