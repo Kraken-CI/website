@@ -33,6 +33,9 @@ module.exports = {
 //          label: 'Blog',
 //          position: 'left'
       }, {
+          href: 'http://lab.kraken.ci',
+          label: 'Demo',
+      }, {
           href: 'https://github.com/kraken-ci/kraken',
           label: 'GitHub',
           position: 'right',
@@ -66,10 +69,10 @@ module.exports = {
         {
           title: 'More',
           items: [
-            {
-              label: 'Blog',
-              to: 'blog',
-            },
+//            {
+//              label: 'Blog',
+//              to: 'blog',
+//            },
             {
               label: 'GitHub',
               href: 'https://github.com/kraken-ci/kraken',

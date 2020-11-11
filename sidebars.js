@@ -12,6 +12,7 @@ module.exports = {
       Usage: [
           'proj-branches',
           'schema',
+          'webhooks',
           'docker-executor'
       ],
       Administration: [

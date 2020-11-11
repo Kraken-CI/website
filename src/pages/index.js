@@ -61,7 +61,7 @@ const features = [
     imageUrl: 'img/cpu.svg',
     description: (
       <>
-            Testing on a standard hardware is easy. What about automated testing on unstable pre-production hardware platforms? 
+            Testing on a standard hardware is easy. What about automated testing on unstable pre-production hardware platforms?
             Or in an simulation environment, when real hardware is expensive or does not exist? And with a variety of automatically deployed operating systems.
       </>
     ),
@@ -119,6 +119,15 @@ function Home() {
           </div>
         </div>
       </header>
+
+          <div style={{
+              textAlign: 'center',
+              fontSize: '1.8em',
+              margin: '20px auto 30px auto'
+          }}>
+          Mission: deliver modern, on-premise CI/CD system <br/> that is highly scalable and focused on testing.
+      </div>
+
       <main>
         {features && features.length > 0 && (
           <section className={styles.features}>

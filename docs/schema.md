@@ -56,8 +56,12 @@ first stages, just after triggering a new flow in a branch.
 
 ## Triggers
 
-Triggers indicate what events may start a stage and create its new run.
-There are several events:
+Triggers indicate what events may start a stage and create its new
+run.  There are several events: `parent`, `interval`, `date`, `cron`,
+`repository` and `manual`.
+
+Whole flow and its root stages can be also triggered manually in web UI or by a
+webhook. More about that in [Webhooks chapter](webhooks).
 
 ### parent
 
@@ -118,13 +122,90 @@ Example, start a new stage run always half past nine AM:
 
 ### repository
 
-TODO: repository: url with branch
+Not implemented yet. See [webhooks](webhooks).
 
-### webhook
+### manual
 
-TODO: webhook: from GitHub or GitLab or Bitbucket
+Stage may be configured in a way that it is not automatically started,
+even if its parent has completed. This can be achieved by `manual`
+trigger. When it is set to `True` then in a web UI its run is shown in
+blue and awaits user confirmation to start.
 
-## Step
+Example:
+
+```json
+   "triggers": {
+      "manual": True
+   }
+```
+
+
+## Parameters
+
+When a flow is started manually it is possible to provide values for
+parameters defined in all stages in given branch. This allows
+customizing behaviour of a stage and its jobs.
+
+There can be defined multiple parameters in one stage. Each parameters
+has the following fields:
+
+- `name` - a string that identifies a parameter
+- `type` - a type of parameter, for now it can be only `string`
+- `default` - a default value for a parameter, it is required
+- `description` - a description of a parameter, it used when a
+  parameter is presented in web UI
+
+Default value for a parameter is required. It is used when a flow is
+started automatically. In that situation it is not possible to provide
+values for the parameters manually.
+
+Example:
+
+```json
+   "parameters": [{
+       "name": "COUNT",
+       "type": "string",
+       "default": "10",
+       "description": "Number of tests to generate"
+   }]
+```
+
+Then, in a job definition a parameter can be used by enclosing its
+name in `#{...}`, e.g.: `#{COUNT}`.
+
+Using parameter `COUNT` example:
+
+```json
+    "jobs": [{
+        "name": "random tests",
+        "steps": [{
+            "tool": "rndtest",
+            "count": "#{COUNT}"
+        }],
+        ...
+    }]
+```
+
+or
+
+```json
+    "jobs": [{
+        "name": "random tests",
+        "steps": [{
+            "tool": "shell",
+            "cmd": "echo 'the count is #{COUNT}'"
+        }],
+        ...
+    }]
+```
+
+## Configs
+
+Not implemented yet.
+
+## Jobs
+
+## Step in Job
 
 Common step fields:
 
@@ -212,3 +293,15 @@ Fields:
 Fields:
 
 - `count`
+
+## Environment in Job
+
+TODO
+
+## Notification
+
+TODO
+
+## Timeout
+
+TODO
