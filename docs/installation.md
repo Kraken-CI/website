@@ -147,3 +147,10 @@ they can be killed with a command:
 ```console
 $ docker-compose -f kraken-docker-compose-X.Y.yaml kill
 ```
+## Next Steps
+
+Now there are s everal steps that can be done:
+
+- learn more about Kraken concepts: read [Entities & Terminology](entities) and [Architecture](architecture) chapters
+- start using Kraken by creating new project, branches, etc: see [Usage chapters](proj-branches)
+- install new agents: visit [Agents](agents) chapter in Administraction category

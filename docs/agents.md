@@ -49,7 +49,13 @@ groups.
 
 ## Setting up a New Agent
 
-Install steps:
+Make sure that on Kraken -> Settings page there is  URL to Kraken
+Server set (copy and paste URL from web browser to this field).
+
+So now a new Agent can be installed. It involves downloading an agent
+installerr and running it. That's all.
+
+Agent Install steps:
 
 1. Download Kraken agent installer:
 
