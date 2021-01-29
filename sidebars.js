@@ -15,6 +15,9 @@ module.exports = {
           'webhooks',
           'docker-executor'
       ],
+      Reference: [
+          'schema-ref',
+      ],
       Administration: [
           'agents'
       ],

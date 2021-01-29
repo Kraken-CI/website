@@ -8,6 +8,8 @@
 .docusaurus
 .cache-loader
 package-lock.json
+docs/schema-ref-embed.md
+kraken.schema.json
 
 # Misc
 .DS_Store

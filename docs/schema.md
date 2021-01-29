@@ -10,6 +10,8 @@ done. Schema generally defines jobs for execution, execution
 environment, triggers that start the execution of whole schema,
 optional parameters and execution configuration.
 
+Full schema syntax is defined in [schema reference](schema-ref).
+
 ## Schema Elements
 
 There are defined several things in the schema:
