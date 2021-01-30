@@ -17,6 +17,7 @@ module.exports = {
       ],
       Reference: [
           'schema-ref',
+          'server-api'
       ],
       Administration: [
           'agents'

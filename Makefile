@@ -1,4 +1,4 @@
-deploy: schema
+deploy: schema server-api
 	USE_SSH=true GIT_USER=godfryd yarn deploy
 
 start:
@@ -7,3 +7,6 @@ start:
 schema:
 	./venv/bin/python ../kraken/server/kraken/server/schemaval.py json
 	./venv/bin/python ../jsonschema2md/jsonschema2md.py kraken.schema.json docs/schema-ref-embed.md
+
+server-api:
+	./node_modules/.bin/widdershins  --language_tabs 'shell:Shell' -- ../kraken/server/kraken/server/swagger.yml | tail -n +26 | grep -v 'backwards compatibility' > docs/server-api.md

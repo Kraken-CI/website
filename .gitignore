@@ -10,6 +10,7 @@
 package-lock.json
 docs/schema-ref-embed.md
 kraken.schema.json
+docs/server-api.md
 
 # Misc
 .DS_Store
