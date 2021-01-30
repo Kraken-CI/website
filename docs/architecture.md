@@ -17,7 +17,6 @@ title: Architecture
 - `Planner` - it triggers new flows based on indicated rule in given project's branch
 - `Scheduler` - it assigns jobs to agents
 - `Watchdog` - it checks runs and their jobs if they are in their time limits, it also monitors agents and their machines health
-- `Storage` - it stores and serves artifacts which can be uploaded or downloaded by agents
 
 ## Celery
 `Celery` executes background tasks like processing results reported by

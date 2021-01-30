@@ -60,7 +60,7 @@ first stages, just after triggering a new flow in a branch.
 
 Triggers indicate what events may start a stage and create its new
 run.  There are several events: `parent`, `interval`, `date`, `cron`,
-`repository` and `manual`.
+`repo` and `manual`.
 
 Whole flow and its root stages can be also triggered manually in web UI or by a
 webhook. More about that in [Webhooks chapter](webhooks).
@@ -122,9 +122,24 @@ Example, start a new stage run always half past nine AM:
    }
 ```
 
-### repository
+### repo
 
-Not implemented yet. See [webhooks](webhooks).
+Example, start a new stage run when there are new commits in master
+branch of Kraken's repository; check for new commits every 60 minutes.
+
+```json
+   "triggers": {
+       "repo": {
+           "url": "https://github.com/Kraken-CI/kraken/",
+           "branch": "master",
+           "interval": "60m"
+       }
+   }
+```
+
+There is another way of trigger a run based on changes to a repository.
+Check [webhooks](webhooks) chapter for details.
+
 
 ### manual
 
