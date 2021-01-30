@@ -14,7 +14,7 @@
    viewBox="0 0 58.391827 41.371159"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="arch-overview-ctrl.svg">
   <title
      id="title2020">Kraken CI</title>
@@ -59,14 +59,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.959798"
-     inkscape:cx="99.053094"
-     inkscape:cy="74.477277"
+     inkscape:cx="84.532151"
+     inkscape:cy="54.274226"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:snap-others="true"
-     inkscape:window-width="2549"
-     inkscape:window-height="1535"
+     inkscape:window-width="1920"
+     inkscape:window-height="1080"
      inkscape:window-x="0"
      inkscape:window-y="31"
      inkscape:window-maximized="0" />
@@ -214,18 +214,6 @@
          x="24.014433"
          y="53.15229"
          style="stroke-width:0.04788041px">Watchdog</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:1.14912987px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.04788041px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="23.976837"
-       y="54.999104"
-       id="text902"
-       transform="scale(1.014994,0.98522749)"><tspan
-         sodipodi:role="line"
-         id="tspan900"
-         x="23.976837"
-         y="54.999104"
-         style="stroke-width:0.04788041px">Storage</tspan></text>
     <g
        id="g3171"
        transform="matrix(0.30577753,0,0,0.30577753,1.3754309,28.006257)">
@@ -271,53 +259,6 @@
            x="148.19118"
            id="tspan908"
            sodipodi:role="line">PostgreSQL</tspan></text>
-    </g>
-    <g
-       id="g3180"
-       transform="matrix(0.30577753,0,0,0.30577753,-10.619885,30.433368)">
-      <rect
-         y="57.90884"
-         x="143.43333"
-         height="21.260944"
-         width="34.769283"
-         id="rect952"
-         style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.10715609;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <text
-         transform="scale(1.014994,0.98522748)"
-         id="text914"
-         y="66.286377"
-         x="144.6851"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.01074457px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.15658577px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.01074457px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.15658577px"
-           y="66.286377"
-           x="144.6851"
-           id="tspan912"
-           sodipodi:role="line">ELK</tspan></text>
-      <text
-         transform="scale(1.014994,0.98522748)"
-         id="text922"
-         y="77.806618"
-         x="145.91542"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.75805855px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.15658577px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           style="stroke-width:0.15658577px"
-           y="77.806618"
-           x="145.91542"
-           id="tspan920"
-           sodipodi:role="line">Elasticsearch</tspan></text>
-      <text
-         transform="scale(1.014994,0.98522749)"
-         id="text926"
-         y="72.343521"
-         x="145.91542"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.75805855px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.15658577px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           style="stroke-width:0.15658577px"
-           y="72.343521"
-           x="145.91542"
-           id="tspan924"
-           sodipodi:role="line">Logstash</tspan></text>
     </g>
     <rect
        style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.03112781;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -636,6 +577,57 @@
            x="73.23185"
            id="tspan1002-43"
            sodipodi:role="line">Tool</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.34293837,0,0,0.29909923,-5.0285909,25.780119)"
+       style="display:inline"
+       id="g4818">
+      <g
+         id="g4804">
+        <rect
+           style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.08449103;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect952"
+           width="37.059803"
+           height="12.401169"
+           x="108.9556"
+           y="74.830841" />
+      </g>
+      <text
+         transform="scale(1.014994,0.98522749)"
+         id="text914"
+         y="83.47361"
+         x="109.68517"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.01074457px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.15658577px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.01074457px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.15658577px"
+           y="83.47361"
+           x="109.68517"
+           id="tspan912"
+           sodipodi:role="line">ClickHouse</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.34293837,0,0,0.29909923,-5.0285909,25.780119)"
+       style="display:inline"
+       id="g4812">
+      <rect
+         y="89.346031"
+         x="108.95294"
+         height="10.894557"
+         width="37.065094"
+         id="rect952-3"
+         style="display:inline;opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.07919816;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         transform="scale(1.014994,0.9852275)"
+         id="text914-6"
+         y="98.209129"
+         x="116.98397"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.01074457px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.15658577px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.01074457px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.15658577px"
+           y="98.209129"
+           x="116.98397"
+           id="tspan912-7"
+           sodipodi:role="line">MinIO</tspan></text>
     </g>
   </g>
 </svg>

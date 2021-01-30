@@ -20,8 +20,9 @@ title: Architecture
 - `Storage` - it stores and serves artifacts which can be uploaded or downloaded by agents
 
 ## Celery
-`Celery` executes background tasks like processing results reported by an agent. Any service in `Controller`
-or `Celery` tasks can enqueue new `Celery` tasks. Current tasks:
+`Celery` executes background tasks like processing results reported by
+an agent. Any service in `Controller` or `Celery` tasks can enqueue
+new `Celery` tasks. Current tasks:
 
 - analyze_results_history
 - notify_about_completed_run
@@ -30,14 +31,22 @@ or `Celery` tasks can enqueue new `Celery` tasks. Current tasks:
 - trigger_run
 - trigger_flow
 
-## ELK
-This is `ELK` stack ie. `Elasticsearch`, `Logstash` and `Kibana`. `Logstash` is used for collecting logs from all agents,
-`Elasticsearch` is used for storing these logs and exposing them to the `Server` for example for presentin in `UI`.
-`Kibana` is an internal dashboard to `Elasticsearch`.
+## ClickHouse & its Proxy
+`ClickHouse` is a database that is used for storing logs from all
+Kraken services and from all agents, `ClickHouse Proxy` is used to
+collect logs, aggregate them and send in batches to `ClickHouse`
+database.
+
+## MinIO
+`MinIO` is an object storage database. It is used in Kraken to store
+artifact that are created during jobs execution, to store cache files
+and to store Git repository bundles.
 
 ## Agent
-Agent is a service that is run on a machine that is expected to execute jobs. Agent can execute jobs directly on the system (locally),
-or it can encapulate them in e.g. container. Currently there are executors for:
+Agent is a service that is run on a machine that is expected to
+execute jobs. Agent can execute jobs directly on the system (locally),
+or it can encapulate them in e.g. container. Currently there are
+executors for:
 
 - local
 - Docker

@@ -40,42 +40,65 @@ Default content of this file looks as follows:
 ![File](https://raw.githubusercontent.com/Kraken-CI/kraken/master/.env)
 
 ```
-ELASTIC_PASSWORD=changeme
-
 POSTGRES_USER=kraken
 POSTGRES_PASSWORD=kk123
 POSTGRES_DB=kraken
 
+MINIO_ACCESS_KEY=UFSEHRCFU4ACUEWHCHWU
+MINIO_SECRET_KEY=HICSHuhIIUhiuhMIUHIUhGFfUHugy6fGJuyyfiGY
+
 KRAKEN_REDIS_ADDR=redis
 KRAKEN_DB_URL=postgresql://kraken:kk123@postgres:5432/kraken
-KRAKEN_LOGSTASH_PORT=5959
-KRAKEN_LOGSTASH_ADDR=logstash:5959
-KRAKEN_ELASTICSEARCH_PORT=9200
-KRAKEN_ELASTICSEARCH_URL=http://elastic:changeme@elasticsearch:9200
+KRAKEN_CLICKHOUSE_PORT=9001
+KRAKEN_CLICKHOUSE_ADDR=clickhouse-proxy:9001
+KRAKEN_CLICKHOUSE_URL=http://clickhouse:8123/
 KRAKEN_SERVER_PORT=6000
 KRAKEN_SERVER_ADDR=server:6000
 KRAKEN_PLANNER_URL=http://controller:7997/
-KRAKEN_STORAGE_ADDR=controller:2121
-KRAKEN_STORAGE_DIR=/var/kraken_storage
 KRAKEN_UI_PUBLIC_PORT=8080
+KRAKEN_MINIO_PORT=9999
+KRAKEN_MINIO_ADDR=minio:9999
 ```
 
-### Configuration of ELK stack
+### Configuration of ClickHouse
 
-These parameters are used when [ELK stack](https://www.elastic.co/) is run
-internally in Docker together with Kraken services from the same Docker
-Compose file. It is possible to set up ELK externally to Kraken
-services on another machine.
+[ClickHouse](https://clickhouse.tech/) is used to store logs from all
+Kraken services and from jobs execution.
+
+These parameters are used when [ClickHouse](https://clickhouse.tech/)
+is run internally in Docker together with Kraken services from the
+same Docker Compose file. It is possible to set up ClickHouse
+externally to Kraken services on another machine.
+
+No specific configuration.
+
+### Configuration of Minio
+
+[MinIO](https://min.io/) is object storage database with API
+compatible with AWS S3.  It is used in Kraken to store build
+artifacts, cache files and Git repositories bundles.
+
+These parameters are used when [MinIO](https://min.io/) is run
+internally in Docker together with Kraken services from the same
+Docker Compose file. It is possible to set up MinIO externally to
+Kraken services on another machine.
 
 | Parameter                   | Description / Default value                                                                            |
 |-----------------------------|--------------------------------------------------------------------------------------------------------|
-| `ELASTIC_PASSWORD`          | Password used to access ELK stack<br/>Default: `changeme`                                              |
+| `MINIO_ACCESS_KEY`          | Access key to MinIO<br/>Default: `UFSEHRCFU4ACUEWHCHWU`                                                |
+| `MINIO_SECRET_KEY`          | Secret key to MinIO<br/>Default: `HICSHuhIIUhiuhMIUHIUhGFfUHugy6fGJuyyfiGY`                            |
 
 ### Configuration of PostgreSQL database
 
-These parameters are used when [PostgreSQL](https://www.postgresql.org/) is run internally in Docker together with
-Kraken services from the same Docker Compose file. It is possible to
-set up PostgreSQL externally to Kraken services on another machine.
+[PostgreSQL](https://www.postgresql.org/) is used to store all
+relational data of Kraken, mainly related to jobs planning, execution
+and reporting.
+
+These parameters are used
+when [PostgreSQL](https://www.postgresql.org/) is run internally in
+Docker together with Kraken services from the same Docker Compose
+file. It is possible to set up PostgreSQL externally to Kraken
+services on another machine.
 
 | Parameter                   | Description / Default value                                                                            |
 |-----------------------------|--------------------------------------------------------------------------------------------------------|
@@ -89,26 +112,26 @@ set up PostgreSQL externally to Kraken services on another machine.
 |-----------------------------|--------------------------------------------------------------------------------------------------------|
 | `KRAKEN_REDIS_ADDR`         | Location of Redis in _address:port_ form<br/>Default: `redis`                                          |
 | `KRAKEN_DB_URL`             | URL of the Kraken's PostgreSQL database<br/>Default: `postgresql://kraken:kk123@postgres:5432/kraken`  |
-| `KRAKEN_LOGSTASH_PORT`      | Port of ELK Logstash, should be the same as in `KRAKEN_LOGSTASH_ADDR`<br/>Default: `5959`              |
-| `KRAKEN_LOGSTASH_ADDR`      | Location of ELK Logstash in _address:port_ form<br/>Default: `logstash:5959`                           |
-| `KRAKEN_ELASTICSEARCH_PORT` | Port of ELK Elasticsearch, should be the same as in `KRAKEN_ELASTICSEARCH_URL`<br/>Default: `9200`     |
-| `KRAKEN_ELASTICSEARCH_URL`  | URL of ELK Elasticsearch<br/>Default: `http://elastic:changeme@elasticsearch:9200`                     |
+| `KRAKEN_CLICKHOUSE_PORT`    | Port of ClickHouse Proxy for collection logs, should be the same as in `KRAKEN_CLICKHOUSE_ADDR` <br/>Default: `9001`     |
+| `KRAKEN_CLICKHOUSE_ADDR`    | Location of ClickHouse Proxy <br/>Default: `clickhouse-proxy:9001`                                     |
+| `KRAKEN_CLICKHOUSE_URL`     | URL to ClickHouse, it is used to query ClickHouse database <br/>Default: `http://clickhouse:8123/`     |
 | `KRAKEN_SERVER_PORT`        | Port of Kraken API Server, should be the same as in `KRAKEN_SERVER_ADDR`<br/>Default: `6000`           |
 | `KRAKEN_SERVER_ADDR`        | Location of Kraken API server in _address:port_ form<br/>Default: `server:6000`                        |
 | `KRAKEN_PLANNER_URL`        | URL of Kraken Planner<br/>Default: `http://controller:7997/`                                           |
-| `KRAKEN_STORAGE_ADDR`       | Location of Kraken Storage in _address:port_ form<br/>Default: `controller:2121`                       |
-| `KRAKEN_STORAGE_DIR`        | Location of directory for storing artifacts, used by Kraken Storage<br/>Default: `/var/kraken_storage` |
-| `KRAKEN_UI_PUBLIC_PORT`     | Public port of Kraken's web UI                                                                         |
+| `KRAKEN_UI_PUBLIC_PORT`     | Public port of Kraken's web UI that is exposed to users. <br/>Default: `8080`                          |
+| `KRAKEN_MINIO_PORT `        | Port of MinIO, should be the same as in `KRAKEN_MINIO_ADDR`. <br/>Default: `9999`                      |
+| `KRAKEN_MINIO_ADDR`         | Location of MinIO in _address:port_ form<br/>Default: `minio:9999`                                     |
 
 Most of these variables do not have to be altered. By default all
 services are defined in one Docker Compose file and they communicate
 with each other internally. Still, it is possible to divide these
 services into a few groups and host them on separate machines. This
-allows for handling bigger load by Kraken. The most common approach for
-dividing services is putting PostgreSQL database and ELK stack on
-separate machines. Going further it is possible to setup Kraken API Server
-on a separate machine and even put several instances of them to handle
-and load-balance huge load of API requests.
+allows for handling bigger load by Kraken. The most common approach
+for dividing services is putting PostgreSQL database, ClickHouse
+database and MinIO on separate machines. Going further it is possible
+to setup Kraken API Server on a separate machine and even put several
+instances of them to handle and load-balance huge load of API
+requests.
 
 ## Kraken Start
 

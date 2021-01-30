@@ -141,10 +141,8 @@ def stage(ctx):
             }]
         }],
         "notification": {
-            "changes": {
-                "slack": {"channel": "kk-results"},
-                "email": "godfryd@gmail.com"
-            }
+            "slack": {"channel": "kk-results"},
+            "email": "godfryd@gmail.com"
         }
     }
 ```
