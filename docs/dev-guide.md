@@ -69,10 +69,8 @@ tasks for that:
 - `rake run_server` - start Kraken web server
 - `rake run_scheduler` - start Kraken scheduler service
 - `rake run_planner` - start Kraken planner service
-- `rake run_storage` - start Kraken storage service
 - `rake run_watchdog` - start Kraken watchdog service
 - `rake run_celery` - start Celery with Kraken background tasks
-- `rake run_elk` - start ELK, ie. Elasticsearch, Logstash and Kibana
 
 This way all needed services can be started and then developed and restarted individually.
 
