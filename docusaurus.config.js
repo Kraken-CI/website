@@ -24,6 +24,18 @@ module.exports = {
           label: 'Docs',
           position: 'left',
       }, {
+          href: 'http://lab.kraken.ci',
+          label: 'Demo',
+          position: 'left',
+      }, {
+          to: 'docs/installation',
+          label: 'Installation',
+          position: 'left',
+      }, {
+          href: 'https://groups.google.com/g/kraken-ci',
+          label: 'Discussion Group',
+          position: 'left',
+      }, {
           to: 'docs/contrib-kraken',
           //activeBasePath: 'docs',
           label: 'Contributing',
@@ -32,9 +44,6 @@ module.exports = {
 //          to: 'blog',
 //          label: 'Blog',
 //          position: 'left'
-      }, {
-          href: 'http://lab.kraken.ci',
-          label: 'Demo',
       }, {
           href: 'https://github.com/kraken-ci/kraken',
           label: 'GitHub',
@@ -58,11 +67,13 @@ module.exports = {
           ],
         },
         {
-          title: 'Community',
-          items: [
-            {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/kraken-ci',
+            title: 'Community',
+            items: [{
+                label: 'Discussion Group',
+                href: 'https://groups.google.com/g/kraken-ci'
+            }, {
+                label: 'Stack Overflow',
+                href: 'https://stackoverflow.com/questions/tagged/kraken-ci',
             },
           ],
         },

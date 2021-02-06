@@ -48,7 +48,7 @@ More details about these `schema` properties are available in chapter [Schema](s
 
 ### Jobs
 
-`jobs` describe what should be done in a `stage`. A `stage` can define multiple `jobs` and they all are run in parallel.
+`Jobs` describe what should be done in a `stage`. A `stage` can define multiple `jobs` and they all are run in parallel.
 
 #### Job Steps
 

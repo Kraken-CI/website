@@ -23,3 +23,20 @@
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
 }
+
+@font-face {
+  font-family: 'audiowide';
+  src: url("/Audiowide-Regular.ttf") format("truetype");
+  font-style: normal;
+/*  font-display: swap*/
+}
+
+.hero__title {
+    font-family: 'audiowide';
+    font-size: 6em;
+}
+
+.navbar__title {
+    font-family: 'audiowide';
+    font-size: 2em;
+}

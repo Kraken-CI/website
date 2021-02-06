@@ -12,21 +12,24 @@ module.exports = {
       Usage: [
           'proj-branches',
           'schema',
+          'schema-vars',
           'webhooks',
           'docker-executor'
       ],
-      Reference: [
-          'schema-ref',
-          'server-api'
-      ],
       Administration: [
           'agents'
+      ],
+      Guides: [
+          'guide-intro'
       ],
       Contributing: [
           'contrib-kraken',
           'dev-guide',
           'contrib-docs',
       ],
-      Guides: ['guide-intro']
+      Reference: [
+          'schema-ref',
+          'server-api'
+      ]
   },
 };

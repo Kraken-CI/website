@@ -220,7 +220,87 @@ or
 
 Not implemented yet.
 
+## Flow Label
+
+This field allows setting a custom label format for flows. It is
+displayed instead of flow database ID which is displayed by default.
+
+Example 1:
+
+```python
+   "flow_label": "demo-#{KK_FLOW_SEQ}",
+```
+
+Here a value of ``KK_FLOW_SEQ`` sequence is used. It mean that each
+new flow will get its incremented numer, e.g. ``demo-2``. This
+sequence is shared between CI and DEV flows so the label is uniqe for
+both types of flows.
+
+Example 2:
+
+```python
+   "flow_label": "bld-#{KK_CI_DEV_FLOW_SEQ}",
+```
+
+In this case a ``KK_CI_DEV_FLOW_SEQ`` sequence is used. It means that
+the sequence is incremented separately for CI and for DEV flows.
+
+More about sequences in [Schema Variables](schema-vars).
+
+## Run Label
+
+This field allows setting a custom label format for runs. It is
+displayed instead of run database ID which is displayed by default.
+
+Example 1:
+
+```python
+   "run_label": "run.#{KK_CI_DEV_RUN_SEQ}",
+```
+
+In this case a ``KK_CI_DEV_RUN_SEQ`` sequence is used. It means that
+the sequence is incremented separately for CI and for DEV flows for
+that run, e.g.: ``run.42``.
+
+More about sequences in [Schema Variables](schema-vars).
+
 ## Jobs
+
+`Jobs` describe what should be done in a `stage`. A `stage` can define
+multiple `jobs` and they all are run in parallel.
+
+There are several setting fields in the job:
+
+### Name
+
+A name of the job.
+
+Example:
+
+```python
+   "jobs": [{
+       "name": "build",
+       ...
+   }]
+```
+
+### Timeout
+
+An initial timeout of the job. It is expressed in seconds.
+
+If there are more than 10 historical succeded jobs then timeout is
+estimated automatically.
+
+Example:
+
+```python
+   "jobs": [{
+       "timeout": 1200,
+       ...
+   }]
+```
+
+Timeout is set to 1200 seconds, i.e. 20 minutes.
 
 ## Step in Job
 
@@ -231,6 +311,17 @@ Common step fields:
 - `timeout`
 - `attempts`
 - `sleep_time_after_attempt`
+
+Example:
+
+```python
+   "jobs": [{
+       "steps": [{
+           "tool": "shell",
+           ...
+       }]
+   }]
+```
 
 
 ## Built-in Step Tools
