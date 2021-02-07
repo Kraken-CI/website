@@ -160,7 +160,7 @@ Example:
 ## Parameters
 
 When a flow is started manually it is possible to provide values for
-parameters defined in all stages in given branch. This allows
+parameters defined in all stages in given branch. This allows for
 customizing behaviour of a stage and its jobs.
 
 There can be defined multiple parameters in one stage. Each parameters
@@ -222,7 +222,7 @@ Not implemented yet.
 
 ## Flow Label
 
-This field allows setting a custom label format for flows. It is
+This field allows for setting a custom label format for flows. It is
 displayed instead of flow database ID which is displayed by default.
 
 Example 1:
@@ -249,7 +249,7 @@ More about sequences in [Schema Variables](schema-vars).
 
 ## Run Label
 
-This field allows setting a custom label format for runs. It is
+This field allows for setting a custom label format for runs. It is
 displayed instead of run database ID which is displayed by default.
 
 Example 1:
@@ -302,15 +302,17 @@ Example:
 
 Timeout is set to 1200 seconds, i.e. 20 minutes.
 
-## Step in Job
+## Steps in Job
+
+The steps' job field defines what an agent should executed. Each step has indicated tool that is directly executing it. Steps are executed in the same order as they are defined.
 
 Common step fields:
 
-- `tool`
-- `cwd`
-- `timeout`
-- `attempts`
-- `sleep_time_after_attempt`
+- `tool` - a tool name that is executing the step; this is required
+- `cwd` - a current working directory where the step is executed; default is `'.'`
+- `timeout` - a timeout in seconds that limits time of step execution; it is guareded by an agent; if it is exceeded then the step is arbitrarly terminated; it is optional - default value is 60 seconds
+- `attempts` - a number of times the step is retried if if it returns error; default is 1
+- `sleep_time_after_attempt` - a sleep time between subsequent execution attempts; default is 0
 
 Example:
 
@@ -328,11 +330,13 @@ Example:
 
 ### Shell
 
+`shell` is a tool that executes provided command in a shell.
+
 Fields:
 
-- `cmd`
-- `timeout`
-- `user` - by default kraken `user` is used, this field allows for changing user e.g. to `root`
+- `cmd` - a command to execute
+- `user` - this field allows for changing user e.g. to `root`; by default kraken `user` is used
+- `env` - a dictionary with environment variables and their values
 
 Example:
 
@@ -343,14 +347,50 @@ Example:
    }]
 ```
 
+Just say 'Hello World'.
+
+```python
+   "steps": [{
+       "tool": "shell",
+       "cmd": "./run-build.sh",
+       "cwd": "/build",
+       "user": "root",
+       "env": {
+           "ARCH": "arm64"
+           "JOBS": "8"
+       },
+       "timeout": 1200,
+       "attempts": 3,
+       "sleep_time_after_attempt": 10
+   }]
+```
+
+Run a build script in `/build` folder as `root` user. Pass two
+environment variables: `ARCH` and `JOBS`. The step should fit in 1200
+seconds ie. 20 minutes. If the commands returns non zero exit code
+then it is repeated up to 3 times. There is a 10 seconds sleep time
+period between attempts.
+
+More examples can be found at https://github.com/Kraken-CI/workflow-examples/tree/main/shell.
+
 ### Git
+
+`git` is a tool that allows for checking out a Git repository. It clones a
+repository indicated by an URK in `checkout` field and puts it in
+`destination` folder. It also stores Git repository bundle in Kraken
+global storage for quiecker subsequent retrieval. If URL is using SSH
+protocol and `ssh-key` field is set then it is used by ssh-agent for
+passing a key during Git cloning. If `access-token` is provided than
+it is embedded to URL in git clone instruction (see
+[GitLab use case](https://docs.gitlab.com/ee/user/project/deploy_tokens/#git-clone-a-repository)).
 
 Fields:
 
-- `checkout`
-- `destination`
-- `ssh-key`
-- `access-token`
+- `checkout` - an URL to the repository
+- `branch` - a branch to checkout, `master` is default
+- `destination` - a destination folder for the repository; it is optional
+- `ssh-key` - an SSH key for ssh-agent
+- `access-token` - an access token for GitLab use case
 
 Example:
 
@@ -362,19 +402,117 @@ Example:
    }]
 ```
 
+More examples can be found at TODO.
+
 ### Artifacts
+
+`artifacts` is a tool that allows for storing and retrieving artifacts in Kraken
+global [storage](storage). They can be non public so they are only
+available internally in Kraken to other stages but only in the same
+flow. If they are public then they are also presented in web UI and
+can be downloaded by users.
 
 Fields:
 
-- `action`
-- `public`
-- `source`
-- `destination`
+- `action` - an action that artifacts tool should execute: either
+  `download` or `upload`. `upload` is default action
+- `public` - determines if artifacts should be public and available to
+  users in web UI (`True`) or if they should be only accessible
+  internally to other stages but only in the same flow (`False`);
+  default value is `False`
+- `source` - a path or list of paths that should be archived or
+  retreived. A path can indicate a folder or a file; a path, in case
+  of upload action, can contain globbing signs `*` or `**`; a path can
+  be relative or absolute
+- `destination` - a path were the artifact(s) should be stored; in
+  case of download action, if the destination folder does not exist
+  then it is created; by default it is `'.'`
+
+Example:
+
+```python
+   "steps": [{
+       "tool": "artifacts",
+       "source": "a.txt"
+   }]
+```
+
+Default action is upload so here an `a.txt` file will be stored in
+global storage in root folder which is default.
+
+```python
+   "steps": [{
+       "tool": "artifacts",
+       "action": "download",
+       "source": "a.txt",
+       "destination": 'a/b/c"
+   }]
+```
+
+Here an `a.txt` file is downloaded from global storage. It is saved to
+`a/b/c` folder. If it does not exist then it is created first.
+
+More examples can be found at https://github.com/Kraken-CI/workflow-examples/tree/main/artifacts.
+
+### Cache
+
+`cache` is a tool that allows for caching files. It quite often
+happens that during a build there are some dependencies that are
+downloaded from an external source over a network. Sometime there is
+lots of content to download or the network link is quite slow so in
+effect downloading this content may take significant amount of time.
+To speed this process it is possible to cache these files after
+downloading them. In the following build these files are first
+retrieved from cache and then they are updated only if needed.
+
+So cache tool exposes two actions: `save` and `restore`. Cached files
+are stored under indicted key in Kraken global storage. This key can
+be statically set so the content is always the same. The key can be
+also set dynamically based on some variables e.g. repository branch or
+CI/DEV flow kind.
+
+Fields:
+
+- `action` - an action that the tool should perform; it should be either `store` or `restore`
+- `key` - a key under which files are stored in or restored from cache
+- `keys` - a list of key under which files are restored from cache
+- `paths` - source paths used in `store` action
+- `expiry` - not implemented yet
+
+Example:
+
+```python
+   "steps": [{
+       "tool": "cache",
+       "action": "save",
+       "key": "one-key",
+       "paths": [
+            "abc"
+       ]
+   }]
+```
+
+Store all files from `abc` folder in cache under `one-key` key.
+
+```python
+   "steps": [{
+       "tool": "cache",
+       "action": "restore",
+       "keys": ["one-key"]
+   }]
+```
+
+Restore all files under `one-key` key in cache to `abc` folder (the
+destination folder was remembered during `store` action).
+
+
+More examples can be found at https://github.com/Kraken-CI/workflow-examples/tree/main/cache.
 
 ### PyLint
 
 Fields:
 
+- `pylint_exe`
 - `rcfile`
 - `modules_or_packages`
 
@@ -382,8 +520,22 @@ Fields:
 
 Fields:
 
+- `pytest_exe`
 - `params`
+- `pythonpath`
 
+### Junit Collect
+
+Fields:
+
+- `file_glob`
+
+### Go Test
+
+Fields:
+
+- `gotest_exe`
+- `params`
 
 ### NgLint
 
@@ -401,6 +553,10 @@ Fields:
 Fields:
 
 - `count`
+
+### Custom Tools
+
+More about custom tools in [Tools](tools#custom-tools) chapter.
 
 ## Environment in Job
 

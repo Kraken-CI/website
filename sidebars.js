@@ -13,11 +13,13 @@ module.exports = {
           'proj-branches',
           'schema',
           'schema-vars',
+          'tools',
           'webhooks',
           'docker-executor'
       ],
       Administration: [
-          'agents'
+          'agents',
+          'storage'
       ],
       Guides: [
           'guide-intro'
