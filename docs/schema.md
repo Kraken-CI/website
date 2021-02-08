@@ -27,24 +27,24 @@ There are defined several things in the schema:
 Example:
 
 ```json
-        "parent": "root",
-        "triggers": {
-            "parent": True
-        },
-        "parameters": [],
-        "configs": [],
-        "jobs": [{
-            "name": "hello",
-            "steps": [{
-                "tool": "shell",
-                "cmd": "echo 'Hello World'"
-            }],
-            "environments": [{
-                "system": "centos-7",
-                "agents_group": "all",
-                "config": "default"
-            }]
-        }]
+"parent": "root",
+"triggers": {
+    "parent": True
+},
+"parameters": [],
+"configs": [],
+"jobs": [{
+    "name": "hello",
+    "steps": [{
+        "tool": "shell",
+        "cmd": "echo 'Hello World'"
+    }],
+    "environments": [{
+        "system": "any",
+        "agents_group": "all",
+        "config": "default"
+    }]
+}]
 ```
 
 ## Parent
@@ -72,9 +72,9 @@ A stage is triggered by completion of a parent stage. It is defined as `"parent"
 Example:
 
 ```json
-   "triggers": {
-      "parent": True
-   }
+"triggers": {
+   "parent": True
+}
 ```
 
 ### interval
@@ -87,9 +87,9 @@ hours and 30 minutes.
 Example, start a new stage run every 10 minutes:
 
 ```json
-   "triggers": {
-      "interval": "10m"
-   }
+"triggers": {
+   "interval": "10m"
+}
 ```
 
 ### date
@@ -101,9 +101,9 @@ Sep 17 23:26:08 CEST 2016`.
 Example, start a new stage run once on indicate date:
 
 ```json
-   "triggers": {
-      "date": "2012-01-19 17:21:00"
-   }
+"triggers": {
+   "date": "2012-01-19 17:21:00"
+}
 ```
 
 ### cron
@@ -117,9 +117,9 @@ possible values for each item can be found on
 Example, start a new stage run always half past nine AM:
 
 ```json
-   "triggers": {
-      "cron": "30 9 * * *"
-   }
+"triggers": {
+   "cron": "30 9 * * *"
+}
 ```
 
 ### repo
@@ -128,13 +128,13 @@ Example, start a new stage run when there are new commits in master
 branch of Kraken's repository; check for new commits every 60 minutes.
 
 ```json
-   "triggers": {
-       "repo": {
-           "url": "https://github.com/Kraken-CI/kraken/",
-           "branch": "master",
-           "interval": "60m"
-       }
-   }
+"triggers": {
+    "repo": {
+        "url": "https://github.com/Kraken-CI/kraken/",
+        "branch": "master",
+        "interval": "60m"
+    }
+}
 ```
 
 There is another way of trigger a run based on changes to a repository.
@@ -151,9 +151,9 @@ blue and awaits user confirmation to start.
 Example:
 
 ```json
-   "triggers": {
-      "manual": True
-   }
+"triggers": {
+    "manual": True
+}
 ```
 
 
@@ -179,12 +179,12 @@ values for the parameters manually.
 Example:
 
 ```json
-   "parameters": [{
-       "name": "COUNT",
-       "type": "string",
-       "default": "10",
-       "description": "Number of tests to generate"
-   }]
+"parameters": [{
+    "name": "COUNT",
+    "type": "string",
+    "default": "10",
+    "description": "Number of tests to generate"
+}]
 ```
 
 Then, in a job definition a parameter can be used by enclosing its
@@ -193,27 +193,26 @@ name in `#{...}`, e.g.: `#{COUNT}`.
 Using parameter `COUNT` example:
 
 ```json
-    "jobs": [{
-        "name": "random tests",
-        "steps": [{
-            "tool": "rndtest",
-            "count": "#{COUNT}"
-        }],
-        ...
-    }]
+"jobs": [{
+    "name": "random tests",
+    "steps": [{
+        "tool": "rndtest",
+        "count": "#{COUNT}"
+    }],
+}]
 ```
 
 or
 
 ```json
-    "jobs": [{
-        "name": "random tests",
-        "steps": [{
-            "tool": "shell",
-            "cmd": "echo 'the count is #{COUNT}'"
-        }],
-        ...
-    }]
+"jobs": [{
+    "name": "random tests",
+    "steps": [{
+        "tool": "shell",
+        "cmd": "echo 'the count is #{COUNT}'"
+    }],
+    ...
+}]
 ```
 
 ## Configs
@@ -228,7 +227,7 @@ displayed instead of flow database ID which is displayed by default.
 Example 1:
 
 ```python
-   "flow_label": "demo-#{KK_FLOW_SEQ}",
+"flow_label": "demo-#{KK_FLOW_SEQ}",
 ```
 
 Here a value of ``KK_FLOW_SEQ`` sequence is used. It mean that each
@@ -239,7 +238,7 @@ both types of flows.
 Example 2:
 
 ```python
-   "flow_label": "bld-#{KK_CI_DEV_FLOW_SEQ}",
+"flow_label": "bld-#{KK_CI_DEV_FLOW_SEQ}",
 ```
 
 In this case a ``KK_CI_DEV_FLOW_SEQ`` sequence is used. It means that
@@ -255,7 +254,7 @@ displayed instead of run database ID which is displayed by default.
 Example 1:
 
 ```python
-   "run_label": "run.#{KK_CI_DEV_RUN_SEQ}",
+"run_label": "run.#{KK_CI_DEV_RUN_SEQ}",
 ```
 
 In this case a ``KK_CI_DEV_RUN_SEQ`` sequence is used. It means that
@@ -278,10 +277,10 @@ A name of the job.
 Example:
 
 ```python
-   "jobs": [{
-       "name": "build",
-       ...
-   }]
+"jobs": [{
+    "name": "build",
+    ...
+}]
 ```
 
 ### Timeout
@@ -294,10 +293,10 @@ estimated automatically.
 Example:
 
 ```python
-   "jobs": [{
-       "timeout": 1200,
-       ...
-   }]
+"jobs": [{
+    "timeout": 1200,
+    ...
+}]
 ```
 
 Timeout is set to 1200 seconds, i.e. 20 minutes.
@@ -317,12 +316,12 @@ Common step fields:
 Example:
 
 ```python
-   "jobs": [{
-       "steps": [{
-           "tool": "shell",
-           ...
-       }]
-   }]
+"jobs": [{
+    "steps": [{
+        "tool": "shell",
+        ...
+    }]
+}]
 ```
 
 
@@ -341,28 +340,28 @@ Fields:
 Example:
 
 ```python
-   "steps": [{
-       "tool": "shell",
-       "cmd": "echo 'Hello World'"
-   }]
+"steps": [{
+    "tool": "shell",
+    "cmd": "echo 'Hello World'"
+}]
 ```
 
 Just say 'Hello World'.
 
 ```python
-   "steps": [{
-       "tool": "shell",
-       "cmd": "./run-build.sh",
-       "cwd": "/build",
-       "user": "root",
-       "env": {
-           "ARCH": "arm64"
-           "JOBS": "8"
-       },
-       "timeout": 1200,
-       "attempts": 3,
-       "sleep_time_after_attempt": 10
-   }]
+"steps": [{
+    "tool": "shell",
+    "cmd": "./run-build.sh",
+    "cwd": "/build",
+    "user": "root",
+    "env": {
+        "ARCH": "arm64"
+        "JOBS": "8"
+    },
+    "timeout": 1200,
+    "attempts": 3,
+    "sleep_time_after_attempt": 10
+}]
 ```
 
 Run a build script in `/build` folder as `root` user. Pass two
@@ -395,11 +394,11 @@ Fields:
 Example:
 
 ```python
-   "steps": [{
-       "tool": "git",
-       "checkout": "https://github.com/Kraken-CI/kraken.git",
-       "branch": "master"
-   }]
+"steps": [{
+    "tool": "git",
+    "checkout": "https://github.com/Kraken-CI/kraken.git",
+    "branch": "master"
+}]
 ```
 
 More examples can be found at TODO.
@@ -431,22 +430,22 @@ Fields:
 Example:
 
 ```python
-   "steps": [{
-       "tool": "artifacts",
-       "source": "a.txt"
-   }]
+"steps": [{
+    "tool": "artifacts",
+    "source": "a.txt"
+}]
 ```
 
 Default action is upload so here an `a.txt` file will be stored in
 global storage in root folder which is default.
 
 ```python
-   "steps": [{
-       "tool": "artifacts",
-       "action": "download",
-       "source": "a.txt",
-       "destination": 'a/b/c"
-   }]
+"steps": [{
+    "tool": "artifacts",
+    "action": "download",
+    "source": "a.txt",
+    "destination": 'a/b/c"
+}]
 ```
 
 Here an `a.txt` file is downloaded from global storage. It is saved to
@@ -482,24 +481,24 @@ Fields:
 Example:
 
 ```python
-   "steps": [{
-       "tool": "cache",
-       "action": "save",
-       "key": "one-key",
-       "paths": [
-            "abc"
-       ]
-   }]
+"steps": [{
+    "tool": "cache",
+    "action": "save",
+    "key": "one-key",
+    "paths": [
+         "abc"
+    ]
+}]
 ```
 
 Store all files from `abc` folder in cache under `one-key` key.
 
 ```python
-   "steps": [{
-       "tool": "cache",
-       "action": "restore",
-       "keys": ["one-key"]
-   }]
+"steps": [{
+    "tool": "cache",
+    "action": "restore",
+    "keys": ["one-key"]
+}]
 ```
 
 Restore all files under `one-key` key in cache to `abc` folder (the
@@ -508,53 +507,184 @@ destination folder was remembered during `store` action).
 
 More examples can be found at https://github.com/Kraken-CI/workflow-examples/tree/main/cache.
 
-### PyLint
+### Pylint
+
+`pylint` is a tool that allows for static analysis of Python source
+code. It wraps around [Pylint](https://www.pylint.org/).
 
 Fields:
 
-- `pylint_exe`
-- `rcfile`
-- `modules_or_packages`
+- `pylint_exe` - an alternative path or command to pylint, by default this is `pylint`
+- `rcfile` - a path to pylint rcfile
+- `modules_or_packages` - a path or paths to Python modules or packages that should be checked
 
-### PyTest
+Example:
+
+```python
+"steps": [{
+    "tool": "pylint",
+    "rcfile": "pylint.rc",
+    "modules_or_packages": "agent/kraken/agent"
+}]
+```
+
+Run `pylint` on a package located in `agent/kraken/agent` folder using
+rcfile `pylint.rc` from current working directory.
+
+```python
+"steps": [{
+    "tool": "pylint",
+    "pylint_exe": "poetry run pylint",
+    "rcfile": "../pylint.rc",
+    "modules_or_packages": "kraken/server",
+    "cwd": "kraken/server"
+}]
+```
+
+Run `pylint` but using specific command ie. `poetry run pylint` on a
+package located in `kraken/server` folder using rcfile from
+`../pylint.rc` from indicated working directory `kraken/server`.
+
+### Pytest
+
+`pytest` is a tool that allows for running Python tests. It wraps
+around [pytest](https://pytest.org/).
 
 Fields:
 
-- `pytest_exe`
-- `params`
-- `pythonpath`
+- `pytest_exe` -an alternative path or command to pytest, by default this is `pytest-3`
+- `params` - parameters passed directly to pytest executable
+- `pythonpath` - extra paths that are used by Python to look for modules/packages that it wants to load
+
+Example:
+
+```python
+"steps": [{
+    "tool": "pytest",
+    "cwd": "kraken/agent"
+}]
+```
+
+Run pytest in `kraken/agent` folder.
+
+```python
+"steps": [{
+    "tool": "pytest",
+    "pytest_exe": "poetry run pytest",
+    "params": "-vv -m 'not db'",
+    "cwd": "kraken/server"
+}]
+```
+
+Run pytest in `kraken/agent` folder, using specific command `poetry
+run pytest` and passing to it `-vv -m 'not db'` parameters.
 
 ### Junit Collect
 
+`junit_collect` is a tool that allows for collecting test results
+stored in indicated files in [JUnit](https://junit.org/) format.
+
 Fields:
 
-- `file_glob`
+- `file_glob` - a glob pattern for searching test result files
+
+Example:
+
+```python
+"steps": [{
+    "tool": "junit_collect",
+    "file_glob": "**/test-results/test/*.xml"
+}]
+```
+
+More examples can be found at https://github.com/Kraken-CI/workflow-examples/tree/main/real-projects/lucene-solr.
 
 ### Go Test
 
+`gotest` is a tool that allows for
+running [Go language](https://golang.org/) tests.
+
 Fields:
 
-- `gotest_exe`
-- `params`
+- `go_exe` - an alternative path or command to `go`
+- `params` - parameters passed directly to `go test`
+
+Example:
+
+```python
+"steps": [{
+    "tool": "gotest",
+    "cwd": "hugo",
+    "params": "-p 1 ./..."
+}]
+```
+
+Run Go tests in `hugo` folder with special parameters `-p 1 ./...`.
+
+More examples can be found at https://github.com/Kraken-CI/workflow-examples/tree/main/real-projects/hugo.
 
 ### NgLint
 
-No specific fields.
+`nglint` is a tool that allows for
+running [Angular](https://angular.io/) `ng lint`, that is performing
+static analysis of TypeScript in Angular projects.
+
+It does not have specific fields.
+
+Example:
+
+```python
+"steps": [{
+    "tool": "nglint",
+    "cwd": "kraken/ui"
+}]
+```
+
+Run `ng lint` in `kraken/ui` where is Angular project located.
 
 ### Cloc
 
+`cloc` is a tool that allows for running counting lines of code. It
+wraps around [cloc](http://github.com/AlDanial/cloc) that can analyse
+source code in multiple programming languages.
+
 Fields:
 
-- `not-match-f`
-- `exclude-dir`
+- `not-match-f` - the value is passed to `--not-match-f=<regex>` that
+  allows for filtering out indicated files
+- `exclude-dir` - the value is passed to `--exclude-dir=<D1>[,D2,]` that
+  allows for excluding indicated list of directories
+
+Example:
+
+```python
+"steps": [{
+    "tool": "cloc",
+    "not-match-f": "(package-lock.json|pylint.rc)",
+    "exclude-dir": "docker-elk",
+    "cwd": "kraken"
+}]
+```
+
+Run `cloc` in `kraken` folder. Exclude `docker-elk` folder and filter
+out indicated two files.
 
 ### RndTest
 
+`rndtest` is a tool that allows for generating random test case
+results. It is used in Kraken to test its testing and reporting
+capabilities.
+
 Fields:
 
-- `count`
+- `count` - a number of expected test cases
 
 ### Custom Tools
+
+Beside Kraken built-in tools, it is possible to use external, your
+own, custom tools. They need to be written as python library with
+specific metadata and they need to fulfil expected protocol of
+execution.
 
 More about custom tools in [Tools](tools#custom-tools) chapter.
 
