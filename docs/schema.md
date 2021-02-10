@@ -690,12 +690,206 @@ More about custom tools in [Tools](tools#custom-tools) chapter.
 
 ## Environment in Job
 
-TODO
+`environment` define the surroundings of a `job` execution. Each `job`
+has one or more `environment`s defined.
+
+Environment has the following fields:
+
+- `agents_group`
+- `executor`
+- `system`
+- `config` - not implemented yet
+
+There can be many job instances. For each environment and for each
+system in environment there is an instance of the job.
+
+### Agents Groups
+
+This is a name of agents group that should be used by scheduler for
+agent selection.  Selected agent from this group will be assigned to
+given job and will be used to execute the job. There is a special
+built-in group,`'all'`, that gathers all agents.
+
+### Executors
+
+This is an executor type that agent will use to execute a job. It
+can be one of:
+
+- `'local'` - an egent is executing a job directly on current host
+  system where agent is also running
+- `'docker'` - an agent is executing a job inside of dedicated, just
+  spawned Docker container; after the execution the container is
+  killed and removed
+- `'lxd'` - an agent is executing a job inside of dedicated, just
+  spawned LXD container; after the execution the container is
+  stopped and removed
+
+Default is `'local'`.
+
+### Systems
+
+This field can hold an operating system name or list of such names
+that are used for job execution. If this is a list then the number of
+job instances is multiplied by numer of systems - each instance has
+its system.
+
+There is a special system name, `'any'`, that in case of `'local'`
+executor ignores system selection by jobs scheduler. In other executor
+types `'any'` has no special meaning.
+
+The system name has different meaning depending on executor type.
+
+In case of `'local'` executor the system name must match with the system
+reported by agent wher it is running.
+
+In case of `'docker'` executor the system name is a name of Docker
+image from [Docker Hub](https://hub.docker.com/) or other Docker
+registry. Example name: `'ubuntu:20.04'`. There are also Docker images
+specially crafted for Kraken. The are hosted on Docker Hub:
+https://hub.docker.com/u/krakenci. Example: `'krakenci/ubuntu:20.04'`.
+
+In case of `'lxd'` executor the system name is a name of LXD image
+from https://images.linuxcontainers.org/. Example name:
+`'ubuntu/focal/amd64'`. To get list of all available LXD container
+names run `lxc image list images:` command.
+
+Examples:
+
+```python
+"environments": [{
+    "agents_group": "all",
+    "system": "any",
+    "config": "default"
+}]
+```
+
+Pick any agent and use its local host system for job execution.
+
+```python
+"environments": [{
+    "agents_group": "fast",
+    "system": "ubuntu-18.04",
+    "config": "default"
+}]
+```
+
+Pick an agent from `'fast'` group that runs on `'ubuntu-18.04'`
+operating system.
+
+
+```python
+"environments": [{
+    "agents_group": "all",
+    "executor": "docker",
+    "system": ["maven:3.6.3-jdk-11",
+               "fedora:32",
+               "centos:8",
+               "debian:buster",
+               "debian:bullseye",
+               "ubuntu:18.04",
+               "ubuntu:20.04",
+               "krakenci/bld-kraken",
+               "krakenci/ubuntu:20.04",
+               "krakenci/python:3.8",
+               "krakenci/maven:3.6.3-jdk-11"],
+    "config": "default"
+}]
+```
+
+Create multiple jobs for each indicated system. For each job pick an
+agent from `'all'` group and execute the job in spawned Docker
+container with indicated system image.
+
+```python
+"environments": [{
+    "agents_group": "lxd",
+    "executor": "lxd",
+    "system": "centos/8/amd64",
+    "config": "default"
+}]
+```
+
+Pick an agent form `'lxd'` group and execute the job in spawned LXD
+container with `'centos/8/amd64'` system image.
+
+More examples can be found at:
+- https://github.com/Kraken-CI/workflow-examples/tree/main/systems-many-docker
+- https://github.com/Kraken-CI/workflow-examples/tree/main/systems-many-lxd
+- https://github.com/Kraken-CI/workflow-examples/tree/main/systems-mixed
+
+More about agents, agent's groups and agent's management can be found in [Agents chapter](agents).
 
 ## Notification
 
-TODO
+`notification` allows for configuring a notification means that are
+used to pass an information about stage's run result. There are
+several communication methods supported:
 
-## Timeout
+- `email`
+- `slack`
+- `github`
 
-TODO
+### Email
+
+It sends notifications to indicated email address. This requires
+setting global configuration of SMTP server. This can be found in
+`Settings` menu at the top, in `Notifications` tab.
+
+Example:
+
+```python
+"notification": {
+    "email": "godfryd@gmail.com"
+}
+```
+
+### Slack
+
+It sends notifications to indicated channel on Slack. This requires
+setting global configuration of an access token to Slack service. This
+can be found in `Settings` menu at the top, in `Notifications` tab.
+
+Example:
+
+```python
+"notification": {
+    "slack": {"channel": "kk-results"}
+}
+```
+
+### GitHub
+
+It sends notifications of stages that were triggered by a GitHub pull
+request. It sets results status on PR page on GitHub. This requires
+setting a configuration on a project page in `Web Hooks` tab. There
+should be enabled GitHub section and then copied the values or URL and
+secret and pasted on GitHub project page, in Settings tab, Webhooks
+subtab.
+
+GitHub notification section requires setting one field, `credentials`.
+The credentials are in form `<user>:<password>` e.g.: `john:1q2w3e4r`.
+To make it safe credentials should be stored and taken from project's
+secrets. More about secrets in [Secrets chapter](secrets). GitHub
+credentials can be prepared on your account developer settings page in
+GitHub (https://github.com/settings/tokens), in Personal access token
+subtab.
+
+More about GitHub integration can be found in [Webhooks chapter](webhooks).
+
+Example:
+
+```python
+"notification": {
+    "github": {"credentials": "#{KK_SECRET_SIMPLE_gh_status_creds}"}
+}
+```
+
+It is also possible to enable all notification means together:
+
+```python
+"notification": {
+    "slack": {"channel": "kk-results"},
+    "email": "godfryd@gmail.com",
+    "github": {"credentials": "#{KK_SECRET_SIMPLE_gh_status_creds}"}
+}
+```

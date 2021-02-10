@@ -14,6 +14,7 @@ module.exports = {
           'schema',
           'schema-vars',
           'tools',
+          'secrets',
           'webhooks',
           'docker-executor'
       ],
