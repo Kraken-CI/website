@@ -45,6 +45,10 @@ module.exports = {
 //          label: 'Blog',
 //          position: 'left'
       }, {
+          to: 'support',
+          label: 'Support',
+          position: 'right',
+      }, {
           to: 'contact',
           label: 'Contact',
           position: 'right',
@@ -78,6 +82,17 @@ module.exports = {
             }, {
                 label: 'Stack Overflow',
                 href: 'https://stackoverflow.com/questions/tagged/kraken-ci',
+            },
+          ],
+        },
+        {
+            title: 'Business',
+            items: [{
+                label: 'Support',
+                to: 'support'
+            }, {
+                label: 'Contact',
+                to: 'contact',
             },
           ],
         },

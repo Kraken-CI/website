@@ -122,7 +122,7 @@ function Home() {
               fontSize: '1.8em',
               margin: '20px auto 30px auto'
           }}>
-          Mission: deliver a modern, on-premise CI/CD system <br/> that is highly scalable and focused on testing.
+          Mission: deliver a modern, open-source, on-premise CI/CD system <br/> that is highly scalable and focused on testing.
       </div>
 
       <main>

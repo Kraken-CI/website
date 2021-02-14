@@ -91,7 +91,8 @@ form.fsFrm {
 .fsFrm [type="button"],
 .fsFrm [type="submit"],
 .fsFrm [type="reset"] {
-  background-color: #0d0;
+    background-color: #0d0;
+    text-shadow: 2px 2px #0004;
   font-variant: small-caps;
   font-weight: bold;
   text-align: left;
