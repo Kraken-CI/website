@@ -215,6 +215,9 @@ or
 }]
 ```
 
+More about interpolating variables in string can be found
+in [Schema Variables chapter](schema-vars).
+
 ## Configs
 
 Not implemented yet.
@@ -388,7 +391,7 @@ Fields:
 - `checkout` - an URL to the repository
 - `branch` - a branch to checkout, `master` is default
 - `destination` - a destination folder for the repository; it is optional
-- `ssh-key` - an SSH key for ssh-agent
+- `ssh-key` - a name of a secret that holds SSH username and key for ssh-agent
 - `access-token` - an access token for GitLab use case
 
 Example:
