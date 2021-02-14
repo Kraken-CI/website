@@ -45,6 +45,10 @@ module.exports = {
 //          label: 'Blog',
 //          position: 'left'
       }, {
+          to: 'contact',
+          label: 'Contact',
+          position: 'right',
+      }, {
           href: 'https://github.com/kraken-ci/kraken',
           label: 'GitHub',
           position: 'right',
@@ -91,7 +95,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Michal Nowikowski. Built with Docusaurus. Icons made by <a href="https://www.flaticon.com/authors/freepik">Freepik</a> from <a href="https://www.flaticon.com">flaticon</a>`,
+      copyright: `Copyright © ${new Date().getFullYear()} <a href="mailto:mike@kraken.ci">Michal Nowikowski</a>. Built with Docusaurus. Icons made by <a href="https://www.flaticon.com/authors/freepik">Freepik</a> from <a href="https://www.flaticon.com">flaticon</a>`,
     },
   },
   presets: [

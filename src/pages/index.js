@@ -101,22 +101,19 @@ function Home() {
   const {siteConfig = {}} = context;
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title={`Modern CI/CD System focused on Testing`}
+      description="Modern CI/CD System focused on Testing">
       <header className={clsx('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <h1 className="hero__title">{siteConfig.title}</h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
-          <div className={styles.buttons}>
-            <Link
-              className={clsx(
-                'button button--outline button--secondary button--lg',
-                styles.getStarted,
-              )}
-              to={useBaseUrl('docs/')}>
-              Get Started
-            </Link>
-          </div>
+
+          <form className={styles.fsFrm} name="newsletter-form" accept-charset="utf-8" action="https://formspree.io/f/mwkwjvvp" method="post">
+          <input type="email" name="_replyto" id="email-address" placeholder="email@domain.tld" required=""></input>
+          <input type="hidden" name="_subject" id="email-subject" value="Subscribe Newsletter"></input>
+          <input type="submit" value="Subscribe to Newsletter"></input>
+          </form>
+
         </div>
       </header>
 
