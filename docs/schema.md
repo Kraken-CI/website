@@ -750,11 +750,13 @@ image from [Docker Hub](https://hub.docker.com/) or other Docker
 registry. Example name: `'ubuntu:20.04'`. There are also Docker images
 specially crafted for Kraken. The are hosted on Docker Hub:
 https://hub.docker.com/u/krakenci. Example: `'krakenci/ubuntu:20.04'`.
+More about Docker executor in [Docker Executor chapter](docker-executor).
 
 In case of `'lxd'` executor the system name is a name of LXD image
 from https://images.linuxcontainers.org/. Example name:
 `'ubuntu/focal/amd64'`. To get list of all available LXD container
-names run `lxc image list images:` command.
+names run `lxc image list images:` command. More about LXD executor
+in [LXD Executor chapter](lxd-executor).
 
 Examples:
 
