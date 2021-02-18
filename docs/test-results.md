@@ -11,7 +11,7 @@ contains the latest flow. Each flow row contains list of boxes. Each
 box contains information about a run of given stage. The order of
 boxes with runs is chronological according to their start time.
 
-<img src="/img/screen-branch-results-2.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px'}}/>
+<img src="/img/screen-branch-results-2.png" style={{boxShadow: '0 10px 10px 5px #777', marginBottom: '30px'}}/>
 
 ## Run Box
 
@@ -32,7 +32,7 @@ A run box contains:
 
 Example 1:
 
-<img src="/img/run-box-1.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px', width: '80%'}}/>
+<img src="/img/screen-run-box-1.png" style={{boxShadow: '0 10px 10px 5px #777', marginBottom: '30px', width: '80%'}}/>
 
 This run has 1 successful job that reported tests results. There were
 run 100 test cases, where 16 did not passed, so pass ratio is
@@ -41,7 +41,7 @@ failures so the box is yellow.
 
 Example 2:
 
-<img src="/img/run-box-2.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px'}}/>
+<img src="/img/screen-run-box-2.png" style={{boxShadow: '0 10px 10px 5px #777', marginBottom: '30px'}}/>
 
 This run has 4 job with no errors. Some of them that reported tests
 results, the other ones reported issues. There were run 17 test
@@ -50,7 +50,7 @@ detected 15 issues in the code. There are issues so the box is yellow.
 
 Example 3:
 
-<img src="/img/run-box-3.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px'}}/>
+<img src="/img/screen-run-box-3.png" style={{boxShadow: '0 10px 10px 5px #777', marginBottom: '30px'}}/>
 
 This run has 2 job with no errors. In the reported tests results,
 there are 100% passed test cases. No failures and no issues so the box
@@ -58,7 +58,7 @@ is green.
 
 Example 4:
 
-<img src="/img/run-box-4.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px'}}/>
+<img src="/img/screen-run-box-4.png" style={{boxShadow: '0 10px 10px 5px #777', marginBottom: '30px'}}/>
 
 This run has 4 job with 1 error. All tests reported are passed but
 there could be not reported tests due to error in job execution. There
@@ -70,6 +70,23 @@ is red.
 A job that performs testing reports test results. The test results are
 visible on a `Run Results` page, in `Test Results` tab. They are
 presented in a table.
+
+<img src="/img/screen-run-test-results.png" style={{boxShadow: '0 10px 10px 5px #777', marginBottom: '30px'}}/>
+
+The table presents test case results in each row. They contain a details of the test case result:
+
+- the result status
+- a name of the test case
+- job name and ID
+- age and instability
+- values
+- execution environment: system, agent group and actual agent and config
+
+In Kraken test case result beside status can contain values. Valuas
+are pairs: attribute and its value. They are also a result of a test
+case but hold numbers. They can hold e.g. performance data or anything
+similar to performance. These values are tracked over time. Kraken can
+draw charts of values and do more things with them.
 
 ## Filtering Test Case Results
 
@@ -94,13 +111,32 @@ It is possible to filter test results by various attributes:
 - by `Test Case` name
 - by `Job` name of ID
 
+Example 1:
+
+<img src="/img/screen-run-test-results-regressions.png" style={{boxShadow: '0 10px 10px 5px #777', marginBottom: '30px'}}/>
+
+Filtering by `Result Changes`: show only regressions. Regression means a change from non-passed status to passed status.
+
+Example 2:
+
+<img src="/img/screen-run-test-results-regressions-failures.png" style={{boxShadow: '0 10px 10px 5px #777', marginBottom: '30px'}}/>
+
+Filtering by `Result Status` and `Result Changes`: show only failures that are regressions.
+
+Example 3:
+
+<img src="/img/screen-run-test-results-age.png" style={{boxShadow: '0 10px 10px 5px #777', marginBottom: '30px'}}/>
+
+Filtering by `Age`: show only results in age between 2 and 3.
+
+Example 4:
+
+<img src="/img/screen-run-test-results-instability.png" style={{boxShadow: '0 10px 10px 5px #777', marginBottom: '30px'}}/>
+
+Filtering by `Instability`: show only results that have instability greater than 7 i.e. very unstable test cases.
 
 
-
-
-
-
-
+<!---
 
 <img src="/img/screen-branch-results.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px'}}/>
 <br/>
@@ -111,3 +147,5 @@ It is possible to filter test results by various attributes:
 <br/>
 
 <a href="https://imgur.com/Eqa35IQ"><img src="https://i.imgur.com/Eqa35IQ.png" title="source: imgur.com" /></a>
+
+-->
