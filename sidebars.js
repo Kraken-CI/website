@@ -17,7 +17,8 @@ module.exports = {
           'secrets',
           'webhooks',
           'docker-executor',
-          'lxd-executor'
+          'lxd-executor',
+          'test-results'
       ],
       Administration: [
           'agents',

@@ -1,0 +1,113 @@
+---
+id: test-results
+title: Test Results
+---
+
+## Branch Results
+
+The `Branch Results` page presents high level information about flows
+and runs of given branch.. It organizes flows in rows. The top row
+contains the latest flow. Each flow row contains list of boxes. Each
+box contains information about a run of given stage. The order of
+boxes with runs is chronological according to their start time.
+
+<img src="/img/screen-branch-results-2.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px'}}/>
+
+## Run Box
+
+The color of run box indicates final status of the run:
+
+- red: one or more jobs finished with an error
+- yellow: no errors in jobs but some test results failed or there are
+  issues discovered in the code
+- green: all jobs finished without error and there is no failures in
+  tests and no issues in the code
+
+A run box contains:
+
+- data about execution: total number of scheduled jobs, number of
+  erred jobs, etc.
+- summary of testing: pass ratio, total, regressions and fixes counts, etc
+- issues summary: total number of discovered issues, number of new issues
+
+Example 1:
+
+<img src="/img/run-box-1.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px', width: '80%'}}/>
+
+This run has 1 successful job that reported tests results. There were
+run 100 test cases, where 16 did not passed, so pass ratio is
+16%. There were detected 15 regressions and 13 fixes. There are
+failures so the box is yellow.
+
+Example 2:
+
+<img src="/img/run-box-2.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px'}}/>
+
+This run has 4 job with no errors. Some of them that reported tests
+results, the other ones reported issues. There were run 17 test
+cases, where all passed, so pass ratio is 100%. There were
+detected 15 issues in the code. There are issues so the box is yellow.
+
+Example 3:
+
+<img src="/img/run-box-3.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px'}}/>
+
+This run has 2 job with no errors. In the reported tests results,
+there are 100% passed test cases. No failures and no issues so the box
+is green.
+
+Example 4:
+
+<img src="/img/run-box-4.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px'}}/>
+
+This run has 4 job with 1 error. All tests reported are passed but
+there could be not reported tests due to error in job execution. There
+were detected 6 issues in the code. There is one erred job so the box
+is red.
+
+## Test Case Results Table
+
+A job that performs testing reports test results. The test results are
+visible on a `Run Results` page, in `Test Results` tab. They are
+presented in a table.
+
+## Filtering Test Case Results
+
+It is possible to filter test results by various attributes:
+
+- by `Results Status` ie. `Passed`, `Failed`, etc.
+- by `Result Change` ie. `Fixes`, `Regressions`, `New` and `No
+  Changes`; the change is determined between current result and
+  previous result from previous run
+- by `Age` where age is a number of previous runs with the same result
+  as in current run; so e.g. age 0 means that in previous run test
+  case had different result than it has now (so these are regressions
+  and fixes); age 1 means that current run and previous run has the
+  same result but the result before previous one is different
+- `New` is a shortcut to set `Age` between 0 and 0, ie. show changes
+  that happend in last run (fixes + regressions)
+- by `Instability` where instability is a count of result status
+  changes in last 10 runs; if this is 0 then in the last 10 runs test
+  case has the same result (it was pretty stable); if this is 10 then
+  it means that in every run of the last 10 runs the status was
+  changing comparing to previous one (it was very unstable)
+- by `Test Case` name
+- by `Job` name of ID
+
+
+
+
+
+
+
+
+
+<img src="/img/screen-branch-results.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px'}}/>
+<br/>
+<img src="/img/screen-run-jobs.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px'}} />
+
+<br/>
+<br/>
+<br/>
+
+<a href="https://imgur.com/Eqa35IQ"><img src="https://i.imgur.com/Eqa35IQ.png" title="source: imgur.com" /></a>
