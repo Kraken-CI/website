@@ -3,11 +3,23 @@ id: proj-branches
 title: Projects and Branches
 ---
 
+export const Screen = ({img}) => (
+    <img
+        src={'/img/' + img}
+        style={{
+            boxShadow: '0 10px 10px 5px #777',
+            marginBottom: '30px'
+        }}
+    />
+);
+
 ## Projects
 
 The first thing that should be created is a project. It defines scope
 of view.  All entities defined inside a project are not visible or
 available in other projects.
+
+<Screen img="screen-projects.png" />
 
 To add new project click `New Project` button. Then you are asked for
 a name of the new project. After adding new project on the main page a
@@ -21,10 +33,14 @@ branches in a project. Branch logically represents a branch in a
 source code repository and all development activities involved with
 it.
 
+<Screen img="screen-branches.png" />
+
 The first project that can be created is `main` or `master` branch.
 To do that click `New Branch` button and enter its name.
 Click on branch name to get to branch page. On this page it is possible
 to define workflow schema for the branch and things.
+
+<Screen img="screen-branch-mgmt.png" />
 
 In the scope of a branch there are defined two sets of "builds" or
 `Flows` actually. These two sets of flows are called `CI Flows` and

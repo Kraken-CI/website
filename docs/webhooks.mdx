@@ -3,6 +3,16 @@ id: webhooks
 title: Webhooks
 ---
 
+export const Screen = ({img}) => (
+    <img
+        src={'/img/' + img}
+        style={{
+            boxShadow: '0 10px 10px 5px #777',
+            marginBottom: '30px'
+        }}
+    />
+);
+
 Webhooks allows for integration between source code versioning system
 and Kraken. This way a push to Git repository may trigger a CI or a
 Dev flow. Currently the supported system is Github.
@@ -10,6 +20,8 @@ Dev flow. Currently the supported system is Github.
 Webhooks configuration is located in a project web page, under `Web
 Hooks` tab. There is a switch that enables or disables receiving
 webhook requests from GitHub.
+
+<Screen img="screen-webhooks.png" />
 
 When GitHub webhook is enabled then there is provided a `URL` and a
 `secret` that should be set in GitHub project settings page for
