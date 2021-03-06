@@ -43,9 +43,9 @@ def stage(ctx):
                 "cmd": "echo 'hello world'"
             }],
             "environments": [{
-                "system": "ubuntu-18.04",
+                "system": "any",
                 "agents_group": "all",
-                "config": "c1"
+                "config": "default"
             }]
         }],
     }

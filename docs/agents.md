@@ -3,6 +3,16 @@ id: agents
 title: Agents
 ---
 
+export const Screen = ({img}) => (
+    <img
+        src={'/img/' + img}
+        style={{
+            boxShadow: '0 10px 10px 5px #777',
+            marginBottom: '30px'
+        }}
+    />
+);
+
 Agent is a part of Kraken system. The place of agents in Kraken is
 visualized in [Architecture chapter](architecture.md).
 
@@ -25,6 +35,8 @@ execute jobs. The table of agents shows their address, current system
 where they are running, if they are running on bare-metal host or in
 Docker container, what capabilities host system has, currently running
 job, etc.
+
+<Screen img="screen-agents.png" />
 
 Clicking the agent address leads to agent page which shows Agent
 details. Here, it is also possible to assign an agent to `Agents

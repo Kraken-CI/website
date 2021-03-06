@@ -156,6 +156,8 @@ docker-compose -f kraken-docker-compose-X.Y.yaml ps
 
 If all is ok then now it is possible to check Kraken web page: [http://localhost:8080](http://localhost:8080)
 
+There are two built-in users: `demo`/`demo` and `admin`/`admin`.
+
 ## Kraken Stop
 
 Kraken services can be stopped with a command:
