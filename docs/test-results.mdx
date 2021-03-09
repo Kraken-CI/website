@@ -88,7 +88,7 @@ The table presents test case results in each row. They contain a details of the 
 - the result status
 - a name of the test case
 - job name and ID
-- age and instability
+- age, instability and relevancy
 - values
 - execution environment: system, agent group and actual agent and config
 
@@ -148,6 +148,36 @@ Example 4:
 Filtering by `Instability`: show only results that have instability
 greater than 7 i.e. very unstable test cases.
 
+## Sorting Test Case Results
+
+Test case results can be sorted. This can be done using several columns:
+
+- name
+- result
+- change
+- age
+- instability
+- relevancy
+
+<Screen img="screen-run-test-results-sort-name.png" />
+
+By default results are sorted by test case name.
+
+One of the most important sorting order is by `relevancy`.
+Relevancy is estimated according to this rules:
+
+- 0 is initial
+- +1 for not passed
+- +1 for failure
+- +1 for instability <= 3
+- +1 for age < 5
+- +1 for regression
+
+This way the most relevant results get the highest score. They need an
+attention.
+
+<Screen img="screen-run-test-results-sort-relevancy.png" />
+
 
 ## Test Case History
 
@@ -166,17 +196,3 @@ The left chart shows history of result status. The right one presents
 history of values in time. Error bars are shown if there were run
 multiple iterations and there were reported multiple values for given
 attribute.
-
-<!---
-
-<img src="/img/screen-branch-results.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px'}}/>
-<br/>
-<img src="/img/screen-run-jobs.png" style={{boxShadow: '0 14px 14px 0px #777', marginBottom: '30px'}} />
-
-<br/>
-<br/>
-<br/>
-
-<a href="https://imgur.com/Eqa35IQ"><img src="https://i.imgur.com/Eqa35IQ.png" title="source: imgur.com" /></a>
-
--->
