@@ -61,11 +61,44 @@ groups.
 
 ## Setting up a New Agent
 
-Make sure that on Kraken -> Settings page there is  URL to Kraken
-Server set (copy and paste URL from web browser to this field).
+There are several methods for setting up a new Kraken Agent. It can
+be installed on a host system using a installation script. It can be
+started as a Docker container. It is also possible to copy agent
+binaries and setup it manually.
+
+### Network Connections
+
+While setting up a new agent, network connections need to be
+considered.  Kraken Agent needs to have connections to several
+services. They are presented
+in [Architecture chapter](architecture.md). The required services are:
+`Kraken Server`, `MinIO` and `ClickHouse`.
+
+The address of the server must be passed to agent binary using `-s`
+switch. This is handled by install script or is already backed into
+Docker image with Kraken Agent.
+
+In that moment the address of MinIO and ClickHouse should be acquired
+from the server. Unfortunatelly if Kraken Server is started by docker
+compose then the addresses of these services are internal ie. from a
+subnet that was created by docker compose. The services are published
+to the host using defined ports in the docker compose yaml
+configuration file. So when the Kraken Agent is started externally
+then the addresses to MinIO and ClickHouse needs to be provided. This
+can be done by defining environemnt variables:
+`KRAKEN_CLICKHOUSE_ADDR` and `KRAKEN_MINIO_ADDR`. More details about
+setting them is provided in the next sections.
+
+### Installing by a Script
+
+This method relies on an install script that is hosted on Kraken server.
+
+Make sure that in Kraken Web UI, on Kraken -> Settings page there is
+URL to Kraken Server set (copy and paste URL from web browser to this
+field).
 
 So now a new Agent can be installed. It involves downloading an agent
-installerr and running it. That's all.
+installer and running it. That's all.
 
 Agent Install steps:
 
@@ -84,10 +117,82 @@ $ ./kraken-agent-install.sh
 
 This will download the latest agent from Kraken server and install it
 as a SystemD service on the host. Agent's files are installed into
-/opt/kraken directory.
+`/opt/kraken` directory. The state of the service can be checked using
+`systemctl`:
+
+```console
+$ sudo systemctl status kraken-agent
+● kraken-agent.service - Kraken Agent
+   Loaded: loaded (/lib/systemd/system/kraken-agent.service; enabled; vendor preset: enabled)
+   Active: active (running) since Thu 2021-03-11 17:09:16 UTC; 1 weeks 0 days ago
+ Main PID: 699 (python3)
+    Tasks: 1 (limit: 6998)
+   Memory: 14.5M
+   CGroup: /system.slice/kraken-agent.service
+           └─699 python3 /opt/kraken/kkagent -s http://localhost:6000/ -d /opt/kraken/data run
+```
+
+The Kraken Agent service is running but it may not see `MinIO` and
+`ClickHouse` services. This can be configured in
+`/opt/kraken/kraken.env` file.
+
+Set `KRAKEN_CLICKHOUSE_ADDR` to the host where `clickhouse-proxy` is
+running and add its listening port. If Kraken Server is started by
+docker compose then use the address of the host. The port to
+`clickhouse-proxy` should be taken from .env file or from docker
+compose yaml file. Example:
+`KRAKEN_CLICKHOUSE_ADDR=192.168.0.12:9001`.
+
+Set `KRAKEN_MINIO_ADDR` to the host where `minio` is running and add
+its listening port. If Kraken Server is started by docker compose then
+use the address of the host. The port to `minio` should be
+taken from .env file or from docker compose yaml file. Example:
+`KRAKEN_MINIO_ADDR=192.168.0.12:9999`.
+
+If Kraken Server was started by docker compose then the ports of these
+services can be determined using `docker ps`. Example:
+
+```console
+$ docker ps | grep 'chproxy\|minio'
+c17deb0b8fb7   127.0.0.1:5000/kkchproxy:kk_ver           ....  0.0.0.0:9001->9001/udp            kraken_clickhouse-proxy_1
+b3e7c3aeeeb3   minio/minio:RELEASE.2020-12-18T03-27-42Z  ....  9000/tcp, 0.0.0.0:9999->9999/tcp  kraken_minio_1
+```
+
+where we can see that `clickhouse proxy` is exposed on 9001 port and
+`minio` on 9999.
 
 Now the new agent can be authorized in Kraken server. On Discovered
 agents page there should be visible an IP address of the host with the
 new agent. Select checkbox and click `Authorize` button. And then add
 the agent to proper agent's group. Now the new agent will be getting
 jobs for execution.
+
+### Starting in Docker Container
+
+In this case Kraken Agent is packed into Docker image and can be
+started as Docker container.
+
+The command to start a container is as follows:
+
+```console
+$ docker run -e KRAKEN_SERVER_ADDR=<host-addr>:6363 \
+             -e KRAKEN_CLICKHOUSE_ADDR=<host-addr>:9001 \
+             -e KRAKEN_MINIO_ADDR=<host-addr>:9999 \
+             --rm \
+             eu.gcr.io/kraken-261806/kkagent:<version>
+```
+
+where `<host-addr>` is a host address where given service is running.
+If Kraken Server was started by `docker-compose` then the
+`<host-addr>` is an address of the host where docker-compose has been
+started. The ports above are default ports if the ports where changed
+e.g. in docker compose .env file then the same ones should be used
+here.
+
+`eu.gcr.io/kraken-261806/kkagent:<version>` is a location of Docker
+image with Kraken Agent. The `<version>` identifies particular Kraken
+version. The latest Kraken `<version>` can be found on a Kraken's
+releases page in GitHub: https://github.com/Kraken-CI/kraken/releases.
+Example image URL: `eu.gcr.io/kraken-261806/kkagent:0.406`.  Notice
+that the version in the image URL does not have `v` prefix as on
+GitHub page (v0.406).
