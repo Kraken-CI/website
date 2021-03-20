@@ -25,19 +25,18 @@ Kraken installation artifacts can be downloaded from [Kraken GitHub releases pag
 There are:
 
 - **kraken-docker-compose-X.Y.yaml** - a services configuration file for Docker Compose
-- **dot-X.Y.env** - an example configuration for Kraken services that is used by Docker Compose file
+- **kraken-X.Y.env** - an example configuration for Kraken services that is used by Docker Compose file
 
 Docker Compose file is using pre-built Kraken container images. On first run, it will download and install Kraken image and all required dependencies.
 
 Download these 2 files to your local machine that will host Kraken services. Put them in the same folder.
-Rename `dot-X.Y.env` to `.env` - this is the only way to make it visible to `docker-compose`.
 
 ## Kraken Configuration
 
-**.env** file contains Kraken basic configuration that is required to start Kraken services.
+**kraken-X.Y.env** file contains Kraken basic configuration that is required to start Kraken services.
 Default content of this file looks as follows:
 
-![File](https://raw.githubusercontent.com/Kraken-CI/kraken/master/.env)
+![File](https://raw.githubusercontent.com/Kraken-CI/kraken/master/dot.env)
 
 ```
 POSTGRES_USER=kraken
@@ -139,7 +138,7 @@ After downloading Docker Compose and .env files and tweaking them if needed,
 Kraken services can be started by:
 
 ```console
-$ docker-compose -f kraken-docker-compose-X.Y.yaml up -d
+$ docker-compose --env-file kraken-X.Y.env -f kraken-docker-compose-X.Y.yaml up -d
 ```
 
 where:
