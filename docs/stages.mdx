@@ -1,0 +1,48 @@
+---
+id: stages
+title: Stages in a Branch
+---
+
+export const Screen = ({img}) => (
+    <img
+        src={'/img/' + img}
+        style={{
+            boxShadow: '0 10px 10px 5px #777',
+            marginBottom: '30px'
+        }}
+    />
+);
+
+## Branch Stages
+
+A branch contains one or several stages. Stages can be independent and
+run in parallel or chained and together can form a tree or a set of
+trees (forest). A stage has a schema that defines what should be
+done. Schema generally defines jobs for execution, execution
+environment, triggers that start executing whole schema, optional
+parameters, and execution configuration. [The Schema chapter](schema)
+provides details of the schema.
+
+## Chaining Stages
+
+When there are several stages in a branch, they are independent of each
+other. This means that when a new flow for a branch is triggered,
+all the stages are triggered and run in parallel.
+
+It is possible to define dependencies between stages and form a chain
+or a tree of stages. Each stage can have defined its parent. One stage
+can have one parent. One stage can have several children. A stage with
+a parent is triggered when the execution of the parent stage is completed
+successfully.
+
+## Stage Schema Source
+
+A stage schema can be defined directly in Kraken web UI, on a branch
+management page. It can be also defined in a file in a Git
+repository. The location of the repository and the schema file has to
+be provided in `Schema from Repository` tab in UI.
+
+<Screen img="screen-branch-mgmt-schema-repo.png" />
+
+The repository is refreshed on indicated interval basis. If there are
+any changes then the schema definition in Kraken database is updated.

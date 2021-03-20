@@ -3,14 +3,10 @@ id: schema
 title: Workflow Schema
 ---
 
-A branch contains one or several stages. Stages can be independent and
-run in parallel or chained and together can for a tree or a set of
-trees (forest). Stage have a schema that defines what should be
-done. Schema generally defines jobs for execution, execution
-environment, triggers that start the execution of whole schema,
-optional parameters and execution configuration.
+This chapter presents syntax of workflow schema defined in stages of a
+branch.
 
-Full schema syntax is defined in [schema reference](schema-ref).
+Full schema syntax referenced is available in [schema reference](schema-ref).
 
 ## Schema Elements
 

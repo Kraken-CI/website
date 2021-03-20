@@ -11,6 +11,7 @@ module.exports = {
       ],
       Usage: [
           'proj-branches',
+          'stages',
           'schema',
           'schema-vars',
           'tools',
