@@ -40,3 +40,13 @@
     font-family: 'audiowide';
     font-size: 2em;
 }
+
+
+.navbar-sponsor-item:before {
+  content: '';
+  width: 22px;
+  height: 16px;
+  vertical-align: text-top;
+  display: inline-block;
+  background: url("/img/heart.svg") no-repeat;
+}

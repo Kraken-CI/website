@@ -45,6 +45,11 @@ module.exports = {
 //          label: 'Blog',
 //          position: 'left'
       }, {
+          href: 'https://github.com/sponsors/godfryd',
+          label: 'Sponsor Us',
+          position: 'right',
+          className: 'navbar-sponsor-item'
+      }, {
           to: 'support',
           label: 'Support',
           position: 'right',
