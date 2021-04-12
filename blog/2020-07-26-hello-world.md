@@ -1,6 +1,6 @@
 ---
 slug: hello-world
-title: Hello
+title: Hello World!
 author: Michal Nowikowski
 author_title: Kraken Founder
 author_url: https://www.linkedin.com/in/godfryd
@@ -9,7 +9,3 @@ tags: [hello, kraken]
 ---
 
 Welcome to Kraken CI blog. This is the first post on this blog.
-
-<!--truncate-->
-
-TODO

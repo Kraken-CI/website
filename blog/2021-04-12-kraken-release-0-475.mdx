@@ -1,0 +1,56 @@
+---
+slug: kraken-release-0-475
+title: Kraken Release 0.475
+author: Michal Nowikowski
+author_title: Kraken Founder. I’m software engineer focused on full-stack programming and improving software processes.
+author_url: https://www.linkedin.com/in/godfryd
+author_image_url: https://avatars1.githubusercontent.com/u/176567?s=460&u=4ade22771af9569be24b20278d24ef60da6eb0bb&v=4
+tags: [kraken, release]
+description: kraken,continuous integration,continuous testing
+---
+
+import Screen from "../docs/common.jsx"
+
+The 0.475 release contains three main features:
+
+- presenting **the status of the last flows** on the Kraken main page
+- presenting **changes in Git repository** that got into a given flow
+- presenting **step duration** on Run page, on the selected job, on Steps tab
+
+<!--truncate-->
+
+## The last flows status on the Kraken main page
+
+The Kraken main page presents a list of branches for each
+project.  On the Demo project shown below, there are multiple
+branches. Now under each branch, there are exposed the last completed
+flow and the last in-progress flow. On the side, there is added a time
+in grey how long ago the flow was completed or created.
+
+<Screen img="screen-main-last-flows.png" />
+
+
+## Git repo changes on a flow page
+
+The flow can be triggered by a push to Github PR or a Git branch. Now
+the flow page presents information about these Git changes.
+
+If a push to Github PR triggered a flow, then it is presented
+in **Repo Changes** tab on the flow page.
+
+<Screen img="screen-flow-repo-trigger.png" />
+
+If a stage has a repository defined in a trigger section, then the changes
+detected since previous flow are presented on another **Repo Changes**
+tab for the selected stage.
+
+<Screen img="screen-flow-run-repo-changes.png" />
+
+
+## Step duration on Run page
+
+The run page show steps' status for the selected job on the Steps
+tab. Now besides the current state of a step, there is included its
+duration in seconds.
+
+<Screen img="screen-run-step-duration.png" />
