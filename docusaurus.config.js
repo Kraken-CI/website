@@ -122,6 +122,9 @@ module.exports = {
       anonymizeIP: true,
     },
   },
+  plugins: [
+    "@docusaurus/plugin-ideal-image",
+  ],
   presets: [
     [
       '@docusaurus/preset-classic',
