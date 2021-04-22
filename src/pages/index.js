@@ -6,6 +6,9 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
 
+const recentPosts = require("../../.docusaurus/docusaurus-plugin-content-blog/default/blog-post-list-prop-default.json");
+
+
 const features = [
   {
     title: <>Pass or fail? More</>,
@@ -105,14 +108,66 @@ function Home() {
       description="Modern CI/CD System focused on Testing">
       <header className={clsx('hero hero--primary', styles.heroBanner)}>
         <div className="container">
-          <h1 className="hero__title">{siteConfig.title}</h1>
-          <p className="hero__subtitle">{siteConfig.tagline}</p>
+          <div className="row" style={{ alignItems: 'center' }}>
+            <div className="col col--6">
+              <h1 className="hero__title">{siteConfig.title}</h1>
+              <p className="hero__subtitle">{siteConfig.tagline}</p>
+            </div>
+            <div className="col col--3">
+              <div style={{ textAlign: 'left', margin: '0 0 0 5rem' }}>
+                <div style={{ fontSize: '1.3rem', paddingLeft: '16px' }}>
+                Recent Blog Posts
+                </div>
+                <ul style={{ fontSize: '1.2rem', listStyleType: 'disclosure-closed' }}>
+                  {recentPosts.items.slice(0, 5).map((item, index) => (
+                     <li key={index}>
+                          { item.date }
+                     <a href={`${item.permalink}`} style={{ color: 'white' }}>{item.title}</a>{" "}
+                  </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
 
-          <form className={styles.fsFrm} name="newsletter-form" accept-charset="utf-8" action="https://formspree.io/f/mwkwjvvp" method="post">
-          <input type="email" name="_replyto" id="email-address" placeholder="email@domain.tld" required=""></input>
-          <input type="hidden" name="_subject" id="email-subject" value="Subscribe Newsletter"></input>
-          <input type="submit" value="Subscribe to Newsletter"></input>
-          </form>
+            <div className="col col--3">
+              <div style={{ padding: '0 0 0 4em'}}>
+                <form className={styles.fsFrm} name="newsletter-form" acceptCharset="utf-8" action="https://formspree.io/f/mwkwjvvp" method="post">
+                  <input type="email" name="_replyto" id="email-address" placeholder="email@domain" required=""></input>
+                  <input type="hidden" name="_subject" id="email-subject" value="Subscribe Newsletter"></input>
+                  <input type="submit" value="Subscribe to Newsletter"></input>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div className="row" style={{ height: '330px', alignItems: 'center' }} id="slideshow-box">
+            <div className="slideshow">
+              <img
+                src={useBaseUrl('img/slide-main.png')}
+                className="splashScreen" />
+              <img
+                src={useBaseUrl('img/slide-branch-results.png')}
+                className="splashScreen"
+              />
+              <img
+                src={useBaseUrl('img/screen-run-test-results.png')}
+                className="splashScreen"
+              />
+              <img
+                src={useBaseUrl('img/slide-branch-mgmt.png')}
+                className="splashScreen"
+              />
+              <img
+                src={useBaseUrl('img/slide-run.png')}
+                className="splashScreen"
+              />
+              <img
+                src={useBaseUrl('img/slide-charts.png')}
+                className="splashScreen"
+              />
+            </div>
+            <div className="shadow" />
+          </div>
 
         </div>
       </header>

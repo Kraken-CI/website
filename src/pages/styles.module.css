@@ -61,9 +61,9 @@
 
 /* border, padding, margin, width */
 form.fsFrm {
-    position: absolute;
+/*    position: absolute;
     top: 30%;
-    right: 20px;
+    right: 20px; */
 }
 .fsFrm label {
     display: flex;
