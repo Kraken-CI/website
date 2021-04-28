@@ -28,8 +28,8 @@ module.exports = {
           label: 'Demo',
           position: 'left',
       }, {
-          to: 'docs/installation',
-          label: 'Installation',
+          to: 'docs/quick-start',
+          label: 'Quick Start',
           position: 'left',
       }, {
           href: 'https://groups.google.com/g/kraken-ci',

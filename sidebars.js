@@ -2,6 +2,7 @@ module.exports = {
   someSidebar: {
       Introduction: [
           'overview',
+          'quick-start',
           'philosophy',
           'features',
           'demo',

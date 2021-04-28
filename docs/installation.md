@@ -138,7 +138,7 @@ After downloading Docker Compose and .env files and tweaking them if needed,
 Kraken services can be started by:
 
 ```console
-$ docker-compose --env-file kraken-X.Y.env -f kraken-docker-compose-X.Y.yaml up -d
+docker-compose --env-file kraken-X.Y.env -f kraken-docker-compose-X.Y.yaml up -d
 ```
 
 where:
@@ -162,14 +162,14 @@ There are two built-in users: `demo`/`demo` and `admin`/`admin`.
 Kraken services can be stopped with a command:
 
 ```console
-$ docker-compose -f kraken-docker-compose-X.Y.yaml down
+docker-compose -f kraken-docker-compose-X.Y.yaml down
 ```
 
 In case the services can't be gracefully stopped or need to be shut down immediately,
 they can be killed with a command:
 
 ```console
-$ docker-compose -f kraken-docker-compose-X.Y.yaml kill
+docker-compose -f kraken-docker-compose-X.Y.yaml kill
 ```
 ## Next Steps
 
