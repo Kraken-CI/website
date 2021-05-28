@@ -1,0 +1,88 @@
+---
+slug: kraken-release-0-557
+title: Kraken Release 0.557
+author: Michal Nowikowski
+author_title: Kraken Founder. I’m software engineer focused on full-stack programming and improving software processes.
+author_url: https://www.linkedin.com/in/godfryd
+author_image_url: https://avatars1.githubusercontent.com/u/176567?s=460&u=4ade22771af9569be24b20278d24ef60da6eb0bb&v=4
+tags: [kraken, release]
+---
+
+import Screen from "../docs/common.jsx"
+
+
+The 0.557 release contains several new features and improvements and some fixes.
+The most noteworthy changes are:
+
+- improved diagnostics capabilities, i.e. browsing internal logs from Kraken services
+- integration with AWS EC2 - this is in beta state
+
+<!--truncate-->
+
+## The list of changes
+
+The complete list of changes looks as follows.
+
+Features & improvements:
+
+- #105 added browsing Kraken logs in diagnostics page
+- added errors number indicator in the top menu bar
+- added integration with AWS EC2 - spawning VMs for jobs (beta/preview)
+- added loading status with a spinner to submit, refresh and other buttons
+- added interpolating variables in system and agents_group names in a workflow schema
+- added adding kraken user to docker group and configuring sudo in agent installer
+- kraken workflow: switched to AWS agents in build and static analysis jobs
+- added codebeat badge to readme
+
+Fixes:
+
+- fixed preparing repo changes data
+- fixed counting agents in agents group
+- fixed updating schema_from_repo_enabled
+- fixed colors of top menu items
+
+
+## Improved diagnostics
+
+### Logs
+
+The diagnostics page accessible from the top menu bar got a
+new feature: browser of Kraken services logs. The second tab on the
+diagnostics page, called `Logs`, now contains filters and a
+logs window.
+
+<Screen img="screen-diagnostics-logs.png" />
+
+The list of select buttons at the top allows selecting Kraken services
+like server/api, celery or watchdog. Below, there is a dropbox with
+log level selection, from info level to error level. When the celery
+service is selected, selecting task type from the dropbox list is also
+possible.
+
+### Error Indicator
+
+To make it easier to reach logs with some problems, there have been
+added an error indicator in the top menu bar.
+
+<Screen img="screen-error-indicator.png" />
+
+It is visible on all Kraken pages. If it is greater than 0, it is
+displayed in reddish color to get user attention. The count indicates
+the number of errors in Kraken services logs in the last hour.
+When clicked, it leads to the logs page.
+
+## Preliminary AWS EC2 integration
+
+The second, quite exciting feature, is integration with AWS EC2. The
+integration allows for autoscaling Kraken's agents. If no jobs are
+waiting for execution, then there are no waitng agents on EC2
+VMs. When they appear, new VMs in EC2 are spawned immediately. If the
+number of jobs grows, the number of VMs can grow as well. There is
+possible to set a limit for the number of VMs. VMs can be reused or
+reclaimed after a given period of idle time or after an indicated
+number of executed jobs.
+
+The configuration in Kraken for AWS EC2 integration is 1) in global
+settings (credentials) and 2) on the agent's group page.
+
+More details will be presented when the feature is completed.
