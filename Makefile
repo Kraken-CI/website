@@ -4,9 +4,14 @@ deploy: schema server-api
 start:
 	yarnpkg start --no-open
 
+prep-venv:
+	python3 -m venv venv
+	./venv/bin/pip install -U pip
+	./venv/bin/pip install jsonschema click
+
 schema:
 	./venv/bin/python ../kraken/server/kraken/server/schemaval.py json
-	./venv/bin/python ../jsonschema2md/jsonschema2md.py kraken.schema.json docs/schema-ref-embed.md
+	./venv/bin/python jsonschema2md.py kraken.schema.json docs/schema-ref-embed.md
 
 server-api:
 	./node_modules/.bin/widdershins  --language_tabs 'shell:Shell' -- ../kraken/server/kraken/server/swagger.yml | \
