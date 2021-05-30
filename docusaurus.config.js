@@ -117,6 +117,9 @@ module.exports = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} <a href="mailto:mike@kraken.ci">Michal Nowikowski</a>. Built with Docusaurus. Icons made by <a href="https://www.flaticon.com/authors/freepik">Freepik</a> from <a href="https://www.flaticon.com">flaticon</a>`,
     },
+    colorMode: {
+      disableSwitch: true
+    },
     googleAnalytics: {
       trackingID: 'UA-152860048-1',
       anonymizeIP: true,
