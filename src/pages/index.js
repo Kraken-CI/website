@@ -130,12 +130,24 @@ function Home() {
             </div>
 
             <div className="col col--3">
-              <div style={{ padding: '0 0 0 4em'}}>
-                <form className={styles.fsFrm} name="newsletter-form" acceptCharset="utf-8" action="https://formspree.io/f/mwkwjvvp" method="post">
-                  <input type="email" name="_replyto" id="email-address" placeholder="email@domain" required=""></input>
-                  <input type="hidden" name="_subject" id="email-subject" value="Subscribe Newsletter"></input>
-                  <input type="submit" value="Subscribe to Newsletter"></input>
-                </form>
+              <div id="mc_embed_signup" style={{ padding: '0 0 0 4em'}}>
+                  <form action="https://kraken.us1.list-manage.com/subscribe/post?u=d06ddd079b1e9d843467ea3ff&amp;id=6cf6b09f66" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className={styles.fsFrm} target="_blank" noValidate>
+                      <div id="mc_embed_signup_scroll">
+                          <div className="mc-field-group">
+	                      <input type="email" defaultValue="" name="EMAIL" placeholder="email@domain" className="required email" id="mce-EMAIL"></input>
+                          </div>
+	                  <div id="mce-responses" className="clear">
+		              <div className="response" id="mce-error-response" style={{display: 'none'}}></div>
+		              <div className="response" id="mce-success-response" style={{display: 'none'}}></div>
+	                  </div>
+                          <div style={{position: 'absolute', left: '-5000px'}} aria-hidden="true">
+                              <input type="text" name="b_d06ddd079b1e9d843467ea3ff_6cf6b09f66" tabIndex="-1" defaultValue=""></input>
+                          </div>
+                          <div className="clear">
+                              <input type="submit" value="Subscribe to Newsletter" name="subscribe" id="mc-embedded-subscribe" className="button"></input>
+                          </div>
+                      </div>
+                  </form>
               </div>
             </div>
           </div>
