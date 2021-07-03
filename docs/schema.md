@@ -335,8 +335,13 @@ Fields:
 - `cmd` - a command to execute
 - `user` - this field allows for changing user e.g. to `root`; by default kraken `user` is used
 - `env` - a dictionary with environment variables and their values
+- `background` - if set to True then a step is run in background; the
+  background process will be terminated at the end of whole job;
+  default value is False
 
-Example:
+Examples:
+
+#### Shell: Hello World
 
 ```python
 "steps": [{
@@ -368,6 +373,21 @@ environment variables: `ARCH` and `JOBS`. The step should fit in 1200
 seconds ie. 20 minutes. If the commands returns non zero exit code
 then it is repeated up to 3 times. There is a 10 seconds sleep time
 period between attempts.
+
+```python
+"steps": [{
+    "tool": "shell",
+    "cmd": "./run-service.sh",
+    "background": True
+}, {
+    "tool": "shell",
+    "cmd": "ps ax"
+}]
+```
+
+`run-service.sh` script is run in background and then the next step is
+executed. It should show a list of all processes - `./run-service.sh`
+should be on the list.
 
 More examples can be found at https://github.com/Kraken-CI/workflow-examples/tree/main/shell.
 
