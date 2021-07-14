@@ -27,6 +27,39 @@ there is a form for collecting credentials to cloud providers:
 
 In the case of AWS, there are required `Access Key` and `Secret Access Key`.
 
+## Preparing Cloud Environment
+
+In case of AWS it is also required to assign proper permissions so
+that Kraken can create or destroy EC2 instances. List of all requires
+permissions looks as follows:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:CreateKeyPair",
+                "ec2:CreateSecurityGroup",
+                "ec2:CreateTags",
+                "ec2:DeleteKeyPair",
+                "ec2:DescribeInstances",
+                "ec2:DescribeInstanceStatus"
+                "ec2:DescribeInstanceTypeOfferings",
+                "ec2:DescribeRegions",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeVpcs",
+                "ec2:RunInstances",
+                "ec2:TerminateInstances",
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
 
 ## Configuration in Agents Groups
 
