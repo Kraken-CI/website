@@ -20,6 +20,7 @@ module.exports = {
           'webhooks',
           'docker-executor',
           'lxd-executor',
+          'autoscale-in-cloud',
           'test-results'
       ],
       Administration: [
