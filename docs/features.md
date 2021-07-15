@@ -32,7 +32,7 @@ The other features can be grouped in 3 areas: planning, execution and reporting.
 
 ## Execution
 
-- jobs are assigned to Kraken Agents for execution
+- jobs are assigned to Kraken Agents for execution by a scheduler using FIFO rule
 - Agents are running on machines, they can be set up on:
   - bare metal machines
   - virtual machines
@@ -48,6 +48,9 @@ The other features can be grouped in 3 areas: planning, execution and reporting.
   - in LXD container
 - builds and tests execution is dynamically distributed to multiple
   machines with Kraken Agents according to indicated environments
+- autoscaling in the cloud - Kraken server connected to AWS EC2
+  environment can spawn new machines with Kraken Agents when there is
+  not enough agents for jobs
 - jobs can return 3 kinds of entities:
   - build artifacts - any files like packages, tarballs, RPMs,
     generated HTML reports
@@ -65,6 +68,7 @@ The other features can be grouped in 3 areas: planning, execution and reporting.
   blocked by some broken build that hangs machine or by an infinite
   loop in tests
 - automatically estimated timeouts for jobs based on passed execution
+  so there is no never ending jobs occupying resources
 
 ## Reporting
 

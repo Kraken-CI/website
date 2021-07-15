@@ -31,6 +31,15 @@
   width: 100%;
 }
 
+.feature {
+  color: inherit;
+  text-decoration: none;
+}
+
+.feature:hover {
+  text-decoration: none;
+}
+
 .featureImage {
   height: 150px;
   width: 150px;

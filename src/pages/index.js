@@ -13,6 +13,7 @@ const features = [
   {
     title: <>Pass or fail? More</>,
     imageUrl: 'img/trend.svg',
+    link: '/docs/test-results',
     description: (
       <>
             Failures are boring, now observe regressions and fixes, see behavior of test cases over time on charts.
@@ -23,6 +24,7 @@ const features = [
   {
     title: <>More dimensions to results</>,
     imageUrl: 'img/presentation.svg',
+    link: '/docs/test-results',
     description: (
       <>
             Performance testing, obviously. Now with support for multiple iterations,
@@ -31,8 +33,22 @@ const features = [
     ),
   },
   {
+    title: <>Executor Engines</>,
+    imageUrl: 'img/power-plant.svg',
+    link: '/docs/schema#executors',
+    description: (
+      <>
+          Common way of executing jobs is doing this directly in local system. Beside that Kraken allows for
+          execution in containers (Docker or LXD) or in virtual machines (AWS EC2).
+      </>
+    ),
+  },
+
+/*
+  {
     title: <>Dynamic tests distribution</>,
     imageUrl: 'img/power-plant.svg',
+    link: '/docs/test-results',
     description: (
       <>
             Execution machines are fully utilized. We use dynamic division of your tests content
@@ -50,9 +66,11 @@ const features = [
       </>
     ),
   },
+*/
   {
     title: <>Efficient and standardized pre-commit testing</>,
     imageUrl: 'img/study.svg',
+    link: '/docs/test-results',
     description: (
       <>
             Reduced risk of regressions. Developers can test their code with the same tests that are used for product validation. No need for expensive individual bench test environments.
@@ -62,10 +80,22 @@ const features = [
   {
     title: <>Broad spectrum of execution environments</>,
     imageUrl: 'img/cpu.svg',
+    link: '',
     description: (
       <>
-            Testing on a standard hardware is easy. What about automated testing on unstable pre-production hardware platforms?
-            Or in an simulation environment, when real hardware is expensive or does not exist? And with a variety of automatically deployed operating systems.
+          Testing on a standard hardware is easy. What about automated testing on unstable pre-production hardware platforms?
+          Or in an simulation environment, when real hardware is expensive or does not exist? And with a variety of automatically deployed operating systems.
+      </>
+    ),
+  },
+  {
+    title: <>Cloud & Autoscaling</>,
+    imageUrl: 'img/cloud.svg',
+    link: '/docs/autoscale-in-cloud',
+    description: (
+      <>
+          Kraken can operate in the cloud. In can be easily deployed to the cloud but also can automatically spawn new executing machines there if the demand is high.
+          Currently the autoscaling feature is supported in AWS.
       </>
     ),
   },
@@ -84,10 +114,10 @@ const features = [
 */
 ];
 
-function Feature({imageUrl, title, description}) {
+function Feature({imageUrl, title, description, link}) {
   const imgUrl = useBaseUrl(imageUrl);
   return (
-    <div className={clsx('col col--4', styles.feature)}>
+      <a className={clsx('col col--4', styles.feature)} href={link}>
       {imgUrl && (
         <div className="text--center">
           <img className={styles.featureImage} src={imgUrl} alt={title} />
@@ -95,7 +125,7 @@ function Feature({imageUrl, title, description}) {
       )}
       <h3>{title}</h3>
       <p>{description}</p>
-    </div>
+    </a>
   );
 }
 
