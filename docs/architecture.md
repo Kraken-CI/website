@@ -18,10 +18,10 @@ title: Architecture
 - `Scheduler` - it assigns jobs to agents
 - `Watchdog` - it checks runs and their jobs if they are in their time limits, it also monitors agents and their machines health
 
-## Celery
-`Celery` executes background tasks like processing results reported by
-an agent. Any service in `Controller` or `Celery` tasks can enqueue
-new `Celery` tasks. Current tasks:
+## RQ
+`RQ` executes background tasks like processing results reported by
+an agent. Any service in `Controller` or `RQ` tasks can enqueue
+new `RQ` tasks. Current tasks:
 
 - analyze_results_history
 - notify_about_completed_run

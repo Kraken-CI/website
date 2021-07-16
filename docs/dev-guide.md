@@ -70,7 +70,15 @@ tasks for that:
 - `rake run_scheduler` - start Kraken scheduler service
 - `rake run_planner` - start Kraken planner service
 - `rake run_watchdog` - start Kraken watchdog service
-- `rake run_celery` - start Celery with Kraken background tasks
+- `rake run_rq` - start RQ with Kraken background tasks
+- `rake run_qneck` - start Queue Neck service for filtering background tasks
+- `rake run_agent` - start Kraken Agent service localy
+- `rake run_agent_in_docker` - start Kraken Agent service inside Docker container
+- `rake run_agent_in_lxd` - start Kraken Agent service inside LXD container
+- `rake run_ch` - start ClickHouse and ClickHouse-proxy services
+- `rake run_minio` - run MinIO service
+- `rake run_redis` - run Redis service
+- `rake run_pgsql` - run PostgreSQL service
 
 This way all needed services can be started and then developed and restarted individually.
 
