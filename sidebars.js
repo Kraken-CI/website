@@ -28,7 +28,8 @@ module.exports = {
           'storage'
       ],
       Guides: [
-          'guide-intro'
+          'guide-intro',
+          'guide-autoscale'
       ],
       Contributing: [
           'contrib-kraken',
