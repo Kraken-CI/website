@@ -144,18 +144,12 @@ function Home() {
               <p className="hero__subtitle">{siteConfig.tagline}</p>
             </div>
             <div className="col col--3">
-              <div style={{ textAlign: 'left', margin: '0 0 0 5rem' }}>
-                <div style={{ fontSize: '1.3rem', paddingLeft: '16px' }}>
-                Recent Blog Posts
-                </div>
-                <ul style={{ fontSize: '1.2rem', listStyleType: 'disclosure-closed' }}>
-                  {recentPosts.items.slice(0, 5).map((item, index) => (
-                     <li key={index}>
-                          { item.date }
-                     <a href={`${item.permalink}`} style={{ color: 'white' }}>{item.title}</a>{" "}
-                  </li>
-                  ))}
-                </ul>
+              <div className={styles.blogPosts}>
+                <a href="/blog" style={{ fontSize: '1.3rem', paddingLeft: '16px', fontWeight: 'bold' }}>Recent Blog Posts</a>
+                <a href="/blog/kraken-release-0-645"><b>07/04</b> Background steps, switch to RQ from Celery - 0.645</a>
+                <a href="/blog/kraken-release-0-557"><b>05/22</b> Early integration with AWS, improved diagnostics  - 0.557</a>
+                <a href="/blog/kraken-release-0-492"><b>04/24</b> Build status badges  - 0.492</a>
+                <a href="/blog/kraken-code-quality"><b>04/22</b> Kraken's Code Quality</a>
               </div>
             </div>
 

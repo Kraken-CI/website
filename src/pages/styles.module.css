@@ -47,6 +47,21 @@
 }
 
 
+.blogPosts {
+  text-align: left;
+  margin: 0 0 0 3rem;
+}
+
+.blogPosts a {
+  display: block;
+  color: white;
+  line-height: 1.25;
+  padding-bottom: 6px;
+  text-indent: -16px;
+  font-size: 1.1rem;
+}
+
+
 /* newsletter subscribe form */
 .fsFrm input,
 .fsFrm label {
