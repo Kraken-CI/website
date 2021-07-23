@@ -9,19 +9,19 @@ import Screen from "./common.jsx"
 ## Intro
 
 Maintaining a fixed number of machines for Kraken CI can be costly. If
-there is no high traffic of builds then some machines sit idle and
+there is no high traffic of builds, then some machines sit idle and
 waste power. The solution to this problem is autoscaling ie. spawning
 machines with Kraken Agents dynamically depending on the current needs
 in the Kraken CI. If there is submitted a new flow with many building
-or testing jobs then new machines are spawned. When the flow completes
-machines are terminated and no costs are incurred.
+or testing jobs, then new machines are spawned. When the flow
+completes, machines are terminated and no costs are incurred.
 
 Currently, Kraken CI autoscaling is supporting AWS EC2 virtual
 machines.
 
-The next chapters show how to configure access to AWS, then how to
-configure parameters and behovior of spawned machines. At the end the
-usage in job definitions is presented.
+The following chapters show how to configure access to AWS, then how
+to configure parameters and behaviour of spawned machines. In the end,
+the usage in job definitions is presented.
 
 Details about configuration can be found in [the Kraken
 docs](autoscale-in-cloud).
@@ -42,8 +42,8 @@ to check if it works by clicking `Test Access` button.
 
 ## Preparing Cloud Environment
 
-In case of AWS it is also required to assign proper permissions so
-that Kraken can create or destroy EC2 instances. List of all requires
+In the case of AWS it is also required to assign proper permissions so
+that Kraken can create or destroy EC2 instances. The list of all requires
 permissions looks as follows:
 
 ```json
@@ -83,29 +83,29 @@ configure aspects of spawning new machines. This can be done on Kraken
 `Add New Group` button and naming it `aws-t2-micro`. The newly created
 details will be presented on a separate tab. On this tab, there is a
 section `Agents Deployment`. So the deployment can be manual (default)
-or automated to particular cloud provider. In the case of Amazon Web
+or automated to a particular cloud provider. In the case of Amazon Web
 Services, there are the following options that can be set:
 
 <Screen img="screen-agents-groups-cloud-aws.png" />
 
-Select any region taht fits you. Limit of instances can be set to
-2. This will not allow having more running machines than 2. For now
-default AMI can be empty.
+Select any region that fits you. Limit of instances can be set to
+2. This will not allow having more running machines than 2. For now,
+the default AMI can be empty.
 
-Then in VM options let's stick to AWS free tier and select t2.micro
+Then in VM options, let's stick to AWS free tier and select t2.micro
 instance type. The rest of the checkboxes leave empty. Init script
-also can be empty.
+also can be blank.
 
-To be sure that dangling instances do not eat up our budget let's set
-the options in Destruction section to 1 job and to 10 minutes. So a
+To ensure that dangling instances do not eat up our budget, let's set
+the options in Destruction section to 1 job and 10 minutes. So a
 spawned machine will be terminated after executing 1 job. And even
-then if it sits idle for more than 10 minutes it will be destroyed as
+then, if it sits idle for more than 10 minutes, it will be destroyed as
 well.
 
 
 ## Job Definition
 
-Now, to use the defined `aws-t2-micro` Agents Group we need to prepare
+Now, to use the defined `aws-t2-micro` Agents Group, we need to prepare
 a project with a branch and a stage. More details about that can be
 found in [Introductory Guide](/docs/guide-intro). So let's concentrate
 now on defining a job.
@@ -115,7 +115,7 @@ now on defining a job.
 {
     "parent": "root",
     "triggers": {
-        "parent": true
+        "parent": True
     },
     "configs": [],
     "jobs": [{
@@ -135,18 +135,18 @@ now on defining a job.
 ```
 
 There is no much difference comparing to regular Kraken jobs. The job
-has defined environments section where we are pointing to out
+has a defined environments section where we are pointing to out
 `aws-t2-micro` Agents Group. What's is new is `system` field which
 points to `AMI` identifier - this indicates AWS EC2 image.
 
 ## Run
 
 Now when a job is assigned to an agents group with configured Agents
-Deployment then a new machine will be spawned for that job if there
-are no available agents.
+Deployment then a new machine will be spawned for that job if agents
+are no available in the Kraken.
 
 Let's change the view to Branch Results view and trigger a new flow by
-clicking `Run Flow` button. On the run page the list of jobs shows our
+clicking `Run Flow` button. On the run page, the list of jobs shows our
 AWS job:
 
 <Screen img="screen-aws-job.png" />

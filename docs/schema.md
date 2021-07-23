@@ -445,6 +445,9 @@ Fields:
 - `destination` - a path were the artifact(s) should be stored; in
   case of download action, if the destination folder does not exist
   then it is created; by default it is `'.'`
+- `report_entry` - a destination path of one of uploaded HTML files
+  that will be used as a report entry in Kraken Web UI, on a flow
+  page and a run page
 
 Example:
 
@@ -470,7 +473,22 @@ global storage in root folder which is default.
 Here an `a.txt` file is downloaded from global storage. It is saved to
 `a/b/c` folder. If it does not exist then it is created first.
 
-More examples can be found at https://github.com/Kraken-CI/workflow-examples/tree/main/artifacts.
+```python
+"steps": [{
+    "tool": "artifacts",
+    "source": ["index.html", "log.html"],
+    "report_entry": "index.html"
+}]
+```
+
+In this example a generated report is uploaded to Kraken's
+storage. The report consists of two files: index.html and log.html.
+`report_entry` fields indicates which files should be used as a report
+entry. The report is available on a flow page and on a run page under
+`Reports` tab.
+
+More examples can be found at https://github.com/Kraken-CI/workflow-examples/tree/main/artifacts
+and https://github.com/Kraken-CI/workflow-examples/tree/main/reports.
 
 ### Cache
 
