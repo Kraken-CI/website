@@ -1,0 +1,64 @@
+---
+id: tf-junit
+title: JUnit
+---
+
+import Screen from "./common.jsx"
+
+## Intro
+
+[JUnit](https://junit.org/) is a simple framework to write repeatable tests for Java
+language. It is an instance of the xUnit architecture for unit testing
+frameworks.
+
+## Integration with Kraken CI
+
+The following example shows how to execute JUnit tests in Kraken CI.
+The presented workflow stage does:
+
+1. pulls sample JUnit project,
+2. runs JUnit tests generating results in JUnit format
+3. collects results from JUnit file
+
+```python
+def stage(ctx):
+    return {
+        "parent": "root",
+        "triggers": {
+            "parent": True,
+        },
+        "parameters": [],
+        "configs": [],
+        "jobs": [{
+            "name": "junit collect",
+            "steps": [{
+            	"tool": "git",
+            	"checkout": "https://github.com/junit-team/junit5-samples.git",
+                "branch": "main"
+            }, {
+                "tool": "shell",
+                "cmd": "./mvnw test",
+                "cwd": "junit5-samples/junit5-jupiter-starter-maven"
+            }, {
+                "tool": "junit_collect",
+                "cwd": "junit5-samples/junit5-jupiter-starter-maven/",
+                "file_glob": "target/*/*xml"
+            }],
+            "environments": [{
+                "system": "openjdk:11.0.12-slim-buster",
+                "agents_group": "all",
+                "executor": "docker",
+                "config": "default"
+            }]
+        }]
+    }
+```
+
+More details about `junit_collect` tool can be found in [its docs
+section](schema#junit-collect).
+
+As a result of the execution of this stage in the Kraken's web UI,
+there will be a set of test case results.
+
+Demo: https://lab.kraken.ci/branches/24<br/>
+Sources: https://github.com/Kraken-CI/workflow-examples/blob/main/junit-collect/one.py

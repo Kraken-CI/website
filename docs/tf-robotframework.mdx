@@ -1,0 +1,141 @@
+---
+id: tf-robotframework
+title: RobotFramework
+---
+
+import Screen from "./common.jsx"
+
+## Intro
+
+[Robot Framework](https://robotframework.org/) is a generic open
+source automation framework. It can be used for test automation and
+robotic process automation (RPA).
+
+Robot Framework is actively supported, with many industry-leading
+companies using it in their software development. Robot Framework is
+open and extensible and can be integrated with virtually any other
+tool to create powerful and flexible automation solutions. Being open
+source also means that Robot Framework is free to use without
+licensing costs.
+
+Robot Framework has easy syntax, utilizing human-readable
+keywords. Its capabilities can be extended by libraries implemented
+with Python or Java. The framework has a rich ecosystem around it,
+consisting of libraries and tools that are developed as separate
+projects.
+
+## Integration with Kraken CI
+
+The following example shows how to execute RobotFramework tests in Kraken CI.
+The presented workflow stage does:
+
+1. pulls RobotFramefork project,
+2. installs roboframework package using Python's pip tool,
+3. runs RobotFramework tests generating results in JUnit format
+4. collects results from JUnit file
+5. and then stores generated reports by RobotFramework
+
+
+```python
+def stage(ctx):
+    return {
+        "parent": "root",
+        "triggers": {
+            "parent": True,
+        },
+        "parameters": [],
+        "configs": [],
+        "jobs": [{
+            "name": "robot",
+            "steps": [{
+            	"tool": "git",
+            	"checkout": "https://github.com/robotframework/RobotDemo.git"
+            }, {
+                "tool": "shell",
+                "cmd": "python3 -m venv venv && ./venv/bin/pip install robotframework"
+            }, {
+                "tool": "shell",
+                "cmd": "../venv/bin/robot --nostatusrc -x junit.xml *.robot",
+                "cwd": "RobotDemo"
+            }, {
+                "tool": "junit_collect",
+                "cwd": "RobotDemo",
+                "file_glob": "junit.xml"
+            }, {
+                "tool": "artifacts",
+                "cwd": "RobotDemo",
+                "source": ["log.html", "report.html"],
+                "report_entry": "report.html",
+                "public": True
+            }],
+            "environments": [{
+                "system": "krakenci/ubuntu:20.04",
+                "executor": "docker",
+                "agents_group": "all",
+                "config": "default"
+            }]
+        }]
+    }
+```
+
+Let's dissect the workflow to particular steps and explain them.
+
+```python
+    }, {
+        "tool": "shell",
+        "cmd": "python3 -m venv venv && ./venv/bin/pip install robotframework"
+    }, {
+```
+
+This step prepares Python's virtualenv folder and then install
+RobotFramework using pip to this venv.
+
+```python
+    }, {
+        "tool": "shell",
+        "cmd": "../venv/bin/robot --nostatusrc -x junit.xml *.robot",
+        "cwd": "RobotDemo"
+    }, {
+```
+
+This one starts RobotFramework int the folder with `.robot` files. It
+also says to RobotFramework to not return error exit code in case of
+failure using `--nostatusrc` switch as non-zero exit code would be
+read by Kraken as an error of tests execution. And then `-x junit.xml`
+switch indicates to store results in JUnit format in the indicated
+file.
+
+```python
+    }, {
+        "tool": "junit_collect",
+        "cwd": "RobotDemo",
+        "file_glob": "junit.xml"
+    }, {
+```
+
+This step collects results stored in `junit.xml` file and uploads them
+to Kraken CI server. More details about `junit_collect` tool can be
+found in [its docs section](schema#junit-collect).
+
+```python
+    }, {
+        "tool": "artifacts",
+        "cwd": "RobotDemo",
+        "source": ["log.html", "report.html"],
+        "report_entry": "report.html",
+        "public": True
+    }],
+```
+
+And the last step takes generated HTML reports by RobotFramework and
+uploads them to Kraken CI server indicating which document is an entry
+one.
+
+As a result of the execution of this stage in the Kraken's web UI,
+there will be:
+
+- set of test case results
+- report about RobotFramework execution
+
+Demo: https://lab.kraken.ci/branches/26<br/>
+Sources: https://github.com/Kraken-CI/workflow-examples/blob/main/robotframework/one.py

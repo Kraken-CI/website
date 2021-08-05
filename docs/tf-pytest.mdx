@@ -1,0 +1,58 @@
+---
+id: tf-pytest
+title: Pytest
+---
+
+import Screen from "./common.jsx"
+
+## Intro
+
+[Pytest](https://pytest.org/) framework for Python language makes it
+easy to write small tests, yet scales to support complex functional
+testing for applications and libraries.
+
+## Integration with Kraken CI
+
+The following example shows how to execute Pytest tests in Kraken CI.
+The presented workflow stage does:
+
+1. pulls simple Python project,
+2. runs Pytests tests cases one by one, and each test case result
+   is reported to the Kraken server.
+
+It is expected that Pytest is already installed in the system.
+
+```python
+def stage(ctx):
+    return {
+        "parent": "root",
+        "triggers": {
+            "parent": True,
+        },
+        "parameters": [],
+        "configs": [],
+        "jobs": [{
+            "name": "pytest",
+            "steps": [{
+                "tool": "git",
+                "checkout": "https://github.com/Kraken-CI/sample-project-python.git"
+            }, {
+                "tool": "pytest",
+                "cwd": "sample-project-python",
+                "params": "-vv",
+                "pythonpath": "src"
+            }],
+            "environments": [{
+                "system": "any",
+                "agents_group": "all",
+                "config": "default"
+            }]
+        }]
+    }
+```
+
+More details about `pytest` tool can be found in [its docs
+section](schema#pytest).
+
+Demo: https://lab.kraken.ci/branches/10<br/>
+Sources: https://github.com/Kraken-CI/workflow-examples/blob/main/sample-project-python/one.py

@@ -23,6 +23,11 @@ module.exports = {
           'autoscale-in-cloud',
           'test-results'
       ],
+      'Testing Frameworks': [
+          'tf-junit',
+          'tf-pytest',
+          'tf-robotframework'
+      ],
       Administration: [
           'agents',
           'storage'

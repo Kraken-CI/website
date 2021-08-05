@@ -585,7 +585,9 @@ package located in `kraken/server` folder using rcfile from
 ### Pytest
 
 `pytest` is a tool that allows for running Python tests. It wraps
-around [pytest](https://pytest.org/).
+around [pytest](https://pytest.org/). It first collects list of all
+available test cases based on passed parameters, then executes them
+one by one, reporting results after each test case.
 
 Fields:
 
@@ -619,7 +621,8 @@ run pytest` and passing to it `-vv -m 'not db'` parameters.
 ### Junit Collect
 
 `junit_collect` is a tool that allows for collecting test results
-stored in indicated files in [JUnit](https://junit.org/) format.
+stored in indicated files in the XML [JUnit](https://junit.org/)
+format.
 
 Fields:
 
