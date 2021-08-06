@@ -98,6 +98,9 @@ module.exports = {
             }, {
                 label: 'Contact',
                 to: 'contact',
+            }, {
+                label: 'Privacy Policy',
+                to: 'privacy-policy',
             },
           ],
         },
