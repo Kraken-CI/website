@@ -146,10 +146,10 @@ function Home() {
             <div className="col col--3">
               <div className={styles.blogPosts}>
                 <a href="/blog" style={{ fontSize: '1.3rem', paddingLeft: '16px', fontWeight: 'bold' }}>Recent Blog Posts</a>
+                <a href="/blog/autoscaling-with-aws"><b>07/20</b> Autoscaling with AWS</a>
                 <a href="/blog/kraken-release-0-645"><b>07/04</b> Background steps, switch to RQ from Celery - 0.645</a>
                 <a href="/blog/kraken-release-0-557"><b>05/22</b> Early integration with AWS, improved diagnostics  - 0.557</a>
                 <a href="/blog/kraken-release-0-492"><b>04/24</b> Build status badges  - 0.492</a>
-                <a href="/blog/kraken-code-quality"><b>04/22</b> Kraken's Code Quality</a>
               </div>
             </div>
 
