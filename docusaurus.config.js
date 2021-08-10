@@ -115,6 +115,10 @@ module.exports = {
               label: 'GitHub',
               href: 'https://github.com/kraken-ci/kraken',
             },
+            {
+              label: 'LinkedIn',
+              href: 'https://www.linkedin.com/company/kraken-ci',
+            },
           ],
         },
       ],
