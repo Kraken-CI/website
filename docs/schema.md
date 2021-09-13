@@ -133,6 +133,31 @@ branch of Kraken's repository; check for new commits every 60 minutes.
 }
 ```
 
+Trigger build if there is a new commit to master branch in Kraken repo.
+Check the repo every 60 minutes.
+
+```json
+"triggers": {
+    "repo": {
+        "repos": [{
+            "url": "https://github.com/Kraken-CI/kraken/",
+            "branch": "master"
+        }, {
+            "url": "https://github.com/Kraken-CI/website/",
+            "branch": "master"
+        }],
+        "interval": "60s"
+        "git_cfg": {
+            "http.proxy": "https://my-proxy.example.com:8080"
+        }
+    }
+}
+```
+
+Trigger build if there is a new commit to master branch in any of two
+indicated repos.  Check the repo every 60 seconds. In clone operation
+set indicated HTTP proxy in Git config.
+
 There is another way of trigger a run based on changes to a repository.
 Check [webhooks](webhooks) chapter for details.
 
@@ -409,6 +434,7 @@ Fields:
 - `destination` - a destination folder for the repository; it is optional
 - `ssh-key` - a name of a secret that holds SSH username and key for ssh-agent
 - `access-token` - an access token for GitLab use case
+- `git_cfg` - a dictionary with Git config that is passed to -c of the clone command
 
 Example:
 
@@ -419,6 +445,20 @@ Example:
     "branch": "master"
 }]
 ```
+
+This clones https://github.com/Kraken-CI/kraken.git and checks out master branch.
+
+```python
+"steps": [{
+    "tool": "git",
+    "checkout": "https://github.com/Kraken-CI/kraken.git",
+    "branch": "master",
+    "git_cfg": {
+        "http.proxy": "https://my-proxy.example.com:8080"
+    }
+}]
+```
+
 
 More examples can be found at TODO.
 
