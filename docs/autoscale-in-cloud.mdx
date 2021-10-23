@@ -15,6 +15,8 @@ located in agent groups.
 Currently, Kraken CI autoscaling is supporting:
 
 - AWS EC2 virtual machines
+- AWS ECS containers
+- Azure virtual machines
 
 
 ## Global Cloud Settings
@@ -27,9 +29,12 @@ there is a form for collecting credentials to cloud providers:
 
 In the case of AWS, there are required `Access Key` and `Secret Access Key`.
 
+When Microsoft Azure is used, then there are required `Subscription ID`,
+`Tenant ID`, `Client ID` and `Client Secret`.
+
 ## Preparing Cloud Environment
 
-In case of AWS it is also required to assign proper permissions so
+In the case of AWS, it is also required to assign proper permissions so
 that Kraken can create or destroy EC2 instances. List of all requires
 permissions looks as follows:
 
@@ -64,12 +69,16 @@ permissions looks as follows:
 ## Configuration in Agents Groups
 
 Having set credentials to cloud providers, it is possible now to
-configure aspects of spawning new machines. This can be done on Kraken
+configure the aspects of spawning new machines. This can be done on Kraken
 -> Agents -> Groups page.  When a particular group is selected, then
 its details will be presented on a separate tab. On this tab, there is
 a section `Agents Deployment`. So the deployment can be manual
-(default) or automated to particular cloud provider. In the case of
-Amazon Web Services, there are the following options that can be set:
+(default) or automated to particular cloud provider.
+
+### AWS EC2
+
+In the case of `AWS EC2`, jobs are executed in AWS EC2 VMs. There are
+the following options that can be set:
 
 <Screen img="screen-agents-groups-cloud-aws.png" />
 
@@ -82,7 +91,7 @@ In **General** section:
 **Instances Limit** - maximum number of spawned machines at a time
 
 **Default AMI Image** - if AMI image is not provided in job definition
-  that this one is used
+  then this one is used
 
 In **VM Options** section:
 
@@ -100,9 +109,79 @@ In **VM Options** section:
   in [AWS
   docs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances-unlimited-mode.html)
 
+**Disk Size** - the size of root disk, if 0 then default size is used otherwise provided number is counted in GB
+
 **Init Script** - a value of this text is passed as UserData to EC2
   instance, generally, this is a script that is executing during the
   first boot of instance ([AWS docs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html))
+
+In **Destruction** section:
+
+**Destroy VM after N jobs** - this indicates that the machine should
+  be destroyed (terminated) after it is used in N Kraken jobs, default
+  is 1, ie. machine is used once and then it is destroyed so each time
+  a new fresh machine is used for each job; 0 means that this
+  mechanism is disabled
+
+**Destroy VM after N minutes of idle time** - this indicates that the
+  machine should be destroyed (terminated) after it is not used in any
+  Kraken jobs for a given number of minutes, default is 10 minutes,
+  ie. a machine is destroyed if it sits idle for 10 minutes; 0 means
+  that this mechanism is disabled
+
+
+### AWS ECS
+
+In the case of `AWS ECS`, jobs are executed in containers in AWS ECS
+cluster. There are the following options that can be set:
+
+<Screen img="screen-agents-groups-cloud-aws-ecs.png" />
+
+The meaning of the settings is as follows.
+
+In **General** section:
+
+**Region** - AWS region where a machine will be spawned
+
+**Instances Limit** - maximum number of spawned machines at a time
+
+In **ECS Task Options** section:
+
+**Cluster** - the name of ECS cluster
+
+**Subnets** - a list of subnets IDs separated by comma
+
+**Security Group** - ID of security group used for spawned tasks and their containers
+
+
+### Azure VM
+
+In the case of `Azure VM`, jobs are executed in containers in
+Microsoft Azure VMs. There are the following options that can be set:
+
+<Screen img="screen-agents-groups-cloud-azure-vm.png" />
+
+The meaning of the settings is as follows.
+
+In **General** section:
+
+**Location** - Azure location (region) where a machine will be spawned
+
+**Instances Limit** - maximum number of spawned machines at a time
+
+**Default Image** - if image is not provided in job definition
+  then this one is used; the expected format is: publisher:offer:sku:version,
+  e.g.: Canonical:0001-com-ubuntu-server-focal:20_04-lts:20.04.202109080
+
+In **VM Options** section:
+
+**VM Size** - Azure VM size that should be used for spawned
+  machines; more about VM sizes can be found on [Azure web
+  page](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes)
+
+**Init Script** - a value of this text is passed as user_data to VM
+  instance, generally, this is a script that is executing during the
+  first boot of instance
 
 In **Destruction** section:
 

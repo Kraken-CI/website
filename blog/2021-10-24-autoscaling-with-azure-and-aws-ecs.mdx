@@ -1,0 +1,36 @@
+---
+slug: autoscaling-with-azure-and-aws-ecs
+title: Autoscaling with Azure and AWS ECS
+author: Michal Nowikowski
+author_title: Kraken Founder. I’m software engineer focused on full-stack programming and improving software processes.
+author_url: https://www.linkedin.com/in/godfryd
+author_image_url: https://avatars1.githubusercontent.com/u/176567?s=460&u=4ade22771af9569be24b20278d24ef60da6eb0bb&v=4
+tags: [kraken, cloud]
+---
+
+import Screen from "../docs/common.jsx"
+
+
+The latest release [0.748 release](https://github.com/Kraken-CI/kraken/releases/tag/v0.748)
+brings a new public cloud in autoscaling features: Azure and AWS ECS.
+
+[Quick Start](/docs/quick-start) guide shows how to install Kraken CI.
+
+[Autoscaling Guide](/docs/guide-autoscale) shows how to use
+autoscaling with Azure VMs and AWS ECS.
+
+<!--truncate-->
+
+
+Maintaining a fixed number of machines for Kraken CI can be costly. If
+there is no high traffic of builds, then some machines sit idle and
+waste power. The solution to this problem is autoscaling ie. spawning
+machines with Kraken Agents dynamically depending on the current needs
+in the Kraken CI. If there is submitted a new flow with many building
+or testing jobs, then new machines are spawned. When the flow
+completes, machines are terminated and no costs are incurred.
+
+The [Autoscaling Guide](/docs/guide-autoscale) shows how to configure
+access to Azure, then how to configure parameters and behaviour of
+spawned machines. In the end, the usage in job definitions is
+presented.
