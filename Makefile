@@ -1,5 +1,5 @@
 deploy: schema server-api
-	USE_SSH=true GIT_USER=godfryd yarn deploy
+	DEPLOYMENT_BRANCH=master USE_SSH=true GIT_USER=godfryd yarn deploy
 
 start:
 	yarnpkg start --no-open
