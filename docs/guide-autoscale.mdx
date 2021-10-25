@@ -74,6 +74,33 @@ permissions looks as follows:
 }
 ```
 
+And similar list for AWS ECS:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeNetworkInterfaces",
+                "ecs:RunTask",
+                "ecs:StopTask",
+                "ecs:DescribeTasks",
+                "ecs:ListTaskDefinitions"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::*:role/ecsTaskExecutionRole"
+        }
+    ]
+}
+```
 
 ## Configuration in Agents Groups
 
