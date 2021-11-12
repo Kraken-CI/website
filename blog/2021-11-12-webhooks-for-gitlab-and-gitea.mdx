@@ -1,0 +1,39 @@
+---
+slug: webhooks-for-gitlab-and-gitea
+title: Webhooks for GitLab and Gitea
+author: Michal Nowikowski
+author_title: Kraken Founder. I’m software engineer focused on full-stack programming and improving software processes.
+author_url: https://www.linkedin.com/in/godfryd
+author_image_url: https://avatars1.githubusercontent.com/u/176567?s=460&u=4ade22771af9569be24b20278d24ef60da6eb0bb&v=4
+tags: [kraken, git, webhooks]
+---
+
+import Screen from "../docs/common.jsx"
+
+
+The latest release [0.753 release](https://github.com/Kraken-CI/kraken/releases/tag/v0.753)
+brings support for webhooks for 2 new Git hosting services: [GitLab](https://gitlab.org)
+and [Gitea](https://gitea.io/).
+
+[Quick Start](/docs/quick-start) guide shows how to install Kraken CI.
+
+[Webhooks Guide](/docs/guide-webhooks) shows how to use webhooks,
+now in GitLab, Gitea and GitHub.
+
+<!--truncate-->
+
+
+Webhooks allows for triggering a flow in a branch. The webhook may
+come now from 3 Git hosting services: GitLab, Gitea and GitHub.  There
+are two kinds of webhook events supported: push and pull request (in
+the case of GitHub and Gitea) and merge request (in the case of
+GitLab). A push even to a given branch causes a CI flow to be
+started. If this is a pull request or a merge request, then a DEV flow
+is started. If a workflow schema checks out sources from this
+repository, a version indicated in the push or the pull/merge request is
+checked out.
+
+The [Webhook Guide](/docs/guide-webhooks) shows how to configure
+webhooks in a project, and then how to configure a Git hosting
+service. In the end, checking out the repository in the workflow
+schema is presented.

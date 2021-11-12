@@ -34,7 +34,8 @@ module.exports = {
       ],
       Guides: [
           'guide-intro',
-          'guide-autoscale'
+          'guide-autoscale',
+          'guide-webhooks'
       ],
       Contributing: [
           'contrib-kraken',

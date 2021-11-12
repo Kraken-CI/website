@@ -146,10 +146,10 @@ function Home() {
             <div className="col col--3">
               <div className={styles.blogPosts}>
                 <a href="/blog" style={{ fontSize: '1.3rem', paddingLeft: '16px', fontWeight: 'bold' }}>Recent Blog Posts</a>
+                <a href="/blog/webhooks-for-gitlab-and-gitea"><b>11/12</b> Webhooks for GitLab and Gitea - 0.753</a>
                 <a href="/blog/autoscaling-with-azure-and-aws-ecs"><b>10/24</b> Autoscaling with Azure and AWS ECS - 0.748</a>
                 <a href="/blog/testing-frameworks"><b>08/06</b> Testing Frameworks</a>
                 <a href="/blog/autoscaling-with-aws"><b>07/20</b> Autoscaling with AWS</a>
-                <a href="/blog/kraken-release-0-645"><b>07/04</b> Background steps, switch to RQ from Celery - 0.645</a>
               </div>
             </div>
 

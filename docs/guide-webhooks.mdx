@@ -1,0 +1,112 @@
+---
+id: guide-webhooks
+title: Webhooks Guide
+---
+
+import Screen from "./common.jsx"
+
+
+## Intro
+
+Kraken CI allows triggering a flow of a branch in a project using a
+webhook in a Git hosting service. A push to a regular branch e.g. main
+branch or to a branch associated with a pull or a merge request will cause
+a Git hosting service to call a webhook exposed by Kraken CI. To make
+it happen a webhook URL and a secret have to be stored in a project
+settings in Git hosting service.
+
+Currenty there are support the following Git hosting services:
+
+- GitHub
+- GitLab
+- Gitea
+
+The following guide shows how to configure webhooks: 1) how to enable
+them in a project in Kraken CI and then 2) how to set a webhook URL and
+a secret in Git hosting service. In the end, the usage of webhooks
+will be presented by doing a push to Git repository.
+
+
+## Enable Webhooks in a Project
+
+In Kraken CI go to your project page and switch to `WebHooks`
+tab. There are available webhooks for several Git hosting services.
+Enable the one that you are using for hosting your Git repository.
+Enabled webhooks show an actuall webhook URL and a secret. These
+information should be copied and set in you webhooks setting page in
+your Git hosting service.
+
+<Screen img="screen-webhooks.png" />
+
+
+## Set Webhook URL in Git Hosting Service
+
+The following sections show how to set webhook URL to Kraken CI, a
+secret that is used to authenticate and they show which event types
+should be selected that will trigger a new flow in you Kraken CI
+project.
+
+### GitHub
+
+<Screen img="webhooks-github.png" />
+
+The arrows on the picture above indicate where the webhook URL and the
+secret from your Kraken CI project should be pasted on your GitHub
+repository webhooks settings page. In case of GitHub two event types
+should be selected:
+
+- `Pull Requests` - they will trigger DEV flows in you Kraken CI
+  project, in a branch indicated in the event
+- `Pushes` - they will trigger CI flows in you Kraken CI project,
+  in a branch indicated in the event
+
+### GitLab
+
+<Screen img="webhooks-gitlab.png" />
+
+The arrows on the picture above indicate where the webhook URL and the
+secret from your Kraken CI project should be pasted on your GitLab
+repository webhooks settings page. In case of GitLab two event
+types should be selected:
+
+- `Push events` - they will trigger CI flows in you Kraken CI
+  project, in a branch indicated in the event
+- `Merge Request events` - they will trigger DEV flows in you Kraken CI project,
+  in a branch indicated in the event
+
+### Gitea
+
+<Screen img="webhooks-gitea.png" />
+
+The arrows on the picture above indicate where the webhook URL and the
+secret from your Kraken CI project should be pasted on your Gitea
+repository webhooks settings page. In case of GitLab two event
+types should be selected:
+
+- `Push` - they will trigger CI flows in you Kraken CI project,
+  in a branch indicated in the event
+- `Pull Request` and `Pull Request Synchronized` - they will trigger
+  DEV flows in you Kraken CI project, in a branch indicated in the event
+
+
+## Trigger a Flow
+
+Now, in your a folder with source code repository you may invoke git push command:
+
+```console
+$ git push
+```
+
+This should trigger a new flow in CI branch in you Kraken CI project.
+
+If you create a new branch, do some commits to it, then push this new
+branch, and then create a pull request (PR) or merge request (MR) in
+your Git hosting service UI, then all this will trigger a new DEV flow
+that is a base branch for the PR or MR:
+
+```console
+$ git checkout -b my-branch
+$ git push --set-upstream origin my-branch
+```
+
+That's it!

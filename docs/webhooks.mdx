@@ -7,24 +7,29 @@ import Screen from "./common.jsx"
 
 
 Webhooks allows for integration between source code versioning system
-and Kraken. This way a push to Git repository may trigger a CI or a
-Dev flow. Currently the supported system is Github.
+and Kraken. This way a push to Git repository may trigger a CI or a pull/merge request a
+DEV flow. Currently the supported Git hosting services are GitHub, GitLab and Gitea.
 
 Webhooks configuration is located in a project web page, under `Web
-Hooks` tab. There is a switch that enables or disables receiving
-webhook requests from GitHub.
+Hooks` tab. There are switches that enable or disable receiving
+webhook requests from a selected service.
 
 <Screen img="screen-webhooks.png" />
 
-When GitHub webhook is enabled then there is provided a `URL` and a
-`secret` that should be set in GitHub project settings page for
-webhooks. This is `https://github.com/<user>/<project>/settings/hooks`.
+When a webhook for a given Git hosting service is enabled then there
+is provided a `URL` and a `secret` that should be set in a project
+settings page for webhooks in this service. In Git hosting services
+this page can be found:
+
+- GitHub - `https://github.com/<user>/<project>/settings/hooks`
+- GitLab - `https://gitlab.com/<user>/<project>/-/hooks`
+- Gitea - `https://try.gitea.io/<user>/<project>/settings/hooks`.
 
 On this page there are several fields that should be filled:
 
 - `Payload URL` - set to URL from Kraken that was mentioned above,
 - `Content Type` - set to `application/json`
-- `Secret` - take from Kraken, it was mentioned above.
+- `Secret` or `Token` - take from Kraken, it was mentioned above.
 
 In section `Which events would you like to trigger this webhook?`
 select `Let me select individual events.` and then check `Pull
