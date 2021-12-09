@@ -6,7 +6,12 @@ module.exports = {
           'philosophy',
           'features',
           'demo',
-          'installation',
+          {
+              Installation: [
+                  'install-docker-compose',
+                  'install-helm'
+              ]
+          },
           'entities',
           'architecture'
       ],

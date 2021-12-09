@@ -56,7 +56,7 @@ Example:
     ...
     steps: [{
         "tool": "git",
-        "access-token": "#{KK_SECRET_SIMPLE_gitlab_token}",
+        "access-token": "gitlab_token",
         ...
     }]
 }
@@ -65,5 +65,18 @@ Example:
 There is defined a secret named `gitlab_token` and here it is
 referenced and passed to `access-token` field in `git` step.
 
+or
+
+```python
+    ...
+    steps: [{
+        "tool": "shell",
+        "cmd": "echo $GITHUB_TOKEN",
+        "env": {
+            "GITHUB_TOKEN": "#{KK_SECRET_SIMPLE_github_token}"
+    }],
+```
+
+Here a value to a secret is interpolated to the string.
 
 More about secrets can be found in [Secrets chapter](secrets).

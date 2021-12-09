@@ -433,7 +433,7 @@ Fields:
 - `branch` - a branch to checkout, `master` is default
 - `destination` - a destination folder for the repository; it is optional
 - `ssh-key` - a name of a secret that holds SSH username and key for ssh-agent
-- `access-token` - an access token for GitLab use case
+- `access-token` - a name of a secret that contains an access token for GitLab or GitHub
 - `git_cfg` - a dictionary with Git config that is passed to -c of the clone command
 
 Example:
