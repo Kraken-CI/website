@@ -148,7 +148,17 @@ module.exports = {
     },
   },
   plugins: [
-    "@docusaurus/plugin-ideal-image",
+      "@docusaurus/plugin-ideal-image",
+      ["@docusaurus/plugin-client-redirects",
+       {
+           redirects: [
+               {
+                   to: '/docs/install-docker-compose',
+                   from: '/docs/installation',
+               },
+           ],
+       },
+      ],
   ],
   presets: [
     [
