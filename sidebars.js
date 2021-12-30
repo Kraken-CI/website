@@ -40,7 +40,8 @@ module.exports = {
       Guides: [
           'guide-intro',
           'guide-autoscale',
-          'guide-webhooks'
+          'guide-webhooks',
+          'guide-kubernetes'
       ],
       Contributing: [
           'contrib-kraken',

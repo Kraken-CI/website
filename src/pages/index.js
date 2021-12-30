@@ -146,10 +146,10 @@ function Home() {
             <div className="col col--3">
               <div className={styles.blogPosts}>
                 <a href="/blog" style={{ fontSize: '1.3rem', paddingLeft: '16px', fontWeight: 'bold' }}>Recent Blog Posts</a>
-                <a href="/blog/installation-to-kubernetes"><b>12/09</b> Instllation to Kubernetes - 0.788</a>
+                <a href="/blog/autoscaling-with-kubernetes"><b>12/30</b> Autoscaling with Kubernetes - 0.813</a>
+                <a href="/blog/installation-to-kubernetes"><b>12/09</b> Installation to Kubernetes - 0.788</a>
                 <a href="/blog/webhooks-for-gitlab-and-gitea"><b>11/12</b> Webhooks for GitLab and Gitea - 0.753</a>
                 <a href="/blog/autoscaling-with-azure-and-aws-ecs"><b>10/24</b> Autoscaling with Azure and AWS ECS - 0.748</a>
-                <a href="/blog/testing-frameworks"><b>08/06</b> Testing Frameworks</a>
               </div>
             </div>
 

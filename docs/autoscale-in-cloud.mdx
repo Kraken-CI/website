@@ -3,7 +3,11 @@ id: autoscale-in-cloud
 title: Autoscale in Cloud
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 import Screen from "./common.jsx"
+
 
 Kraken CI allows for creating executing machines dynamically in the
 cloud when they are needed. They can be either virtual machines or
@@ -17,26 +21,17 @@ Currently, Kraken CI autoscaling is supporting:
 - AWS EC2 virtual machines
 - AWS ECS containers
 - Azure virtual machines
+- Kubernetes
 
-
-## Global Cloud Settings
-
-First, global settings have to be set to allow access to a given cloud
-provider. In Web UI, on Kraken -> Settings page, in Cloud tab,
-there is a form for collecting credentials to cloud providers:
-
-<Screen img="screen-settings-cloud.png" />
-
-In the case of AWS, there are required `Access Key` and `Secret Access Key`.
-
-When Microsoft Azure is used, then there are required `Subscription ID`,
-`Tenant ID`, `Client ID` and `Client Secret`.
 
 ## Preparing Cloud Environment
 
-In the case of AWS, it is also required to assign proper permissions so
-that Kraken can create or destroy EC2 instances. List of all requires
-permissions looks as follows:
+<Tabs>
+  <TabItem value="aws-ec2" label="AWS EC2" default>
+
+In the case of AWS EC2, it is required to assign proper permissions to the
+accessing user so that Kraken can create or destroy EC2
+instances. The list of all requires permissions looks as follows:
 
 ```json
 {
@@ -66,7 +61,13 @@ permissions looks as follows:
 }
 ```
 
-And a similar list for AWS ECS:
+  </TabItem>
+
+  <TabItem value="aws-ecs" label="AWS ECS">
+
+In the case of AWS ECS, it is required to assign proper permissions to
+the accessing user so that Kraken can create or destroy ECS
+tasks. The list of all requires permissions looks as follows:
 
 ```json
 {
@@ -94,6 +95,151 @@ And a similar list for AWS ECS:
 }
 ```
 
+  </TabItem>
+
+  <TabItem value="kubernetes" label="Kubernetes">
+
+For Kubernetes, there are two accessing variants: Kraken CI is
+installed inside Kubernetes cluster or outside. In both cases, a proper
+access must be configured. When Kraken is installed inside a
+Kubernetes cluster then this is made using Helm chart and it also sets
+service account and proper permissions. When Kraken CI sits outside of
+Kubernetes cluster, then the service account and permissions must be
+configured in the following way.
+
+The content:
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: <namespace>
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kraken
+  namespace: <namespace>
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+
+metadata:
+  name: kraken-role
+
+rules:
+  - apiGroups: [""]
+    resources: ["nodes", "services", "pods", "endpoints", "namespaces"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["create", "delete"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+
+metadata:
+  name: kraken-crb
+
+roleRef:
+  kind: ClusterRole
+  name: kraken-role
+  apiGroup: rbac.authorization.k8s.io
+
+subjects:
+  - kind: ServiceAccount
+    name: kraken
+    namespace: <namespace>
+```
+
+should be copied and pasted to `kraken-serviceaccount.yaml` file or
+downloaded from [here](/kraken-serviceaccount.yaml). Before creating
+the resources, set your namespace by replacing all occurrences of
+`<namespace>` with e.g. `kraken`.
+
+And then create these resources using `kubectl`:
+
+```console
+kubectl apply -f kraken-serviceaccount.yaml
+```
+
+This will create:
+
+  - an indicated namespace (e.g. `kraken`),
+  - a service account `kraken`,
+  - a cluster role `kraken-role` that allows browsing nodes, services,
+    pods, endpoints and namespaces, and creating and deleting pods,
+  - cluster role binding `kraken-crb` that assigns `kraken-role` role to `kraken`
+    service account
+
+Service account's token will be used in the next steps.
+
+  </TabItem>
+</Tabs>
+
+
+## Global Cloud Settings
+
+First, global settings must be set to allow access to a given cloud
+provider. In Web UI, on Kraken -> Settings page, in Cloud tab,
+there is a form for collecting credentials to cloud providers:
+
+<Screen img="screen-settings-cloud.png" />
+
+<Tabs>
+  <TabItem value="aws" label="AWS" default>
+
+In the case of AWS, `Access Key` and `Secret Access Key` are required.
+
+  </TabItem>
+
+  <TabItem value="azure" label="Azure">
+
+When Microsoft Azure is used, then there are required `Subscription ID`,
+`Tenant ID`, `Client ID` and `Client Secret`.
+
+  </TabItem>
+
+  <TabItem value="kubernetes" label="Kubernetes">
+
+When Kraken is installed inside Kubernetes cluster, then only setting
+`Namespace` field is required, `API Server URL` must be empty.
+
+When Kraken is running outside of Kubernetes cluster then all fields
+are required: `API Server URL`, `Namespace` and `Token`. `Namespace`
+and `Token` were created in previous steps. The following commands will
+reveal the token.
+
+First, check the definition of `kraken` service account:
+
+```console
+kubectl get serviceaccounts/kraken -n <namespace> -o yaml
+```
+
+This should display a list of secrets at the bottom. The token should
+be stored in a secret with a name in the form `kraken-token-XXXXX`
+like e.g. `kraken-token-5fvcb`.
+
+Now retrieve the token value:
+
+```console
+kubectl get secret kraken-token-XXXXX -n <namespace> -o yaml
+```
+
+The value should be under the token field, and it should be pretty
+long. It is encoded using base64, and in this form, it should be copied
+& pasted to Kraken CI cloud settings (no decoding is required).
+
+  </TabItem>
+</Tabs>
+
+
 ## Configuration in Agents Groups
 
 Having set credentials to cloud providers, it is possible now to
@@ -101,9 +247,11 @@ configure the aspects of spawning new machines. This can be done on Kraken
 -> Agents -> Groups page.  When a particular group is selected, then
 its details will be presented on a separate tab. On this tab, there is
 a section `Agents Deployment`. So the deployment can be manual
-(default) or automated to particular cloud provider.
+(default) or automated to the particular cloud provider.
 
-### AWS EC2
+
+<Tabs>
+  <TabItem value="aws-ec2" label="AWS EC2" default>
 
 In the case of `AWS EC2`, jobs are executed in AWS EC2 VMs. There are
 the following options that can be set:
@@ -157,8 +305,9 @@ In **Destruction** section:
   ie. a machine is destroyed if it sits idle for 10 minutes; 0 means
   that this mechanism is disabled
 
+  </TabItem>
 
-### AWS ECS
+  <TabItem value="aws-ecs" label="AWS ECS">
 
 In the case of `AWS ECS`, jobs are executed in containers in AWS ECS
 cluster. There are the following options that can be set:
@@ -181,10 +330,11 @@ In **ECS Task Options** section:
 
 **Security Group** - ID of security group used for spawned tasks and their containers
 
+  </TabItem>
 
-### Azure VM
+  <TabItem value="azure-vm" label="Azure VM">
 
-In the case of `Azure VM`, jobs are executed in containers in
+In the case of `Azure VM`, jobs are executed in virtual machines, in
 Microsoft Azure VMs. There are the following options that can be set:
 
 <Screen img="screen-agents-groups-cloud-azure-vm.png" />
@@ -224,6 +374,27 @@ In **Destruction** section:
   Kraken jobs for a given number of minutes, default is 10 minutes,
   ie. a machine is destroyed if it sits idle for 10 minutes; 0 means
   that this mechanism is disabled
+
+  </TabItem>
+
+  <TabItem value="kubernetes" label="Kubernetes">
+
+In the case of `Kubernetes`, jobs are executed in containers in a
+Kubernetes cluster. Kubernetes cluster can be self-hosted or hosted in
+a public cloud like AWS EKS. There are the following options that can
+be set:
+
+<Screen img="screen-agents-groups-cloud-kubernetes.png" />
+
+The meaning of the settings is as follows.
+
+In **General** section:
+
+**Instances Limit** - maximum number of spawned containers at a time
+
+  </TabItem>
+</Tabs>
+
 
 ## Usage
 

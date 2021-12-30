@@ -1,0 +1,200 @@
+---
+id: guide-kubernetes
+title: Deployment in Kubernetes
+---
+
+import Screen from "./common.jsx"
+
+
+## Intro
+
+One of the methods of deploying Kraken CI is installing it into
+Kubernetes cluster. Kraken CI is natively divided into several
+services packed in Docker images so they can be nicely laid
+out in the cluster. The other aspect is running Kraken jobs. In this
+case, they are run in containers natively scheduled onto Kubernetes
+nodes.
+
+This guide shows how to install and configure Kraken CI in Kubernetes
+to leverage its potential.
+
+## Pre-requisites
+
+Several things are required to install Kraken CI in Kubernetes using Helm.
+In short:
+
+- [Kubernetes](https://kubernetes.io) cluster and kubectl tool
+- [Helm tool](https://helm.sh)
+
+
+Helm is used to deploy several Kraken services and expose them to an external network.
+These Kraken services are described in [Architecture chapter](architecture.md).
+
+
+## Kubernetes Clusters
+
+There are multiple ways for setting up a Kubernetes cluster. One of
+the easiest ones that is most often used for experimenting is
+Minikube. There are also managed clusters like EKS (Elastic Kubernetes
+Service) in AWS.
+
+This manual will show how to install Kraken CI in Minikube but the
+steps are similar for other Kubernetes environments as well.
+
+
+## Install in Minikube
+
+First, download minikube from [https://minikube.sigs.k8s.io/docs/](https://minikube.sigs.k8s.io/docs/).
+
+And then create a cluster:
+
+```console
+$ minikube start
+```
+
+Now you may install Kraken CI, but first, let's add a repo with Kraken Helm charts:
+
+```console
+$ helm repo add kraken-ci https://kraken.ci/helm-repo/charts
+$ helm repo update
+```
+
+and now install Kraken CI:
+
+```console
+$ helm upgrade --install --create-namespace --namespace kraken \
+  --debug --wait \
+  --set access.method='external-ips' --set access.external_ips={`minikube ip`} \
+  kraken-ci kraken-ci/kraken-ci
+```
+
+This command actually upgrades Kraken CI if it is already installed
+but if it was not yet installed, then it installs it.
+
+More details about using Helm to install Kraken CI can be found in [installation docs](install-helm.mdx).
+
+When everything completes successfully, then at the end of the whole
+output there should be presented short instruction about getting
+the URL of Kraken service like that:
+
+```
+NOTES:
+Get the application URL by running these commands:
+  export NODE_PORT=$(kubectl get --namespace kk-1 -o jsonpath="{.spec.ports[0].port}" services ui)
+  export NODE_IP=$(kubectl get nodes --namespace kk-1 -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
+```
+
+Now you may check if Kraken is working by visiting the URL
+given by this code and by checking if Kubernetes is running Kraken's
+services with this command:
+
+```console
+kubectl get all -n kraken
+```
+
+This will show Kraken's pods, services, deployments and replica sets.
+
+At this moment, Kraken CI should be operating. Please visit the
+website on the URL presented above. You should see a login page:
+
+<Screen img="qs-login-page.png" />
+
+Enter `admin` for Username and `admin` for Password.
+
+
+## Global Settings
+
+First, let's set some global settings. In Web UI, click `Settings` in
+the top menu bar.
+
+In the `General` tab, fill the following fields:
+
+<Screen img="screen-settings-general.png" />
+
+- `Kraken Server URL` - an URL with a port of the server that is visible inside the Kubernetes cluster
+- `MinIO/S3 Address` - the IP address and port of Kraken's internal artifacts storage address
+- `Clickhouse Proxy Address` - the IP address and port of Kraken's internal logs storage address
+
+In all these cases minikube IP address can be used. It can be obtained
+using `minikube ip` command.
+
+Having set the `General` settings, let's move to the `Cloud` tab.
+
+<Screen img="screen-settings-cloud.png" />
+
+Here, please move to Kubernetes section and set only the `Namespace`
+field to the value that was provided in `helm` command above (if it
+was not changed, then it should be `kraken`).
+
+`API Server URL` field must be empty as Kraken CI is installed inside
+Kubernetes and it knows where the API server is.
+
+After saving the settings, check if connectivity is ok using `Test
+Kubernetes Access` button.
+
+
+## Configuration in Agents Groups
+
+After setting global settings, it is possible now to configure aspects
+of spawning Kubernetes pods for Kraken jobs. This can be done on
+Kraken -> Agents -> Groups page.  Let's create a new Agents Group by
+clicking `Add New Group` button and naming it `k8s`. The newly created
+group's details will be presented on a separate tab. On this tab,
+there is a section `Agents Deployment` - select Kubernetes. In this
+case, there is only one field to set: `Instances Limit`.
+
+<Screen img="screen-agents-groups-cloud-kubernetes.png" />
+
+This limit value will not allow having more running pods than it - here 5.
+
+
+## Job Definition
+
+Now, to use the defined `k8s` Agents Group, we need to prepare
+a project with a branch and a stage. More details about that can be
+found in [Introductory Guide](/docs/guide-intro). So let's concentrate
+now on defining a job.
+
+
+```json
+{
+    "parent": "root",
+    "triggers": {
+        "parent": True
+    },
+    "configs": [],
+    "jobs": [{
+        "name": "hello",
+        "timeout": 500,
+        "steps": [{
+            "tool": "shell",
+            "cmd": "echo 'hello world'"
+        }],
+        "environments": [{
+            "system": "ubuntu:20.04",
+            "agents_group": "k8s",
+            "config": "default"
+        }]
+    }]
+}
+```
+
+There is not much difference compared to regular Kraken jobs. The job
+has a defined environments section where we are pointing to our `k8s`
+Agents Group. In the case of `system` field here, we have a
+`Ubuntu:20.04` Docker image.
+
+## Run
+
+Now when a job is assigned to an agents group with configured Agents
+Deployment then a new pod will be spawned for that job if agents
+are not available in the Kraken.
+
+Let's change the view to Branch Results view and trigger a new flow by
+clicking `Run Flow` button. On the run page, the list of jobs shows our
+AWS job:
+
+<Screen img="screen-k8s-job.png" />
+
+That's it!
