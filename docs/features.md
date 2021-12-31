@@ -48,8 +48,8 @@ The other features can be grouped in 3 areas: planning, execution and reporting.
   - in LXD container
 - builds and tests execution is dynamically distributed to multiple
   machines with Kraken Agents according to indicated environments
-- autoscaling in the cloud - Kraken server connected to AWS EC2 or ECS
-  or Azure VM environments can spawn new machines with Kraken Agents
+- autoscaling in the cloud - Kraken server connected to AWS EC2 or ECS,
+  Azure VM or Kubernetes environments can spawn new machines with Kraken Agents
   when there is not enough agents for jobs
 - jobs can return 3 kinds of entities:
   - build artifacts - any files like packages, tarballs, RPMs,
