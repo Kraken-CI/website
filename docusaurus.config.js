@@ -156,6 +156,10 @@ module.exports = {
                    to: '/docs/install-docker-compose',
                    from: '/docs/installation',
                },
+               {
+                   to: '/docs/test-results-basics',
+                   from: '/docs/test-results',
+               },
            ],
        },
       ],

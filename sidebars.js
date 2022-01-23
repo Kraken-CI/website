@@ -26,7 +26,15 @@ module.exports = {
           'docker-executor',
           'lxd-executor',
           'autoscale-in-cloud',
-          'test-results'
+          {
+              'Test Results': [
+                  {
+                      type: 'doc',
+                      id: 'test-results-basics',
+                      label: 'Basics'
+                  }
+              ]
+          }
       ],
       'Testing Frameworks': [
           'tf-junit',
