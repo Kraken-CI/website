@@ -81,6 +81,7 @@ The other features can be grouped in 3 areas: planning, execution and reporting.
     given test case behaved in the past
   - aging ie. showing how long given result didn't change (or the time
     of the last change of result of given test case)
+  - adding sticky comments to failing results
 - test results and issues in DEV flows are compared to latest CI
   results so fixes and regressions in changes on a given developer
   branch are spotted before a merge to the production branch

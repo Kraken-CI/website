@@ -161,6 +161,7 @@ Relevancy is estimated according to this rules:
 
 - 0 is initial
 - +1 for not passed
+- +1 for not root caused problem
 - +1 for failure
 - +1 for instability <= 3
 - +1 for age < 5
@@ -171,6 +172,41 @@ attention.
 
 <Screen img="screen-run-test-results-sort-relevancy.png" />
 
+
+## Comments
+
+In the test case results table it is possible to add sticky comments
+to test case results. When a new failure is spotted, a comment
+stating, e.g. the reason for the failure or link to a bug in a bug
+tracker may be added.
+
+To add a comment click on the cell of particular test case result in
+the `Comment` or `Comment State` columns.
+
+<Screen img="screen-run-test-results-comments-1.png" />
+
+This will reveal a dialog box that shows a form for introducing new
+comment and a history of previous comments related with this test
+case.
+
+<Screen img="screen-run-test-results-comments-2.png" />
+
+Each comment has a state. It can be one of:
+
+- `new`
+- `investigating`
+- `bug in product`
+- `bug in test`
+
+The state allows to quickly conclude if given failure has been analyzed
+and it is known where is the root cause and what needs to be fixed or
+if the failure still requires some investigation.
+
+If a failure is root-caused then its relevancy is decreased by 1.
+
+If the failure persists in the subsequent test runs, the added comment
+is still presented next to the new results. If new facts about the
+failure are revealed, you may extend the comment.
 
 ## Test Case History
 

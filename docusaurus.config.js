@@ -173,6 +173,8 @@ module.exports = {
           showReadingTime: true,
           editUrl:
             'https://github.com/kraken-ci/website/edit/master/blog/',
+          blogSidebarTitle: 'All posts',
+          blogSidebarCount: 'ALL',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
