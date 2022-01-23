@@ -8,22 +8,23 @@ import Screen from "./common.jsx"
 
 ## Branch Results
 
-The `Branch Results` page presents high level information about flows
-and runs of given branch.. It organizes flows in rows. The top row
-contains the latest flow. Each flow row contains list of boxes. Each
-box contains information about a run of given stage. The order of
-boxes with runs is chronological according to their start time.
+The `Branch Results` page presents high-level information about the
+flows and runs of a given branch. It organizes flows in rows. The top
+row contains the latest flow. Each flow row contains a list of
+boxes. Each box contains information about a run of a given stage. The
+order of boxes with runs is chronological according to their start
+time.
 
 <Screen img="screen-branch-results-2.png" />
 
 ## Run Box
 
-The color of run box indicates final status of the run:
+The color of the run box indicates the final status of the run:
 
 - red: one or more jobs finished with an error
 - yellow: no errors in jobs but some test results failed or there are
   issues discovered in the code
-- green: all jobs finished without error and there is no failures in
+- green: all jobs finished without error and there are no failures in
   tests and no issues in the code
 
 A run box contains:
@@ -38,33 +39,33 @@ Example 1:
 <Screen img="screen-run-box-1.png" />
 
 This run has 1 successful job that reported tests results. There were
-run 100 test cases, where 16 did not passed, so pass ratio is
+100 test cases run, where 16 did not pass, so the pass ratio is
 16%. There were detected 15 regressions and 13 fixes. There are
-failures so the box is yellow.
+failures, so the box is yellow.
 
 Example 2:
 
 <Screen img="screen-run-box-2.png" />
 
-This run has 4 job with no errors. Some of them that reported tests
-results, the other ones reported issues. There were run 17 test
-cases, where all passed, so pass ratio is 100%. There were
-detected 15 issues in the code. There are issues so the box is yellow.
+This run has 4 jobs with no errors. Some of them reported tests
+results, the other ones reported issues. There were 17 test cases run,
+all passed, so the pass ratio is 100%. There were detected 15 issues
+in the code. There are issues, so the box is yellow.
 
 Example 3:
 
 <Screen img="screen-run-box-3.png" />
 
-This run has 2 job with no errors. In the reported tests results,
-there are 100% passed test cases. No failures and no issues so the box
+This run has 2 jobs with no errors. In the reported tests results,
+there are 100% passed test cases. No failures and no issues, so the box
 is green.
 
 Example 4:
 
 <Screen img="screen-run-box-4.png" />
 
-This run has 4 job with 1 error. All tests reported are passed but
-there could be not reported tests due to error in job execution. There
+This run has 4 jobs with 1 error. All tests reported are passed but
+there could be not reported tests due to errors in job execution. There
 were detected 6 issues in the code. There is one erred job so the box
 is red.
 
@@ -76,7 +77,8 @@ presented in a table.
 
 <Screen img="screen-run-test-results.png" />
 
-The table presents test case results in each row. They contain a details of the test case result:
+The table presents test case results in each row. They contain details
+of the test case result:
 
 - the result status
 - a name of the test case
@@ -85,11 +87,11 @@ The table presents test case results in each row. They contain a details of the 
 - values
 - execution environment: system, agent group and actual agent and config
 
-In Kraken test case result beside status can contain values. Valuas
-are pairs: attribute and its value. They are also a result of a test
-case but hold numbers. They can hold e.g. performance data or anything
-similar to performance. These values are tracked over time. Kraken can
-draw charts of values and do more things with them.
+In Kraken, a test case result besides status can contain
+values. Values are pairs: attribute and its value. They are also a
+result of a test case but hold numbers. They can hold e.g. performance
+data or anything similar to performance. These values are tracked over
+time. Kraken can draw charts of values and do more things with them.
 
 ## Filtering Test Case Results
 
@@ -97,20 +99,20 @@ It is possible to filter test results by various attributes:
 
 - by `Results Status` ie. `Passed`, `Failed`, etc.
 - by `Result Change` ie. `Fixes`, `Regressions`, `New` and `No
-  Changes`; the change is determined between current result and
-  previous result from previous run
+  Changes`; the change is determined between the current result and
+  the previous result from previous run
 - by `Age` where age is a number of previous runs with the same result
-  as in current run; so e.g. age 0 means that in previous run test
-  case had different result than it has now (so these are regressions
-  and fixes); age 1 means that current run and previous run has the
-  same result but the result before previous one is different
+  as in the current run; so e.g. age 0 means that in the previous run test
+  case had a different result than it has now (so these are regressions
+  and fixes); age 1 means that the current run and the previous run has the
+  same result but the result before the previous one is different
 - `New` is a shortcut to set `Age` between 0 and 0, ie. show changes
-  that happend in last run (fixes + regressions)
+  that happened in the last run (fixes + regressions)
 - by `Instability` where instability is a count of result status
-  changes in last 10 runs; if this is 0 then in the last 10 runs test
+  changes in the last 10 runs; if this is 0 then in the last 10 runs test
   case has the same result (it was pretty stable); if this is 10 then
   it means that in every run of the last 10 runs the status was
-  changing comparing to previous one (it was very unstable)
+  changing compared to the previous one (it was very unstable)
 - by `Test Case` name
 - by `Job` name of ID
 
@@ -156,7 +158,7 @@ Test case results can be sorted. This can be done using several columns:
 
 By default results are sorted by test case name.
 
-One of the most important sorting order is by `relevancy`.
+One of the most important sorting order is by `Relevancy`.
 Relevancy is estimated according to this rules:
 
 - 0 is initial
@@ -211,9 +213,9 @@ failure are revealed, you may extend the comment.
 ## Test Case History
 
 Each test case has its history of results. In the table with test case
-results a link under test case name leads to a page dedicated to given
-test case. This page presents a table with historical results of the
-test case.
+results a link under the test case name leads to a page dedicated to
+the given test case. This page presents a table with the historical
+results of the test case.
 
 <Screen img="screen-test-case-history.png" />
 
@@ -221,7 +223,7 @@ There is another tab called `Charts` that shows these results on charts.
 
 <Screen img="screen-test-case-charts.png" />
 
-The left chart shows history of result status. The right one presents
-history of values in time. Error bars are shown if there were run
-multiple iterations and there were reported multiple values for given
+The left chart shows the history of result status. The right one presents
+the history of values in time. Error bars are shown if there were run
+multiple iterations and there were reported multiple values for a given
 attribute.
