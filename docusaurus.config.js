@@ -127,10 +127,6 @@ module.exports = {
     colorMode: {
       disableSwitch: true
     },
-    googleAnalytics: {
-      trackingID: 'UA-152860048-1',
-      anonymizeIP: true,
-    },
     algolia: {
       apiKey: '6a41a86ec4ae3fccccf20ff159f4b7ef',
       indexName: 'kraken'
@@ -182,6 +178,10 @@ module.exports = {
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
+        },
+        googleAnalytics: {
+          trackingID: 'UA-152860048-1',
+          anonymizeIP: true,
         },
       },
     ],
