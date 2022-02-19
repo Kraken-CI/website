@@ -32,6 +32,11 @@ module.exports = {
                       type: 'doc',
                       id: 'test-results-basics',
                       label: 'Basics'
+                  },
+                  {
+                      type: 'doc',
+                      id: 'test-results-tracking',
+                      label: 'Tracking'
                   }
               ]
           }
