@@ -128,7 +128,8 @@ module.exports = {
       disableSwitch: true
     },
     algolia: {
-      apiKey: '6a41a86ec4ae3fccccf20ff159f4b7ef',
+      appId: 'YHIPSVOLK3',
+      apiKey: '15e0805c14af0bfb8b052b69f93da8ec',
       indexName: 'kraken'
 
       // Optional: see doc section below
@@ -179,7 +180,7 @@ module.exports = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
-        googleAnalytics: {
+        gtag: {
           trackingID: 'UA-152860048-1',
           anonymizeIP: true,
         },
