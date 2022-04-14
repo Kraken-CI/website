@@ -19,4 +19,4 @@ The list of the most popular images:
 | debian/buster/amd64   | Debian Buster 10     |
 | debian/bullseye/amd64 | Debian Bullseye next |
 | alpine/3.13/amd64     | Alpine 3.13          |
-| opensuse/15.2/amd64   | OpenSuSE 15.2        |
+| opensuse/15.3/amd64   | openSUSE Leap 15.3   |
