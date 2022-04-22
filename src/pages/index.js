@@ -146,10 +146,10 @@ function Home() {
             <div className="col col--3">
               <div className={styles.blogPosts}>
                 <a href="/blog" style={{ fontSize: '1.3rem', paddingLeft: '16px', fontWeight: 'bold' }}>Recent Blog Posts</a>
+                <a href="/blog/dark-mode-in-0-945"><b>22/04</b> Dark Mode - 0.945</a>
                 <a href="/blog/last-few-releases"><b>11/04</b> The Last Few Releases - 0.933</a>
                 <a href="/blog/commenting-test-results"><b>01/24</b> Commenting Test Results - 0.854</a>
                 <a href="/blog/autoscaling-with-kubernetes"><b>12/30</b> Autoscaling with Kubernetes - 0.813</a>
-                <a href="/blog/installation-to-kubernetes"><b>12/09</b> Installation to Kubernetes - 0.788</a>
               </div>
             </div>
 

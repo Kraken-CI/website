@@ -1,0 +1,107 @@
+---
+slug: dark-mode-in-0-945
+title: Dark Mode in 0.945 Release
+authors: mike
+tags: [kraken, release, theme, images]
+---
+
+import Screen from "../docs/common.jsx"
+
+import Image from '@theme/IdealImage';
+
+The dark mode is the main feature in [0.945](https://github.com/Kraken-CI/kraken/releases/tag/v0.945) release.
+
+Besides that, it contains:
+
+- added a new tool `values_collect` that allows collecting values and then doing charts in UI based on them
+- added cleaning cache in MinIO
+- updated Go base image
+- added new base image for [MLflow](https://mlflow.org/)
+
+More information about these changes is below.
+
+<!--truncate-->
+
+### Dark Mode
+
+Now it is possible to look at Kraken CI web UI at night using dark mode.
+
+<Screen img="screen-main-light.png" />
+<Screen img="screen-main-dark.png" />
+
+If the dark mode is switched on in the browser that it will be
+automatically activated in Kraken CI web UI. Otherwise, it is
+possible to manually switch the dark mode on or off using the profile
+drop-down button in the top left corner of the screen (see below).
+
+<Screen img="screen-main-dark-mode-switch.png" />
+
+
+### New Tool values_collect
+
+When testing is being carried out by a Kraken agent, custom measured
+metrics can be returned besides test results. Now it is possible to
+just generate such measurements, store them in a JSON file and then
+load them to the Kraken server. Then they will be visible on a job
+results page and it is possible to display a chart based on these
+values.
+
+The reported file should look like this (e.g. metrics.json):
+
+```json
+{
+    "metric-1": 432,
+    "metric-2": 2.12,
+}
+```
+
+The step that consumes these values should look like this:
+
+```json
+{
+    "tool": "values_collect",
+    "files": [{
+        "name": "metrics.json",
+        "namespace": "metrics"
+    }, {
+        "name": "params.json",
+        "namespace": "params"
+    }],
+    "cwd": "example"
+}
+```
+
+The end results looks like that:
+
+<Screen img="screen-values-chart.png" />
+
+
+The whole example of workflow with collected results is present in
+Kraken lab: https://lab.kraken.ci/branches/32/ci. Check the steps
+definitions in [branch management
+page](https://lab.kraken.ci/branches/32) and then check the charts on
+[tests results page](https://lab.kraken.ci/test_case_results/595950),
+in the charts tab.
+
+
+### Cleaning Cache in MinIO
+
+The files that are always pulled to a build environmnt can be cached
+between builds, so they don't have to be downloaded from the internet
+each time. More about caching
+[here](http://localhost:3000/docs/schema/#cache).
+
+The Current release introduces a feature that automatically removes
+old cached files. Now, after 10 days, these files are deleted from
+MinIO.
+
+
+### Changes in Base Images
+
+The Go lang base image has been updated. The latest image contains Go
+in 1.18.  The location of the image is:
+[krakenci/golang:1.18](https://hub.docker.com/r/krakenci/golang).
+
+There is also a new image with [MLflow](https://mlflow.org/). It is
+available under:
+[krakenci/mlflow](https://hub.docker.com/r/krakenci/mlflow).
