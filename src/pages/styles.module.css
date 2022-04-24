@@ -110,17 +110,18 @@ form.fsFrm {
 
 .fsFrm [type="email"] {
   color: rgba(0,0,0,0.8);
+  background-color: #609DFF;
 }
 
 .fsFrm [type="button"],
 .fsFrm [type="submit"],
 .fsFrm [type="reset"] {
-    background-color: #0d0;
-    text-shadow: 2px 2px #0004;
+  background-color: #0d0;
+  text-shadow: 2px 2px #0004;
   font-variant: small-caps;
   font-weight: bold;
-  text-align: left;
-  padding-left: 10px;
+  text-align: center;
+  padding: .35em;
   cursor: pointer;
   -webkit-appearance: button;
   -moz-appearance: button;

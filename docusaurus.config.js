@@ -61,6 +61,10 @@ module.exports = {
           href: 'https://github.com/kraken-ci/kraken',
           label: 'GitHub',
           position: 'right',
+      }, {
+          href: 'https://github.com/Kraken-CI/kraken/releases',
+          label: 'Download',
+          position: 'right',
       }],
     },
     footer: {

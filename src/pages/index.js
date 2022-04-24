@@ -139,11 +139,11 @@ function Home() {
       <header className={clsx('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <div className="row" style={{ alignItems: 'center' }}>
-            <div className="col col--6">
+            <div className="col col--8">
               <h1 className="hero__title">{siteConfig.title}</h1>
               <p className="hero__subtitle">{siteConfig.tagline}</p>
             </div>
-            <div className="col col--3">
+            <div className="col col--4">
               <div className={styles.blogPosts}>
                 <a href="/blog" style={{ fontSize: '1.3rem', paddingLeft: '16px', fontWeight: 'bold' }}>Recent Blog Posts</a>
                 <a href="/blog/dark-mode-in-0-945"><b>04/22</b> Dark Mode - 0.945</a>
@@ -153,12 +153,17 @@ function Home() {
               </div>
             </div>
 
-            <div className="col col--3">
-              <div id="mc_embed_signup" style={{ padding: '0 0 0 4em'}}>
+            <div className="col col--12">
+              <div id="mc_embed_signup">
                   <form action="https://kraken.us1.list-manage.com/subscribe/post?u=d06ddd079b1e9d843467ea3ff&amp;id=6cf6b09f66" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className={styles.fsFrm} target="_blank" noValidate>
                       <div id="mc_embed_signup_scroll">
-                          <div className="mc-field-group">
-	                      <input type="email" defaultValue="" name="EMAIL" placeholder="email@domain" className="required email" id="mce-EMAIL"></input>
+                          <div style={{display: 'flex', justifyContent: 'center'}}>
+                              <div className="mc-field-group" style={{width: '40%'}}>
+	                          <input type="email" defaultValue="" name="EMAIL" placeholder="Subscribe for email updates" className="required email" id="mce-EMAIL"></input>
+                              </div>
+                              <div className="clear" style={{width: '15%'}}>
+                                  <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" className="button"></input>
+                              </div>
                           </div>
 	                  <div id="mce-responses" className="clear">
 		              <div className="response" id="mce-error-response" style={{display: 'none'}}></div>
@@ -166,9 +171,6 @@ function Home() {
 	                  </div>
                           <div style={{position: 'absolute', left: '-5000px'}} aria-hidden="true">
                               <input type="text" name="b_d06ddd079b1e9d843467ea3ff_6cf6b09f66" tabIndex="-1" defaultValue=""></input>
-                          </div>
-                          <div className="clear">
-                              <input type="submit" value="Subscribe to Newsletter" name="subscribe" id="mc-embedded-subscribe" className="button"></input>
                           </div>
                       </div>
                   </form>
