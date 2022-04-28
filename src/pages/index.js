@@ -146,10 +146,10 @@ function Home() {
             <div className="col col--4">
               <div className={styles.blogPosts}>
                 <a href="/blog" style={{ fontSize: '1.3rem', paddingLeft: '16px', fontWeight: 'bold' }}>Recent Blog Posts</a>
+                <a href="/blog/mlops-with-mlflow-on-kraken-ci"><b>04/28</b> MLOps with MLflow on Kraken CI</a>
                 <a href="/blog/dark-mode-in-0-945"><b>04/22</b> Dark Mode - 0.945</a>
                 <a href="/blog/last-few-releases"><b>04/11</b> The Last Few Releases - 0.933</a>
                 <a href="/blog/commenting-test-results"><b>01/24</b> Commenting Test Results - 0.854</a>
-                <a href="/blog/autoscaling-with-kubernetes"><b>12/30</b> Autoscaling with Kubernetes - 0.813</a>
               </div>
             </div>
 

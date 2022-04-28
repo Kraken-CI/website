@@ -1,0 +1,135 @@
+---
+slug: mlops-with-mlflow-on-kraken-ci
+title: MLOps with MLflow on Kraken CI
+authors: mike
+tags: [kraken, devops, mlops, mlflow]
+---
+
+import Screen from "../docs/common.jsx"
+
+import Image from '@theme/IdealImage';
+
+Besides building, testing and deploying, Kraken CI is also a pretty
+nice tool to build an [MLOps](https://en.wikipedia.org/wiki/MLOps)
+pipeline. In this article, it will be shown how to leverage Kraken CI to
+build a CI workflow for machine learning using
+[MLflow](https://mlflow.org/).
+
+
+<!--truncate-->
+
+### MLOps and MLflow
+
+MLOps is a set of practices that aims to build and maintain machine
+learning models in production reliably and efficiently. One of
+prominent tools in this area is [MLflow](https://mlflow.org/).
+
+MLflow is an open-source platform for managing the end-to-end machine
+learning lifecycle. It tackles four primary functions:
+
+- Tracking experiments to record and compare parameters and results
+  (MLflow Tracking).
+- Packaging ML code in a reusable, reproducible form to share
+  with other data scientists or transfer to production (MLflow
+  Projects).
+- Managing and deploying models from various ML libraries to a
+  variety of model serving and inference platforms (MLflow Models).
+- Providing a central model store to collaboratively manage the entire
+  lifecycle of an MLflow Model, including model versioning, stage
+  transitions, and annotations (MLflow Model Registry).
+
+### MLflow in Kraken CI
+
+In the following sections, I will describe how to prepare a workflow
+in Kraken CI to train an ML model. This is an LSTM model that will
+predict stock prices based on historical data.
+
+The workflow will be:
+
+1. pulling live stock data and preparing it for training ([source
+1](https://github.com/Kraken-CI/mlflow-example/blob/master/download_raw_data.py),
+[source
+2](https://github.com/Kraken-CI/mlflow-example/blob/master/transform_data.py))
+
+2. performing the training ([source 3](https://github.com/Kraken-CI/mlflow-example/blob/master/train_model.py))
+
+3. storing model metrics in Kraken CI for charting
+
+The MLflow project is described in [MLproject](https://github.com/Kraken-CI/mlflow-example/blob/master/MLproject).
+
+### Workflow Definition
+
+The whole Kraken CI workload is defined [here](https://github.com/Kraken-CI/mlflow-example/blob/master/.kraken/one.py).
+
+There are 3 steps:
+
+```json
+   "steps": [{
+       "tool": "git",
+       "checkout": "https://github.com/Kraken-CI/mlflow-example.git"
+   }, {
+       "tool": "shell",
+       "cmd": "/opt/conda/bin/mlflow run .",
+       "cwd": "mlflow-example",
+       "timeout": 1200
+   }, {
+       "tool": "values_collect",
+       "files": [{
+           "name": "metrics.json",
+           "namespace": "metrics"
+       }, {
+           "name": "params.json",
+           "namespace": "params"
+       }],
+       "cwd": "mlflow-example"
+   }],
+```
+
+1. Checkout mflow example project sources
+
+2. Run the mlflow project ie. download data, prepare it, run a
+training and at the end store metrics about the trained model to
+metrics.json
+
+3. Upload collected metrics together with hyperparameters from
+params.json to Kraken server
+
+The last step allows for charting accuracy and RMS of the model over
+builds.
+
+There is one more element defined in the workflow: the definition of
+execution environment:
+
+```json
+   "environments": [{
+       "system": "krakenci/mlflow",
+       "executor": "docker",
+       "agents_group": "all",
+       "config": "default"
+   }]
+```
+Here we can notice the use of a pre-prepared image with mlflow.
+It is available in Docker hub:
+[krakenci/mlflow](https://hub.docker.com/r/krakenci/mlflow).
+
+The whole example of workflow is present in Kraken lab:
+https://lab.kraken.ci/branches/32/ci. Check the steps definitions in
+[branch management page](https://lab.kraken.ci/branches/32).
+
+### Execution and Monitoring
+
+Besides the workflow definition, Kraken UI also shows collected data
+and the charts drawn from this data:
+https://lab.kraken.ci/test_case_results/595950, the charts tab.
+
+The right chart shows value of `loss` collected over time:
+
+<Screen img="screen-values-chart.png" />
+
+
+### Summary
+
+This article shows how Kraken CI can be used to build an MLOps
+pipeline.  The pipeline downloads raw data, prepares the data for
+training and then executes the training. The trained model
+metrics are collected and charted in Kraken UI at the end.
