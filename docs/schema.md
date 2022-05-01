@@ -358,11 +358,13 @@ Example:
 Fields:
 
 - `cmd` - a command to execute
+- `script` - or a script code to execute, this is multiline shell code
 - `user` - this field allows for changing user e.g. to `root`; by default kraken `user` is used
 - `env` - a dictionary with environment variables and their values
 - `background` - if set to True then a step is run in background; the
   background process will be terminated at the end of whole job;
   default value is False
+- `shell_exe` - an alternative path or command to shell executable, e.g.: zsh or /usr/bin/fish
 
 Examples:
 
@@ -413,6 +415,29 @@ period between attempts.
 `run-service.sh` script is run in background and then the next step is
 executed. It should show a list of all processes - `./run-service.sh`
 should be on the list.
+
+```python
+"steps": [{
+    "tool": "shell",
+    "script": """
+        echo 'ABC'
+        echo 'DEF'
+    """,
+}]
+```
+
+Run a multiline script that contains several commands. It is stored as
+a script file and executed.
+
+```python
+"steps": [{
+    "tool": "shell",
+    "cmd": "ls -al",
+    "shell_exe": "zsh"
+}]
+```
+
+Here, instead of `/bin/sh`, `zsh` is used as shell executable.
 
 More examples can be found at https://github.com/Kraken-CI/workflow-examples/tree/main/shell.
 
