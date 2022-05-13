@@ -1,0 +1,136 @@
+---
+slug: hello-worlds-in-22-langs-on-kraken-ci
+title: Hello Worlds in 22 Langs on Kraken CI
+authors: mike
+tags: [kraken, devops, cicd]
+---
+
+import Screen from "../docs/common.jsx"
+
+import Image from '@theme/IdealImage';
+
+There is a new, quite funny workflow example for Kraken CI. It shows
+how to compile and run `Hello World` programs in various programming
+languages, 22 languages.
+
+
+<!--truncate-->
+
+### Hello World Programs
+
+Every programmer knows what does `Hello World` program looks like.
+
+Here is an example in C language:
+
+```c
+#include<stdio.h>
+
+int main(){
+  printf("Hello World\n");
+  return 0;
+}
+```
+
+But 22? These 22 can be seen in Kraken's repo on GitHub:
+https://github.com/kraken-CI/hello-worlds
+
+Still, there are more languages with `Hello Worlds`.
+The biggest collection can be found here:
+http://helloworldcollection.de/.
+
+These are just examples. In our case, they can be compiled and run.
+After downloading the repo you may run `./run.sh` script providing
+the language folder, e.g.:
+
+```shell
+$ ./run.sh C
+```
+
+This will display, compile and run a C example.
+
+In Kraken's case, there is defined a workflow that does it for us for
+each language. But first, we need to have systems with a compiler or a
+runtime for these languages. Docker to the rescue.
+
+
+### Kraken Base Language Images
+
+For each language, there is prepared a Docker image. They are based on
+official images for these languages. For Kraken, they got some extras
+like Kraken Agent that is running using kraken user (not root).
+
+The list of all lang images is available in [the docs](/docs/docker-executor#language-images).
+
+### The Workflow
+
+The mentioned workflow can be found in [kraken-workflow.py](https://github.com/Kraken-CI/hello-worlds/blob/main/kraken-workflow.py) file.
+
+In short, it looks as follows:
+
+```python
+def stage(ctx):
+    langs = [
+        ('C', 'gcc:11.3'),
+        ('C++', 'gcc:11.3'),
+        ('C#', 'mono:6.12'),
+        # and more...
+    ]
+
+    jobs = []
+
+    for lang_name, lang_image in langs:
+        jobs.append({
+            "name": "hello world %s" % lang_name,
+            "steps": [{
+            "tool": "git",
+                "checkout": "https://github.com/Kraken-CI/hello-worlds.git",
+                "branch": "main"
+            }, {
+                "tool": "shell",
+                "cmd": "./run.sh %s" % lang_name,
+                "cwd": "hello-worlds"
+            }],
+            "environments": [{
+                "executor": "docker",
+                "system": "krakenci/%s" % lang_image,
+                "agents_group": "all",
+                "config": "default"
+            }]
+        })
+
+    return {
+        "parent": "root",
+        "triggers": {
+            "parent": True,
+        },
+        "parameters": [],
+        "configs": [],
+        "jobs": jobs
+    }
+```
+
+As you may notice, the list of jobs is built dynamically.  For each
+entry of the list of tuples (`lang-name`, `docker-image`), a job is
+defined with the same steps but various values for language and Docker
+image name. The lang name is passed to `./run.sh` script in `shell`
+step.  And Docker image name is used in the environments section, in
+the `system` field. Such a list of jobs is then returned in the whole
+workflow definition. Each job will be run in parallel in separate
+Docker containers.
+
+The example of workflow execution is present in Kraken lab:
+https://lab.kraken.ci/runs/5009/jobs. Check the workflow definitions in
+[branch management page](https://lab.kraken.ci/branches/33).
+
+This screenshot shows the execution of this workflow:
+
+<Screen img="screen-hello-worlds-execution.png" />
+
+
+### Summary
+
+This article shows how Kraken CI can build programs written in various
+languages. Kraken provides prepared Docker images for many
+languages. It is easy to define sophisticated workflows that
+dynamically define jobs that can be run in parallel. In the end, it is
+nice to observe the results of workflow execution in Kraken UI.
