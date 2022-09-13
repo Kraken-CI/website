@@ -10,7 +10,7 @@ prep-venv:
 	./venv/bin/pip install jsonschema click
 
 schema:
-	./venv/bin/python ../kraken/server/kraken/server/schemaval.py json
+	cd ../kraken/client && ../venv/bin/poetry run kkci -s http://admin:admin@localhost:8080 dump-workflow-schema ../../kraken-website/kraken.schema.json
 	./venv/bin/python jsonschema2md.py kraken.schema.json docs/schema-ref-embed.md
 
 server-api:

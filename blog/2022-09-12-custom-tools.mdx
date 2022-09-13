@@ -1,0 +1,31 @@
+---
+slug: custom-tools
+title: Custom Tools
+authors: mike
+tags: [kraken, devops, cicd]
+---
+
+import Screen from "../docs/common.jsx"
+
+import Image from '@theme/IdealImage';
+
+There is a new way for extending Kraken CI: custom tools. A
+[tool](/docs/tools) in Kraken CI provides particular functionality that is
+used in steps in a workflow schema. Till now, there were only built-in
+tools like `git` for checking out source code from Git repository, or
+`artifacts` for storing or retrieving files from Kraken global
+[storage](/docs/storage) or finally `shell` for running commands in a shell.
+
+Custom tools allow for developing such tools by third parties, sharing
+them with others and installing and using them in Kraken Server.
+
+<!--truncate-->
+
+### Custom Tools Details
+
+Docs for [custom tools](/docs/tools) first present the whole
+architecture of Kraken CI with Agents and tools. Then the interaction
+between Kraken Agent and a tool is shown with an example tool. The
+following sections show how to declare a custom tool and add it to
+Kraken Server so it can be used in workflows. It is also presented how
+to develop custom tools locally, under the desk.

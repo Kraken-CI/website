@@ -39,7 +39,8 @@ module.exports = {
                       label: 'Tracking'
                   }
               ]
-          }
+          },
+          'kkci'
       ],
       'Testing Frameworks': [
           'tf-junit',
