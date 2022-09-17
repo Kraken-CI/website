@@ -67,6 +67,8 @@ services. They are presented
 in [Architecture chapter](architecture.md). The required services are:
 `Kraken Server`, `MinIO` and `ClickHouse`.
 
+<Screen img="agent-connections.png" />
+
 The address of the server must be passed to agent binary using `-s`
 switch. This is handled by install script or is already backed into
 Docker image with Kraken Agent.
@@ -95,13 +97,13 @@ installer and running it. That's all.
 
 Agent Install steps:
 
-1. Download Kraken agent installer:
+1. Download Kraken agent installer.
 
 ```console
 $ wget http://<kraken-server-address>/install/kraken-agent-install.sh
 ```
 
-2. Execute installer:
+2. Execute installer. It will use `sudo` internally so it requires rights to invoke `sudo`.
 
 ```console
 $ chmod a+x kraken-agent-install.sh
@@ -172,7 +174,7 @@ $ docker run -e KRAKEN_SERVER_ADDR=<host-addr>:6363 \
              -e KRAKEN_CLICKHOUSE_ADDR=<host-addr>:9001 \
              -e KRAKEN_MINIO_ADDR=<host-addr>:9999 \
              --rm \
-             eu.gcr.io/kraken-261806/kkagent:<version>
+             us-docker.pkg.dev/kraken-261806/kkagent:<version>
 ```
 
 where `<host-addr>` is a host address where given service is running.
@@ -182,10 +184,89 @@ started. The ports above are default ports if the ports where changed
 e.g. in docker compose .env file then the same ones should be used
 here.
 
-`eu.gcr.io/kraken-261806/kkagent:<version>` is a location of Docker
+`us-docker.pkg.dev/kraken-261806/kkagent:<version>` is a location of Docker
 image with Kraken Agent. The `<version>` identifies particular Kraken
 version. The latest Kraken `<version>` can be found on a Kraken's
 releases page in GitHub: https://github.com/Kraken-CI/kraken/releases.
-Example image URL: `eu.gcr.io/kraken-261806/kkagent:0.406`.  Notice
+Example image URL: `us-docker.pkg.dev/kraken-261806/kkagent:0.406`.  Notice
 that the version in the image URL does not have `v` prefix as on
 GitHub page (v0.406).
+
+### Starting in Docker Compose from QuickStart
+
+It is also possible to extend Docker Compose from
+[QuickStart](quick-start) and add there an agent or more.
+
+There is already defined one built-in agent. But first, several
+modifications are needed to solve IP addressing issues. The problem is
+that it may get a different IP address after a container restart than
+before. Kraken Server requires that the addresses do not change
+otherwise it is not possible to identify agents by the Kraken Server.
+
+First, open your compose file (e.g. kraken-docker-compose-X.Y.yaml)
+and enable IP Address Management (IPAM) in the `lab_net` where all
+agents reside:
+
+```yaml
+  ...
+  lab_net:
+    driver: bridge
+    # add the following lines at the end of compose file
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+```
+
+Here is added a subnet with particular addresses class,
+`172.20.0.0/16`. You can define any subnet definition you need.
+
+And now add extra agents by copy-pasting `agent` service:
+
+```yaml
+  agent1:
+    restart: always
+    image: us-docker.pkg.dev/kraken-261806/kk/kkagent:0.998
+    environment:
+      - KRAKEN_CLICKHOUSE_ADDR
+      - KRAKEN_SERVER_ADDR
+    networks:
+      lab_net:
+        ipv4_address: 172.20.0.11
+    depends_on:
+      - server
+      - minio
+      - clickhouse-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+```
+
+Important things:
+
+1. New agent service name should be different e.g. `agent1`, `agent2`, etc.
+2. Remove ` - KRAKEN_AGENT_BUILTIN=1` environment variable that can be only in one agent.
+3. Add explicit IP address in `networks` section: `ipv4_address: 172.20.0.11`.
+  Every new agent needs to have a different IP address.
+
+Before running such a modified compose file, shut down the currently
+running compose and delete `lab_net`.  To delete this network, first,
+check if it exists:
+
+```console
+$ docker network ls
+```
+
+It should have name like this `<current-folder-name>_lab_net`. Please delete it:
+
+```console
+$ docker network rm <current-folder-name>_lab_net
+```
+
+Now you can start Docker Compose again. `lab_net` network will be
+recreated with proper new settings:
+
+```console
+$ docker-compose --env-file kraken-X.Y.env -f kraken-docker-compose-X.Y.yaml up
+```
+
+Go to Discovered Agents page in Kraken Web UI and check if new agents
+are present there.
