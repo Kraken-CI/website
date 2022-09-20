@@ -1,6 +1,6 @@
 ---
-slug: agent-in-docker-compose
-title: Agent in Docker Compose
+slug: agents-in-docker-compose
+title: Agents in Docker Compose
 authors: mike
 tags: [kraken, devops, cicd]
 ---
@@ -9,17 +9,15 @@ import Screen from "../docs/common.jsx"
 
 import Image from '@theme/IdealImage';
 
-Kraken Agent can be deployed in multiple ways. Here is present a new
-way that leverages Docker Compose. It is not scalable as such agents
-are run on the same machine but it is quick and simple and if we need
-just to have one or two more agents this is a way to go.
+Kraken Agent can be deployed in [multiple ways](/docs/agents). Here is
+presented a new way that leverages Docker Compose. It is not scalable as
+such agents are run on the same machine but it is quick and simple and
+if we need just to have one or two more agents this is a way to go.
 
 <!--truncate-->
 
-### Starting in Docker Compose from QuickStart
-
 To add such agents we will extend Docker Compose from
-[QuickStart](quick-start).
+[QuickStart](/docs/quick-start).
 
 There is already defined one built-in agent. But first, several
 modifications are needed to solve IP addressing issues. The problem is
