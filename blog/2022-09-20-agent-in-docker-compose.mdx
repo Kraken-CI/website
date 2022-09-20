@@ -1,0 +1,98 @@
+---
+slug: agent-in-docker-compose
+title: Agent in Docker Compose
+authors: mike
+tags: [kraken, devops, cicd]
+---
+
+import Screen from "../docs/common.jsx"
+
+import Image from '@theme/IdealImage';
+
+Kraken Agent can be deployed in multiple ways. Here is present a new
+way that leverages Docker Compose. It is not scalable as such agents
+are run on the same machine but it is quick and simple and if we need
+just to have one or two more agents this is a way to go.
+
+<!--truncate-->
+
+### Starting in Docker Compose from QuickStart
+
+To add such agents we will extend Docker Compose from
+[QuickStart](quick-start).
+
+There is already defined one built-in agent. But first, several
+modifications are needed to solve IP addressing issues. The problem is
+that it may get a different IP address after a container restart than
+before. Kraken Server requires that the addresses do not change
+otherwise it is not possible to identify agents by the Kraken Server.
+
+First, open your compose file (e.g. kraken-docker-compose-X.Y.yaml)
+and enable IP Address Management (IPAM) in the `lab_net` where all
+agents reside:
+
+```yaml
+  ...
+  lab_net:
+    driver: bridge
+    # add the following lines at the end of compose file
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+```
+
+Here is added a subnet with particular addresses class,
+`172.20.0.0/16`. You can define any subnet definition you need.
+
+And now add extra agents by copy-pasting `agent` service:
+
+```yaml
+  agent1:
+    restart: always
+    image: us-docker.pkg.dev/kraken-261806/kk/kkagent:0.998
+    environment:
+      - KRAKEN_CLICKHOUSE_ADDR
+      - KRAKEN_SERVER_ADDR
+    networks:
+      lab_net:
+        ipv4_address: 172.20.0.11
+    depends_on:
+      - server
+      - minio
+      - clickhouse-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+```
+
+Important things:
+
+1. New agent service name should be different e.g. `agent1`, `agent2`, etc.
+2. Remove ` - KRAKEN_AGENT_BUILTIN=1` environment variable that can be only in one agent.
+3. Add explicit IP address in `networks` section: `ipv4_address: 172.20.0.11`.
+  Every new agent needs to have a different IP address.
+
+Before running such a modified compose file, shut down the currently
+running compose and delete `lab_net`.  To delete this network, first,
+check if it exists:
+
+```console
+$ docker network ls
+```
+
+It should have name like this `<current-folder-name>_lab_net`. Please delete it:
+
+```console
+$ docker network rm <current-folder-name>_lab_net
+```
+
+Now you can start Docker Compose again. `lab_net` network will be
+recreated with proper new settings:
+
+```console
+$ docker-compose --env-file kraken-X.Y.env -f kraken-docker-compose-X.Y.yaml up
+```
+
+Go to Discovered Agents page in Kraken Web UI and check if new agents
+are present there.
+
+That's it. You have new agents running.
