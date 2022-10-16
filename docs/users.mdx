@@ -1,0 +1,80 @@
+---
+id: users
+title: Users
+---
+
+import Screen from "./common.jsx"
+
+
+Kraken CI has user authentication and authorizations. Before a user
+starts using the system, he/she must log in to the system. Still, a
+user does not have access to all resources. Access is limited by
+roles that are assigned to a user.
+
+## Managing Users
+
+Managing users is only available to `admin` user and users with
+`superadmin` role.  The user management page can be accessed via the
+`Configuration` menu at the top right, then `Users` position and
+again `Users` menu item.
+
+<Screen img="screen-users-menu.png" />
+
+Clicking it leads to the users management page.
+
+<Screen img="screen-users.png" />
+
+On the left is an `Add User` button and a table with users.
+
+Selecting a user in this table shows its details in the right panel.
+This user panel allows for changing a user password, disabling a user,
+assigning `superadmin` role and assigning one of the three predefined
+roles in a selected project.
+
+
+## Adding a User
+
+Clicking the `Add User` button opens a dialog that allows for entering a
+user name and a password.
+
+<Screen img="screen-users-add-new.png" />
+
+When adding is accepted by the `Add User` button in the dialog box,
+then it is shown in the users table. Selecting the user shows its
+details in the user panel on the right side.
+
+## Basic User Options
+
+In the user panel, it is possible to change a user password by clicking
+`Change Password` button.
+
+It is also possible to disable a user account. A disabled user cannot
+login into the system and cannot do any operation if it is already
+logged in to the system.
+
+
+## User Roles
+
+There are two kinds of roles:
+
+- global role `superadmin`
+- three predefined roles per project: `Viewer`, `Power User` and `Admin`
+
+`superadmin` role allows for all available operations in the system.
+
+The per-project roles give some rights only to a given project. The
+rights are grnted by the roles:
+
+- `Viewer` - allows for viewing data only: browsing branches, their
+  flows, results, etc.
+- `Power User` - extends `Viewer` role by allowing for triggering
+  actions like: run a flow, rerun a job, define new stage, etc.
+- `Admin` - extends `Power User` role by allowing for e.g. deleting a
+  branch or a project, managing project secrets.
+
+<Screen img="screen-users-roles.png" />
+
+The selected user may be assigned to a given project with a given
+role. Later this role can be changed by clicking a role for a given
+project. At the end, it is possible to remove a user from a particular
+project.

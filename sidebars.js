@@ -49,6 +49,7 @@ module.exports = {
       ],
       Administration: [
           'agents',
+          'users',
           'storage'
       ],
       Guides: [
