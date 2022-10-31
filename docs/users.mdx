@@ -78,3 +78,88 @@ The selected user may be assigned to a given project with a given
 role. Later this role can be changed by clicking a role for a given
 project. At the end, it is possible to remove a user from a particular
 project.
+
+## Identity Providers
+
+By default, user authentication is happening locally in the Kraken
+server. Still, it is possible to provide an external source of users and
+means for authentication by so-called Identity Providers. This also allows
+setting up Single Sign-On (SSO) scheme ie. users may sign in once
+in a central authentication system and then use it for authentication in
+other systems and services.
+
+To set this up, go to the `Configuration` menu at the top right, then
+`Users` position and `Identity Providers` menu item.
+
+<Screen img="screen-idp-menu.png" />
+
+This leads to the Settings web page with the `Identity Providers` tab.
+
+<Screen img="screen-idp-all-disabled.png" />
+
+On this tab, there are 2 sections available:
+
+1. LDAP
+2. OpenID Connect / OAuth 2
+
+### LDAP
+
+The source of users' identity is an LDAP server, which is used for
+users' authenticating. The login page is the same for local users in
+Kraken Web UI. Kraken Server authenticates users using credentials
+provided by them on this login page. Kraken Server connects to LDAP
+Server and checks if a user is present in LDAP server and his/her
+password is correct.
+
+To perform this operation, Kraken Server needs a few settings that will
+allow Kraken Server to talk to LDAP Server. These settings need to be
+provided in the following form:
+
+<Screen img="screen-idp-ldap.png" />
+
+`Server Address` is an apparent field. `Bind DN` (Distinguished Name)
+and `Bind Password` are used to authenticate Kraken Server to LDAP
+Server. They are needed to connect to LDAP Server. `Base DN` is a
+subtree in LDAP tree where users are looked for. `User Search
+Filter` is an LDAP query expression used to look for users in
+`Base DN` subtree. In `%s` placeholder is inserted a user's username
+that is provided by a user on the login page.
+
+After saving the settings using the `Save Settings` button on the
+bottom of the page, it is possible to check if configured parameters
+are correct and if they allow to establish a connection to LDAP
+Server. For that purpose, the `Test LDAP Connection` button should be
+used.
+
+### OpenID Connect and OAuth
+
+In the case of OpenID Connect and OAuth, the source of users' identity
+is OAuth Authorization Server. In this case, Kraken Web UI redirects
+to an external login page hosted on Authorization Server. A user
+enters his/her credentials to this server and then this server
+redirects the browser back to Kraken Web UI, providing a user
+token. Kraken Server is validating this token against the
+Authorization Server to confirm that this is a valid user. If all is
+ok, a user is allowed by Kraken Server to enter Kraken Web UI.
+
+To perform this operation, Kraken Server needs a few settings that will
+allow Kraken Server to talk to OAuth Authorization Server. Kraken
+supports several providers of OAuth Authorization Servers. They are
+Google, Microsoft, GitHub and Auth0. The settings for these providers
+may be provided in the following forms:
+
+<Screen img="screen-idp-google-ms.png" />
+
+<Screen img="screen-idp-github-auth0.png" />
+
+In each case, `Client ID` and `Client Secret` are needed. In the
+case of Auth0, the `OpenID Config URL` is also required, which is
+specific per organization.
+
+More details on how to set up OpenID Connect and OAuth of the providers
+side can be found in the following documentation pages:
+
+* [Google](https://developers.google.com/identity/openid-connect/openid-connect#python)
+* [Microsoft](https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-protocols-oidc)
+* [GitHub](https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps)
+* [Auth0](https://auth0.com/docs/quickstart/webapp/python/01-login)
