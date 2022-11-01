@@ -8,7 +8,8 @@ The main differentiators of Kraken CI are:
 - massive testing support: hunderds thousands of tests per build
 - focus on hardware testing were hardware is not stable and requires monitoring, rebooting, etc.
 
-The other features can be grouped in 3 areas: planning, execution and reporting.
+The other features can be grouped in 4 areas: [planning](#planning), [execution](#execution),
+[reporting](#reporting) and [administration](#administration).
 
 ## Planning
 
@@ -22,13 +23,14 @@ The other features can be grouped in 3 areas: planning, execution and reporting.
 - environments indicate execution agent groups and operating systems that should be used for jobs
 - groups are defined by assigning execution agents to them
 - jobs can be triggered by:
-   - external triggers via webhooks (e.g.: from GitHub or GitLab or Gitea)
+   - external triggers via [webhooks](/docs/guide-webhooks) (e.g.: from GitHub or GitLab or Gitea)
    - by a commit to a repository
    - on time interval
    - on CRON rule
    - on given time in a day
 - scope of jobs can be dynamically adjusted based on various criteria using Python/Starlark
 - Flows and Runs can have custom labels
+- [Job designer](/blog/job-designer-and-more-0-962) that makes preparing workflow schema much easier
 
 ## Execution
 
@@ -48,8 +50,8 @@ The other features can be grouped in 3 areas: planning, execution and reporting.
   - in LXD container
 - builds and tests execution is dynamically distributed to multiple
   machines with Kraken Agents according to indicated environments
-- autoscaling in the cloud - Kraken server connected to AWS EC2 or ECS,
-  Azure VM or Kubernetes environments can spawn new machines with Kraken Agents
+- autoscaling in the cloud - Kraken server connected to [AWS EC2 or ECS,
+  Azure VM](/blog/autoscaling-with-azure-and-aws-ecs) or [Kubernetes](/blog/autoscaling-with-kubernetes) environments can spawn new machines with Kraken Agents
   when there is not enough agents for jobs
 - jobs can return 3 kinds of entities:
   - build artifacts - any files like packages, tarballs, RPMs,
@@ -69,6 +71,7 @@ The other features can be grouped in 3 areas: planning, execution and reporting.
   loop in tests
 - automatically estimated timeouts for jobs based on passed execution
   so there is no never ending jobs occupying resources
+- [custom tools](/docs/tools#custom-tools) that can be developed and hosted externally
 
 ## Reporting
 
@@ -93,3 +96,15 @@ The other features can be grouped in 3 areas: planning, execution and reporting.
     time with indicating median or average
 - performance results are tracked over time and regressions are
   detected and reported
+- [commenting](/docs/test-results-basics#comments) test results
+
+## Administration
+
+- installing:
+  - using [Docker Compose](/docs/install-docker-compose)
+  - to [Kubernetes](/docs/install-helm)
+- [users management](/docs/users) with global and per-project [roles](/docs/users#user-roles)
+- authentication with:
+  - [LDAP](/docs/users#ldap)
+  - [OpenID Connect and OAuth](/docs/users#openid-connect-and-oauth)
+- [dark mode](/blog/dark-mode-in-0-945)
