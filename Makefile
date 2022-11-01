@@ -18,5 +18,5 @@ server-api:
            tail -n +26 | \
            grep -v 'backwards compatibility' | \
            grep -v 'Base URLs' | \
-           grep -v 'a href="/api' \
+           grep -v 'a href="/bk/api' \
            > docs/server-api.md
