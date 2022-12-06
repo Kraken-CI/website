@@ -1,0 +1,29 @@
+---
+slug: ldap-and-oidc-oauth
+title: LDAP and OIDC/OAuth
+authors: mike
+tags: [kraken, devops, cicd]
+---
+
+import Screen from "../docs/common.jsx"
+
+import Image from '@theme/IdealImage';
+
+There has beed developed an addition to users management:
+authentication against external authentication servers using either
+LDAP or OpenID Connect with OAuth.
+
+LDAP allows administrator to connect Kraken system to corporate LDAP
+or Active Directory. OIDC & OAuth beside bringing another source of
+users' identity it also provides Signe Sign-On scheme.
+
+This features landed in [0.1047
+version](https://github.com/Kraken-CI/kraken/releases/tag/v0.1047) and
+is documented in [identity providers](/docs/users#identity-providers)
+docs.
+
+<!--truncate-->
+
+Here is a screen that shows web UI for configuring Identity Providers.
+
+<Screen img="screen-idp-all-disabled.png" />

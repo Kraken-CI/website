@@ -1,0 +1,548 @@
+---
+id: install-manual
+title: Manual Installation
+---
+
+The installation is based on Ubuntu 22.04. All instructions and
+commands should be performed in Ubuntu 22.04 system.
+
+The first part of the manual shows how to install and prepare services
+required by Kraken CI. The second part guides through the installation
+of particular components of Kraken CI.
+
+Manual installation requires better knowledge of Kraken CI
+internals. So, first, get familiar
+with [Kraken CI architecture](/docs/architecture).
+
+## Required 3rd Party Services
+
+### PostgreSQL
+
+Kraken relies on PostgreSQL 11.
+The installation instruction can be found at https://www.postgresql.org/download/linux/ubuntu/.
+
+To install the required 11 version, do the following:
+
+```shellsession
+$ sudo apt install postgresql-11
+```
+
+After installation, create a `kkdb` database for Kraken CI Server and a
+user `kkuser` with `kkpass` password:
+
+```shellsession
+$ sudo -u postgres psql
+postgres=# create database kkdb;
+postgres=# create user kkuser with encrypted password 'kkpass';
+postgres=# grant all privileges on database kkdb to kkuser;
+```
+
+### Redis
+
+Kraken is using Redis and is tested with the 7.0 version.
+The installation instruction can be found at https://redis.io/docs/getting-started/installation/install-redis-on-linux/.
+
+### Clickhouse
+
+Kraken is using Clickhouse and is tested with the 22.10.2.11 version.
+The installation instruction can be found at https://clickhouse.com/docs/en/install/#install-from-deb-packages.
+
+### MinIO
+
+RELEASE.2022-10-24T18-35-07Z
+
+Kraken is using MinIO RELEASE.2022-10-24T18-35-07Z version. Newer
+versions may not work, so please use indicated version. The
+installation instruction can be found at
+https://min.io/docs/minio/linux/operations/installation.html.
+
+Debian package can be downloaded from here:
+https://dl.min.io/server/minio/release/linux-amd64/archive/minio_20221024183507.0.0_amd64.deb.
+RPM from here:
+https://dl.min.io/server/minio/release/linux-amd64/archive/minio-20221024183507.0.0.x86_64.rpm.
+Please check for any other format on this page:
+https://dl.min.io/server/minio/release/linux-amd64/archive/.
+
+The configuration could be set up in `/etc/default/minio` file. There should be set at least the following fields:
+
+- `MINIO_ROOT_USER` - a name for the root user; this needs to be
+  passed to Kraken components later (especially Kraken Server);
+- `MINIO_ROOT_PASSWORD` - a password for the root user; this needs to
+  be passed to Kraken components later (especially Kraken Server);
+- `MINIO_VOLUMES` - it must point to a folder where MinIO data will be
+  stored;
+- `MINIO_OPTS` - this should be used at least to change the listening
+  port - see next paragraph.
+
+Unfortunately, Clickhouse and MinIO are listening on the same TCP
+port 9000.  It can be changed in MinIO in `/etc/default/minio` by
+adding the following line:
+
+```
+MINIO_OPTS=--address :9999
+```
+
+### Nginx as a reverse proxy
+
+As a frontend web server that does reverse proxy, any web server can be
+used, for example, Nginx.
+
+First, install Nginx:
+
+```shellsession
+$ sudo apt install nginx
+```
+
+The configuration will be described in `Web UI & Reverse Proxy` section below.
+
+## Kraken Components Installation
+
+Kraken CI components can be downloaded from Kraken
+CI [GitHub releases](https://github.com/Kraken-CI/kraken/releases)
+page. There should be:
+
+- `clickhouse-proxy-VERSION.tar.gz`
+- `krakenci_server-VERSION.tar.gz`
+- `krakenci_ui-VERSION.tar.gz`
+- `krakenci_agent-VERSION.tar.gz`
+
+where `VERSION` is for example `0.1091`.
+
+Python packages can also be installed using `pip` tool.
+For that purpose, a Python virtual env may be created:
+
+```shellsession
+$ python3 -m venv venv
+$ ./venv/bin/pip install -U pip
+```
+
+### Server - Clickhouse Proxy
+
+Unpack `clickhouse-proxy`:
+
+```shellsession
+$ tar -zxvf clickhouse-proxy-VERSION.tar.gz
+```
+
+Prepare environment variables, ie. location of Clickhouse server:
+
+```shellsession
+$ export KRAKEN_CLICKHOUSE_URL=http://localhost:8123
+```
+
+Start the proxy:
+
+```shellsession
+$ ./clickhouse-proxy
+started clickhouse proxy
+Clickhouse address: "http://localhost:8123"
+VersionRow { version: 2 }
+logs table created in clickhouse
+waiting for logs to store
+```
+
+### Server - Backend
+
+There are prerequisites needed to install the Kraken CI server. It
+depends on `python-ldap`, which has extensions in C language. So to
+install and build Kraken CI dependencies there are needed:
+
+- C compiler -- `gcc`
+- headers for LDAP library -- `libldap-dev` and `libsasl2-dev`
+- headers for Python -- `python3-dev`
+
+They can be installed this way:
+
+```shellsession
+$ sudo apt install gcc python3-dev libldap-dev libsasl2-dev
+```
+
+Now we are ready to install the Kraken CI Server component:
+
+```shellsession
+$ ./venv/bin/pip install krakenci_server-VERSION.tar.gz
+Processing ./krakenci_server-0.1091.tar.gz
+  Preparing metadata (setup.py) ... done
+Collecting Authlib<2.0.0,>=1.1.0
+  Downloading Authlib-1.1.0-py2.py3-none-any.whl (214 kB)
+...
+```
+
+### Server - Database Preparation
+
+Run a script that sets up tables and performs database migration:
+
+```shellsession
+$ KRAKEN_DB_URL=postgresql://kkuser:kkpass@localhost:5432/kkdb ./venv/bin/kkdbmigrate
+Kraken DB Migration
+migrating db: postgresql://kkuser:kkpass@localhost:5432/kkdb
+checking TCP service postgresql on localhost:5432... 1.
+postgresql is up
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running stamp_revision  -> 5c16623f4d55
+alembic stamp completed
+Preparing initial DB data
+   created Tool record local_tool
+   created Tool record git
+   created Tool record shell
+   created Tool record pytest
+   created Tool record rndtest
+   created Tool record artifacts
+   created Tool record pylint
+   created Tool record cloc
+   created Tool record nglint
+   created Tool record cache
+   created Tool record gotest
+   created Tool record junit_collect
+   created Tool record values_collect
+   created AgentsGroup record 'all'
+   created Project record 'Demo'
+   created Branch record 'master'
+   created Stage record 'Tests'
+   created User record 'admin'
+   created User record 'demo'
+DB version: 5c16623f4d55
+Kraken DB Migration completed
+```
+
+### Server - Planner
+
+To start Kraken Planner, invoke the following command:
+
+```shellsession
+$ KRAKEN_DB_URL=postgresql://kkuser:kkpass@localhost:5432/kkdb ./venv/bin/kkplanner
+checking TCP service postgresql on localhost:5432... 1.
+postgresql is up
+2022-12-05 05:59:36,533 INFO p: 2787     logs:409   setup logging on planner to clickhouse: localhost:9001
+2022-12-05 05:59:36,533 INFO p: 2787  planner:161   Kraken Planner started, version 0.1091
+2022-12-05 05:59:36,720 INFO p: 2787     base:171   Scheduler started
+2022-12-05 05:59:36,723 INFO p: 2787  planner:43    started planner scheduler
+2022-12-05 05:59:36,732 INFO p: 2787  planner:172   starting xml-rpc server for planner on port 7997
+```
+
+Other environment variables that could be expected by the Kraken Planner are:
+
+- `KRAKEN_PLANNER_URL` - the default is `http://localhost:7997`
+- `KRAKEN_CLICKHOUSE_ADDR` - the default is `http://localhost:8123`
+
+### Server - RQ
+
+To start Kraken RQ, invoke the following command:
+
+```shellsession
+$ KRAKEN_DB_URL=postgresql://kkuser:kkpass@localhost:5432/kkdb ./venv/bin/kkrq
+checking TCP service planner on localhost:7997... 1.
+planner is up
+checking TCP service redis on localhost:6379... 1.
+redis is up
+checking TCP service postgresql on localhost:5432... 1.
+postgresql is up
+2022-12-05 06:02:36,132 INFO p: 2809     logs:409   setup logging on rq to clickhouse: localhost:9001
+2022-12-05 06:02:36,133 INFO p: 2809     kkrq:105   Kraken RQ started, version 0.1091
+2022-12-05 06:02:36,297 INFO p: 2809   worker:569   Worker rq:worker:76715862411a4038b99ff404aeedb5b4: started, version 1.11.1
+2022-12-05 06:02:36,299 INFO p: 2809   worker:539   Subscribing to channel rq:pubsub:76715862411a4038b99ff404aeedb5b4
+2022-12-05 06:02:36,303 INFO p: 2809   worker:573   *** Listening on kq...
+2022-12-05 06:02:36,304 INFO p: 2809 schedule:107   Trying to acquire locks for kq
+2022-12-05 06:02:36,312 INFO p: 2813 schedule:233   Scheduler for kq started with PID 2813
+2022-12-05 06:02:36,313 INFO p: 2809   worker:1187  Cleaning registries for queue: kq
+```
+
+Other environment variables that could be expected by the Kraken RQ are:
+
+- `KRAKEN_PLANNER_URL` - the default is `http://localhost:7997`
+- `KRAKEN_CLICKHOUSE_ADDR` - the default is `http://localhost:8123`
+- `KRAKEN_REDIS_ADDR` - the default is `localhost:6379`
+
+### Server - QNeck
+
+To start Kraken QNeck, invoke the following command:
+
+```shellsession
+$ ./venv/bin/kkqneck
+2022-12-05 06:03:07,656 INFO p: 2824     logs:409   setup logging on rq to clickhouse: localhost:9001
+2022-12-05 06:03:07,657 INFO p: 2824    qneck:136   Kraken QNeck started, version 0.1091
+checking TCP service redis on localhost:6379... 1.
+redis is up
+```
+
+Other environment variables that could be expected by the Kraken QNeck are:
+
+- `KRAKEN_CLICKHOUSE_ADDR` - the default is `http://localhost:8123`
+- `KRAKEN_REDIS_ADDR` - the default is `localhost:6379`
+
+### Server - Scheduler
+
+To start Kraken Scheduler, invoke the following command:
+
+```shellsession
+$ KRAKEN_DB_URL=postgresql://kkuser:kkpass@localhost:5432/kkdb ./venv/bin/kkscheduler
+checking TCP service postgresql on localhost:5432... 1.
+postgresql is up
+checking TCP service planner on localhost:7997... 1.
+planner is up
+2022-12-05 06:40:13,445 INFO p: 2942     logs:409   setup logging on scheduler to clickhouse: localhost:9001
+2022-12-05 06:40:13,446 INFO p: 2942 schedule:139   Kraken Scheduler started, version 0.1091
+2022-12-05 06:40:13,621 INFO p: 2942 schedule:117   no idle agents
+2022-12-05 06:40:13,621 INFO p: 2942 schedule:173   scheduled 0 jobs in 0.0s, go sleep for 5.0s
+2022-12-05 06:40:18,620 INFO p: 2942 schedule:117   no idle agents
+```
+
+Other environment variables that could be expected by the Kraken Scheduler are:
+
+- `KRAKEN_CLICKHOUSE_ADDR` - the default is `http://localhost:8123`
+- `KRAKEN_PLANNER_URL` - the default is `http://localhost:7997`
+
+### Server - Watchdog
+
+To start Kraken Watchdog, invoke the following command:
+
+```shellsession
+$ KRAKEN_DB_URL=postgresql://kkuser:kkpass@localhost:5432/kkdb ./venv/bin/kkwatchdog
+checking TCP service postgresql on localhost:5432... 1.
+postgresql is up
+checking TCP service planner on localhost:7997... 1.
+planner is up
+2022-12-05 06:40:53,819 INFO p: 3003     logs:409   setup logging on watchdog to clickhouse: localhost:9001
+2022-12-05 06:40:53,820 INFO p: 3003 watchdog:53    Kraken Watchdog started, version 0.1091
+```
+
+Other environment variables that could be expected by the Kraken Watchdog are:
+
+- `KRAKEN_CLICKHOUSE_ADDR` - the default is `http://localhost:8123`
+- `KRAKEN_PLANNER_URL` - the default is `http://localhost:7997`
+- `KRAKEN_REDIS_ADDR` - the default is `localhost:6379`
+
+### Server - Server
+
+Set required environment variables:
+
+```shellsession
+export KRAKEN_DB_URL=postgresql://kkuser:kkpass@localhost:5432/kkdb
+export MINIO_ROOT_USER=root
+export MINIO_ROOT_PASSWORD=password
+export KKAGENT_DIR=/usr/share/nginx/html/agent
+```
+
+
+And then start the server directly:
+```shellsession
+./venv/bin/python3 -m kraken.server.server
+```
+
+or using `gunicorn`:
+```shellsession
+./venv/bin/gunicorn -b 0.0.0.0:8080 -w 2 "kraken.server.server:create_app()"
+```
+
+Other environment variables that could be expected by the Kraken Server are:
+
+- `KRAKEN_CLICKHOUSE_ADDR` - the default is `http://localhost:8123`
+- `KRAKEN_PLANNER_URL` - the default is `http://localhost:7997`
+- `KRAKEN_REDIS_ADDR` - the default is `localhost:6379`
+- `KRAKEN_SERVER_ADDR` - the default is `localhost:8080`
+- `KRAKEN_MINIO_ADDR` - the default is `localhost:9999`
+
+### Web UI & Reverse Proxy
+
+Save the following nginx.conf file in `/etc/nginx/sites-available/kraken`:
+
+```apache
+upstream ui_rest {
+    server localhost:8080;
+}
+
+server {
+    listen       80;
+    server_name  localhost;
+    root   /usr/share/nginx/html;
+    index  index.html index.htm;
+
+    location ~ ^/(bk|api|webhooks|artifacts|job_log|install|backend|branch-badge) {
+        proxy_pass http://ui_rest;
+        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        proxy_buffering off;
+        proxy_set_header Accept-Encoding "";
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # redirect server error pages to the static page /50x.html
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}
+```
+
+The critical part is:
+
+```
+    server localhost:8080;
+```
+
+It indicates the serving address and port of the backend Kraken CI server.
+It should point to `KRAKEN_SERVER_ADDR`, which is `localhost:8080` by default.
+
+Unpack static Kraken Web UI content:
+
+```shellsession
+tar -zxvf krakenci_ui-VERSION.tar.gz
+```
+
+Copy this static content to `/usr/share/nginx/html`:
+
+```shellsession
+$ sudo cp -a krakenci_ui-VERSION/* /usr/share/nginx/html
+```
+
+Now remove the default site in Nginx and add the kraken site:
+
+```shellsession
+$ sudo rm /etc/nginx/sites-enabled/default
+$ sudo ln -s /etc/nginx/sites-available/kraken /etc/nginx/sites-enabled/kraken
+```
+
+Now restart and check the Nginx service:
+
+```shellsession
+$ sudo systemctl restart nginx
+$ sudo systemctl status nginx
+```
+
+Now you may check if Kraken web UI is working by visiting
+[http://localhost/](http://localhost/) in your web browser or using curl:
+
+```shellsession
+$ curl http://localhost/
+```
+
+In a web browser, log in with `admin`:`admin` credentials.  Next, go to
+`Configuration`->`Settings` page and on `General` tab set `Kraken
+Server URL`, `MinIO Address` and `Clickhouse Proxy Address`. And then
+click the save button at the bottom.
+
+Now you can install Kraken Agent.
+
+### Agent
+
+Unpack `krakenci_agent-VERSION.tar.gz` and copy
+`krakenci_agent-VERSION/kkagent` and `krakenci_agent-0.1091/kktool` to
+`KKAGENT_DIR` i.e. `/usr/share/nginx/html/agent`:
+
+```shellsession
+$ tar -zxvf krakenci_agent-VERSION.tar.gz
+$ sudo mkdir -p /usr/share/nginx/html/agent
+$ sudo cp -a krakenci_agent-VERSION/* /usr/share/nginx/html/agent/
+```
+
+In Kraken Web UI, go to `Agents` menu and click `Download`. This will
+download a script for installing `Kraken Agent`.
+
+Transfer it to a machine where you want to have Kraken Agent running
+and then run:
+
+```shellsession
+$ chmod a+x kraken-agent-install.sh
+$ ./kraken-agent-install.sh
++ KRAKEN_URL=http://10.79.46.85
++ sudo -n true
++ '[' 0 -ne 0 ']'
++ python3 --version
+Python 3.10.6
++ '[' 0 -ne 0 ']'
++ DL_TOOL=
++ which curl
+/usr/bin/curl
++ '[' 0 -ne 0 ']'
++ DL_TOOL=curl
++ set -e
++ '[' curl == wget ']'
++ curl -o /tmp/kkagent http://10.79.46.85/install/agent
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1366k  100 1366k    0     0  70.1M      0 --:--:-- --:--:-- --:--:-- 74.1M
++ chmod a+x /tmp/kkagent
++ export KRAKEN_CLICKHOUSE_ADDR=10.79.46.85:9001
++ KRAKEN_CLICKHOUSE_ADDR=10.79.46.85:9001
++ /tmp/kkagent install -s http://10.79.46.85
+2022-12-06 05:11:29,897 INFO p: 4552     logs:409   setup logging on agent to clickhouse: 10.79.46.85:9001
+2022-12-06 05:11:29,898 INFO p: 4552     main:49    Starting Kraken Agent, version 0.1091
+2022-12-06 05:11:29,899 INFO p: 4552     main:50    using Python version 3.10.6
+2022-12-06 05:11:30,063 INFO p: 4552  install:107   no docker group
+Created symlink /etc/systemd/system/multi-user.target.wants/kraken-agent.service → /lib/systemd/system/kraken-agent.service.
+● kraken-agent.service - Kraken Agent
+     Loaded: loaded (/lib/systemd/system/kraken-agent.service; enabled; vendor preset: enabled)
+    Drop-In: /run/systemd/system/service.d
+             └─zzz-lxc-service.conf
+     Active: active (running) since Tue 2022-12-06 05:11:30 UTC; 37ms ago
+   Main PID: 4737 (python3)
+      Tasks: 1 (limit: 14079)
+     Memory: 2.7M
+        CPU: 27ms
+     CGroup: /system.slice/kraken-agent.service
+             └─4737 python3 /opt/kraken/kkagent run
+
+Dec 06 05:11:30 u22 systemd[1]: Started Kraken Agent.
++ rm -f /tmp/kkagent
++ echo 'Kraken Agent installed'
+Kraken Agent installed
+```
+
+You can check logs of the installed agent by invoking:
+
+```shellsession
+sudo journalctl -u kraken-agent
+```
+
+In the logs, there should be seen a response with information that the
+agent is unauthorized:
+
+```
+...
+Dec 06 05:12:41 u22 kkagent[4737]: 2022-12-06 05:12:41,974 INFO p: 4737    agent:137   RESP {'unauthorized': True}
+Dec 06 05:12:41 u22 kkagent[4737]: 2022-12-06 05:12:41,975 WARN p: 4737    agent:140   agent is not authorized, sleeping for 10s
+...
+```
+
+Now go to Kraken web UI and go to `Agents`->`Discovered` menu. The
+started agent should be present there. Select the checkbox on the left
+and click `Authorize` button at the top.
+
+Now switch the web page to the list of authorized agents:
+`Agents`->`Agents`. Now the agent should be visible here and should be
+enabled.
+
+Recheck the agent logs:
+
+```shellsession
+sudo journalctl -u kraken-agent
+```
+Now it should be visible that the received job by the agent is empty:
+
+```
+...
+Dec 06 05:14:52 u22 kkagent[4737]: 2022-12-06 05:14:52,348 INFO p: 4737    agent:137   RESP {}
+Dec 06 05:14:52 u22 kkagent[4737]: 2022-12-06 05:14:52,361 INFO p: 4737     logs:409   setup logging on agent to clickhouse: 10.79.46.85:9001
+Dec 06 05:14:52 u22 kkagent[4737]: 2022-12-06 05:14:52,362 INFO p: 4737    agent:163   received job: {}
+...
+```
+
+## The First Job
+
+But first, install Git and Pytest on the machine where the Kraken Agent is
+running. The demo job requires that.
+
+```shellsession
+$ sudo apt install git python3-pytest
+```
+
+Now, go to Krakek Web UI, go to the main page (click on the logo in
+the left top corner), click `master` branch in `Project Demo` and now
+click `Run Flow` button and then `Submit`. You should be on the `Flow
+1.` page. In the big box, click `Tests` title (this is the name of the
+job). This will land you on the Run page, where one job should be
+visible in the pane on the left, while there should be logs in the
+right pane.

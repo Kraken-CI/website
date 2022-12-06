@@ -9,7 +9,8 @@ module.exports = {
           {
               Installation: [
                   'install-docker-compose',
-                  'install-helm'
+                  'install-helm',
+                  'install-manual'
               ]
           },
           'entities',

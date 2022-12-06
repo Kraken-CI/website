@@ -17,6 +17,7 @@ title: Architecture
 - `Planner` - it triggers new flows based on indicated rule in given project's branch
 - `Scheduler` - it assigns jobs to agents
 - `Watchdog` - it checks runs and their jobs if they are in their time limits, it also monitors agents and their machines health
+- `QNeck` - it is a broker to RQ (see below) that filters out repeating the same requested background tasks
 
 ## RQ
 `RQ` executes background tasks like processing results reported by
@@ -40,6 +41,15 @@ database.
 `MinIO` is an object storage database. It is used in Kraken to store
 artifact that are created during jobs execution, to store cache files
 and to store Git repository bundles.
+
+## Redis
+
+`Redis` is used in various places:
+
+- by `RQ` as its backend storage;
+- by Casbin (RBAC system) for synchronizing changes
+- by Kraken CI Server for caching various data
+- by Kraken CI QNeck as pubsub for passing tasks to `RQ`
 
 ## Agent
 Agent is a service that is run on a machine that is expected to

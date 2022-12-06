@@ -147,6 +147,9 @@ module.exports = {
 
       //... other Algolia params
     },
+    prism: {
+        additionalLanguages: ['shell-session'],
+    },
   },
   plugins: [
       "@docusaurus/plugin-ideal-image",
