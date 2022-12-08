@@ -146,11 +146,11 @@ function Home() {
             <div className="col col--4">
               <div className={styles.blogPosts}>
                 <a href="/blog" style={{ fontSize: '1.3rem', paddingLeft: '16px', fontWeight: 'bold' }}>Recent Blog Posts</a>
+                <a href="/blog/migration-to-newer-deps"><b>12/10</b> Migration to Newer Dependencies - 0.1091</a>
                 <a href="/blog/ldap-and-oidc-oauth"><b>11/02</b> LDAP and OIDC/OAuth - 0.1047</a>
                 <a href="/blog/users-management"><b>10/17</b> Users Management - 0.1013</a>
                 <a href="/blog/agents-in-docker-compose"><b>09/20</b> Agents in Docker Compose</a>
                 <a href="/blog/custom-tools"><b>09/12</b> Custom Tools - 0.998</a>
-                <a href="/blog/hello-worlds-in-22-langs-on-kraken-ci"><b>05/13</b> Hello Worlds in 22 Langs on Kraken</a>
               </div>
             </div>
 

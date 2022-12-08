@@ -1,0 +1,29 @@
+---
+slug: migration-to-newer-deps
+title: Migration to Newer Dependencies
+authors: mike
+tags: [kraken, devops, cicd]
+---
+
+import Screen from "../docs/common.jsx"
+
+import Image from '@theme/IdealImage';
+
+Till now, Kraken CI relied on pretty old versions
+of [Clickhouse](https://clickhouse.com/)
+and [MinIO](https://min.io/). In the latest Kraken CI release, both
+have been upgraded.
+
+Clickhouse has been upgraded from `20.11.4.13` to `22.10.2.11`. The
+migration is seamless from the Kraken CI point of view. There is no need
+for explicit data migration.
+
+MinIO has been upgraded from `RELEASE.2020-12-18T03-27-42Z` to
+`RELEASE.2022-10-24T18-35-07Z`. The major visible change is the names
+of environment variables that hold credentials. Previously they were
+`MINIO_ACCESS_KEY` and `MINIO_SECRET_KEY`, now they are
+`MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD`, respectively. Values of
+these variables may stay the same; they do not need to be changed.
+
+These changes landed in
+[0.1091 version](https://github.com/Kraken-CI/kraken/releases/tag/v0.1091).
