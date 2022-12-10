@@ -41,6 +41,7 @@ module.exports = {
                   }
               ]
           },
+          'notifications',
           'kkci'
       ],
       'Testing Frameworks': [

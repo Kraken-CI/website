@@ -1,0 +1,62 @@
+---
+id: notifications
+title: Notifications
+---
+
+import Screen from "./common.jsx"
+
+
+Kraken CI can provide information about the state of the last build of
+a branch in a project. It can either send notifications over Email,
+Slack or GitHub PR, or present the current state using badges or
+CCTray protocol.
+
+## Notifications Sent per Build
+
+### Email
+
+More on [Email Notifications in Workflow Schema docs](/docs/schema#email).
+
+### Slack
+
+More on [Slack Notifications in Workflow Schema docs](/docs/schema#slack).
+
+### GitHub PR
+
+More on [GitHub PR integration in Workflow Schema docs](/docs/schema#github).
+
+## Presenting Current State
+
+### Badges
+
+
+The status badges indicate the current quality of a branch in a project.
+
+<Screen img="kraken-badges.png" />
+
+There are three types of badges. They are indicating:
+
+- building state (if there are no errors)
+- tests results with fixes and regression counts
+- issues count with a count of newly discovered issues
+
+Links to the badges are available on a branch management page, in the
+`Status Badge & CCTray` tab:
+
+<Screen img="screen-branch-mgmt-badges.png" />
+
+### CCTray
+
+[CCTray](https://cctray.org) is a protocol that allows users to fetch
+the current state of a branch using [dedicated
+clientes](https://cctray.org/clients/).
+
+Kraken CI exposes a URL for a given branch that can be put to such a
+client. This URL is available on the same page as for badges i.e. on
+a branch management page, in the `Status Badge & CCTray` tab:
+
+<Screen img="screen-branch-mgmt-badges.png" />
+
+Copy CCTray URL and paste it to a client e.g. [BuildNotify](https://anaynayak.github.io/buildnotify/):
+
+<Screen img="screen-cctray-in-buildnotify.png" />

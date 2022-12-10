@@ -1,0 +1,25 @@
+---
+slug: support-for-cctray
+title: Support for CCTray
+authors: mike
+tags: [kraken, devops, cicd]
+---
+
+import Screen from "../docs/common.jsx"
+
+import Image from '@theme/IdealImage';
+
+[CCTray](https://cctray.org) is a protocol that allows users to fetch
+the current state of a branch using [dedicated
+clientes](https://cctray.org/clients/).
+
+Kraken CI exposes a URL for a given branch that can be put to such a
+client. This URL is available on a branch management page, in the
+`Status Badge & CCTray` tab:
+
+<Screen img="screen-branch-mgmt-badges.png" />
+
+These feature landed in
+[0.1097 version](https://github.com/Kraken-CI/kraken/releases/tag/v0.1097)
+and is documented in [notifications docs](/docs/notifications#cctray)
+docs.
