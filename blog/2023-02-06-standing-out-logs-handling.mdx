@@ -1,0 +1,115 @@
+---
+slug: standing-out-logs-handling
+title: Standing out Logs Handling
+authors: mike
+tags: [kraken, devops, cicd]
+---
+
+import Screen from "../docs/common.jsx"
+
+import Image from '@theme/IdealImage';
+
+The Kraken version [0.1126](https://github.com/Kraken-CI/kraken/releases/tag/v0.1126)
+introduces much improved logs handling and presentation.
+
+The standing-out features connected with logs are:
+- single-line and *multi-line* secrets masking
+- coloring ANSI codes
+- no issue with handling huge logs containing even more than 10.000 lines
+- switching timestamps on/off
+- auto scroll when at the bottom
+- paging logs
+
+And the new features introduced by this Kraken version:
+
+- job logs are split by steps sections in UI
+- steps status and metadata presented at the top of each step logs section
+- download a step log
+
+More details are below.
+
+<!--truncate-->
+
+### Single-line and Multi-line Secrets Masking
+
+It is possible to define [secrets](/docs/secrets) on a project. Then
+these secrets can be used in workflow schema directly in shell commands
+or as environment variables. Most often, they might be visible in
+logs. Thankfully, Kratos mask secrets - a secret in the log is replaced
+by six asterisks (``*`` sign). Kraken can mask secrets that are single
+line, for example, a password, but also it can secret multi-line
+secrets, e.g. SSH private key that may span about 30 lines. In both
+cases, these secrets will be replaced with asterisks in the log.
+
+The secrets are caught quite early and do not leave a machine
+that traces them to logs. The log database stores only masked
+passwords. Example of masking below:
+
+<Screen img="screen-logs-masked-secrets2.png" />
+
+A very long, multi-line secret has been replaced by 6 asterisk signs.
+
+### Coloring ANSI Codes
+
+Quite often in CI process, there are used tools that color their
+output. This is achieved
+by [ANSI codes](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors)
+printed to a terminal. Kraken can find them and replace them with
+colors in Web UI.
+
+An example of a basic color palette in the log:
+
+<Screen img="screen-logs-ansi-colors.png" />
+
+### Swithing Timestamps On/Off
+
+Kraken allows a user to switch on and off displaying timestamps. These
+are timestamps added during collecting logs and storing them in a
+database. They may not match with timestamps that are already present
+inside the log, so they can be switched off. When there are no
+timestamps in the original log, Kraken timestamps can be switched on
+and be pretty helpful.
+
+Timestamps are switched off:
+<Screen img="screen-logs-ts-off.png" />
+
+Timestamps are switched on:
+<Screen img="screen-logs-ts-on.png" />
+
+### Autoscroll
+
+When the scroll bar is at the bottom position then any new logs
+fetched automatically will trigger scrolling to the bottom so the new
+log content is visible.
+
+### Job Logs Split by Steps
+
+In Kraken Web UI, the job log is divided into steps sections. Each
+section has its title bar that, by clicking, allows a user to expand
+the section to see its details and logs. Each step log is separate, so
+it is easier to browse logs of steps than handling one big job log.
+
+<Screen img="screen-logs-steps.png" />
+
+### Steps Status and Metadata
+
+The step details bar presents information about status and duration
+but also step parameters. Below the bar, there are logs with control
+buttons for navigating logs.
+
+<Screen img="screen-logs-step-status.png" />
+
+### Download Whole Step Log
+
+A log of each section can be downloaded separately.
+
+<Screen img="screen-logs-step-download.png" />
+
+### Paging Logs
+
+A step log pane has control buttons allowing a user to navigate
+logs. A user may load the previous or next page or jump to the first
+or last page. A user may load the whole log, he/she may also scroll to the
+bottom of the log.
+
+<Screen img="screen-logs-paging.png" />
