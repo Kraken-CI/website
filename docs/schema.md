@@ -365,6 +365,7 @@ Fields:
   background process will be terminated at the end of whole job;
   default value is False
 - `shell_exe` - an alternative path or command to shell executable, e.g.: zsh or /usr/bin/fish
+- `ssh-key` - a name of a secret that holds SSH username and key for ssh-agent
 
 Examples:
 
