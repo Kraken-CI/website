@@ -1,0 +1,70 @@
+---
+slug: further-logging-improvements
+title: Further Logging Improvements
+authors: mike
+tags: [kraken, devops, cicd]
+---
+
+import Screen from "../docs/common.jsx"
+
+import Image from '@theme/IdealImage';
+
+The Kraken version [1.0](https://github.com/Kraken-CI/kraken/releases/tag/v1.0)
+introduces even more improvements in logging.
+
+The major changes are:
+
+- added global and per-branch logs retention policy
+- added presenting logs of server-side activities related to a branch,
+  a flow, a run and a job
+
+1.0 release brings several more features - check [the release
+notes](https://github.com/Kraken-CI/kraken/releases/tag/v1.0).
+
+More details about the major features are below.
+
+<!--truncate-->
+
+### Logs Retention Policy
+
+The logs retention policy generally indicates how long logs should be
+kept in the logs store ie. Clickhouse. It is possible to set these
+policies on two levels: 1) global and 2) branch level. The time is
+expressed in a number of months.
+
+The picture below shows the `General Settings` tab where under the
+`Global Log Retention Policy` section, it is possible to set the number
+of months for how long all the logs (from Kraken Server and all
+Agents) will be kept in Clickhouse.
+
+<Screen img="screen-logs-global-ttl.png" />
+
+The following picture shows the `Retention Policy` tab on a branch
+management page. Here, a similar policy can be set for logs related to
+this branch, either for CI flows or for Dev flows.
+
+<Screen img="screen-logs-branch-ttl.png" />
+
+
+### Server Logs Presentation
+
+New logs panel has been introduced. It can show logs from both the
+server and agent sides. This panel can be found in several places that
+are indicated in the pictures below.
+
+Here a branch management page is presented with the `Logs` tab where
+logs related to this branch are shown.
+
+<Screen img="screen-logs-of-branch.png" />
+
+Here is the case for a flow.
+
+<Screen img="screen-logs-of-flow.png" />
+
+Here is the case for a run.
+
+<Screen img="screen-logs-of-run.png" />
+
+And a job case.
+
+<Screen img="screen-logs-of-job.png" />

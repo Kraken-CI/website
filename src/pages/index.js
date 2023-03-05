@@ -146,11 +146,11 @@ function Home() {
             <div className="col col--4">
               <div className={styles.blogPosts}>
                 <a href="/blog" style={{ fontSize: '1.3rem', paddingLeft: '16px', fontWeight: 'bold' }}>Recent Blog Posts</a>
+                <a href="/blog/further-logging-improvements"><b>03/06</b> Further Logging Improvements - 1.0</a>
                 <a href="/blog/standing-out-logs-handling"><b>02/06</b> Standing-out Logs Handling</a>
                 <a href="/blog/support-for-cctray"><b>12/12</b> Support for CCTray - 0.1097</a>
                 <a href="/blog/migration-to-newer-deps"><b>12/10</b> Migration to Newer Dependencies - 0.1091</a>
                 <a href="/blog/ldap-and-oidc-oauth"><b>11/02</b> LDAP and OIDC/OAuth - 0.1047</a>
-                <a href="/blog/users-management"><b>10/17</b> Users Management - 0.1013</a>
               </div>
             </div>
 
