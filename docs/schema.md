@@ -3,10 +3,76 @@ id: schema
 title: Workflow Schema
 ---
 
-This chapter presents syntax of workflow schema defined in stages of a
+This chapter presents syntax of a workflow schema defined in stages of a
 branch.
 
 Full schema syntax referenced is available in [schema reference](schema-ref).
+
+## Overview
+
+The workflow schema attached to a stage is defined in the Python
+language.
+
+Example:
+
+```python
+def stage(ctx):
+    return {
+        "parent": "root",
+        "triggers": {
+            "interval": "10m",
+        },
+        "parameters": [],
+        "flow_label": "demo-#{flow.seq.shared}",
+        "jobs": [{
+            "name": "test",
+            "steps": [{
+                "tool": "git",
+                "checkout": "https://github.com/frankhjung/python-helloworld.git",
+                "branch": "master"
+            }, {
+                "tool": "pytest",
+                "params": "tests/testhelloworld.py",
+                "cwd": "python-helloworld"
+            }],
+            "environments": [{
+                "system": "ubuntu-18.04",
+                "agents_group": "all",
+                "config": "default"
+            }]
+        }],
+        "notification": {
+            "slack": {"channel": "kk-results"},
+            "email": "godfryd@gmail.com"
+        }
+    }
+```
+
+The workflow is defined in a `stage` function. Its code imperatively
+defines various elements of the schema. These elements, such as
+`triggers` or `jobs`, are described in
+the [Schema Elements](#schema-elements) section below.
+
+
+What is essential from a high-level perspective is that the schema is
+dynamically defined. However, ultimately, what is executed is
+declarative. The `stage` function describes which `jobs` must be
+executed, in which `environments`, the `parent` stage, and so on. All
+of these can be dynamically described, and then the schema declaration
+is remembered and executed at the appropriate time. This is in
+contrast to Jenkins, where the pipeline code defined in a Jenkinsfile
+is executed only when a job is executed. In Kraken, stage Python code
+can be executed at any time. The result of the execution of the stage
+code is a schema declaration that can be executed later.  This way,
+when the stage code is saved in Kraken UI, it is immediately executed,
+and the generated schema is validated to ensure correctness. There is
+no need to execute a job to determine if the syntax is correct. In the
+case of Jenkins, the user only learns about Jenkinsfile issues during
+its execution.
+
+The stage code can be executed at any time and multiple times. It is
+executed as soon as it is saved and right before the schema is
+instantiated and run by a Kraken Agent.
 
 ## Schema Elements
 
@@ -20,28 +86,6 @@ There are defined several things in the schema:
 - `notification`
 - `timeout`
 
-Example:
-
-```json
-"parent": "root",
-"triggers": {
-    "parent": True
-},
-"parameters": [],
-"configs": [],
-"jobs": [{
-    "name": "hello",
-    "steps": [{
-        "tool": "shell",
-        "cmd": "echo 'Hello World'"
-    }],
-    "environments": [{
-        "system": "any",
-        "agents_group": "all",
-        "config": "default"
-    }]
-}]
-```
 
 ## Parent
 
@@ -201,7 +245,7 @@ Example:
 
 ```json
 "parameters": [{
-    "name": "COUNT",
+    "name": "count",
     "type": "string",
     "default": "10",
     "description": "Number of tests to generate"
@@ -209,7 +253,7 @@ Example:
 ```
 
 Then, in a job definition a parameter can be used by enclosing its
-name in `#{...}`, e.g.: `#{COUNT}`.
+name in `#{...}`, e.g.: `#{args.count}`.
 
 Using parameter `COUNT` example:
 
@@ -218,7 +262,7 @@ Using parameter `COUNT` example:
     "name": "random tests",
     "steps": [{
         "tool": "rndtest",
-        "count": "#{COUNT}"
+        "count": "#{args.count}"
     }],
 }]
 ```
@@ -230,14 +274,14 @@ or
     "name": "random tests",
     "steps": [{
         "tool": "shell",
-        "cmd": "echo 'the count is #{COUNT}'"
+        "cmd": "echo 'the count is #{args.count}'"
     }],
     ...
 }]
 ```
 
 More about interpolating variables in string can be found
-in [Schema Variables chapter](schema-vars).
+in [Schema Data chapter](schema-data).
 
 ## Configs
 
@@ -251,10 +295,10 @@ displayed instead of flow database ID which is displayed by default.
 Example 1:
 
 ```python
-"flow_label": "demo-#{KK_FLOW_SEQ}",
+"flow_label": "demo-#{flow.seq.shared}",
 ```
 
-Here a value of ``KK_FLOW_SEQ`` sequence is used. It mean that each
+Here a value of ``flow.seq.shared`` sequence is used. It mean that each
 new flow will get its incremented numer, e.g. ``demo-2``. This
 sequence is shared between CI and DEV flows so the label is uniqe for
 both types of flows.
@@ -262,13 +306,13 @@ both types of flows.
 Example 2:
 
 ```python
-"flow_label": "bld-#{KK_CI_DEV_FLOW_SEQ}",
+"flow_label": "bld-#{flow.seq.own}",
 ```
 
-In this case a ``KK_CI_DEV_FLOW_SEQ`` sequence is used. It means that
+In this case a ``flow.seq.own`` sequence is used. It means that
 the sequence is incremented separately for CI and for DEV flows.
 
-More about sequences in [Schema Variables](schema-vars).
+More about sequences in [Schema Data](schema-data).
 
 ## Run Label
 
@@ -278,14 +322,14 @@ displayed instead of run database ID which is displayed by default.
 Example 1:
 
 ```python
-"run_label": "run.#{KK_CI_DEV_RUN_SEQ}",
+"run_label": "run.#{run.seq.own}",
 ```
 
-In this case a ``KK_CI_DEV_RUN_SEQ`` sequence is used. It means that
+In this case a ``run.seq.own`` sequence is used. It means that
 the sequence is incremented separately for CI and for DEV flows for
 that run, e.g.: ``run.42``.
 
-More about sequences in [Schema Variables](schema-vars).
+More about sequences in [Schema Data](schema-data).
 
 ## Jobs
 
@@ -609,6 +653,126 @@ destination folder was remembered during `store` action).
 
 
 More examples can be found at https://github.com/Kraken-CI/workflow-examples/tree/main/cache.
+
+
+### Data
+
+`data` is a tool that allows for storing and retrieving data in JSON
+format on the server-side. The data can be attached to various
+entities:
+
+- current flow,
+- current branch - separatelly for CI flows, for DEV flows and
+  common for both types of flows,
+- current project
+
+This means that if data is stored in the current flow, then it is not
+accessible in the following flow. It is only available to runs and
+jobs in the current flow. However, if it is stored at the branch
+level, then it is preserved between flows. Similarly, in the case of a
+project, such data is available across all branches in the given
+project.
+
+Fields:
+
+- `file` - a file containing data in JSON format for `set` and
+  `jsonpatch` operations, and JQ expression for `jq` operation.
+- `cwd` - the current working directory where the step is executed
+- `value` - the same data as in file field but provided
+  directly; alternative to the file field
+- `operation` - an operation to be performed:
+  - `set` sets (and also overrides) data,
+  - `jq` executes a JQ
+    [assignment expression](https://stedolan.github.io/jq/manual/#Assignment)
+    on the server-side data,
+  - `jsonpatch` patches server-side data as described on
+    [jsonpatch.com](https://jsonpatch.com/), more details available on
+    [RFC 6902](https://www.rfc-editor.org/rfc/rfc6902);
+
+  by default it is `set`
+- `json_pointer` - a JSON pointer that indicates the data location
+  (see [RFC 6901](https://www.rfc-editor.org/rfc/rfc6901));
+  if the pointer is `/`, then the entire data is taken, if a key name is provided, then
+  the data under this key is taken; the default value is `/`
+- `scope` - a scope of data:
+  - `flow` - data attached to a flow,
+  - `branch-ci` - data attached to a branch related to CI flows,
+  - `branch-dev` - data attached to a branch related to Dev flows,
+  - `branch` - data attached to a branch,
+  - `project` - data attached to a project;
+
+  `flow` is the default value
+
+The stored data can be used in two ways:
+
+- by accessing the schema context, see [Schema Data chapter, Context section](schema-data#context),
+- by interpolating schema variables, see [Schema Data chapter, Interpolation section](schema-data#interpolation).
+
+#### Data Example 1
+
+```python
+"steps": [{
+    "tool": "data",
+    "value": '{"aaa": "bbb"}'
+}]
+```
+
+JSON data that is directly indicated in the value field will be stored
+on the server-side in the flow scope.
+
+#### Data Example 2
+
+```python
+"steps": [{
+    "tool": "data",
+    "file": "generated-data.json",
+    "operation": "set",
+    "json_pointer": "/generated-data",
+    "scope": "branch"
+}]
+```
+
+The JSON data stored in the `generated-data.json` file will be saved
+on the server-side within the branch scope, under the `generated-data`
+key. Therefore, the data will be displayed as follows:
+`{"generated-data": <data from generated-data.json file>}`.
+
+#### Data Example 3
+
+```python
+"steps": [{
+    "tool": "data",
+    "value": "'.counter += 1",
+    "operation": "jq",
+    "scope": "branch-ci"
+}]
+```
+
+A counter that is stored in data attached to the branch CI scope will
+be incremented using a JQ assignment expression. During the first
+execution, when there is no data on the server-side, the entire path
+to the indicated field in the JSON data will be created and its value
+will be assumed to be 0. Therefore, after executing this expression
+for the first time, the counter will be set to 1.
+
+#### Data Example 4
+
+```python
+"steps": [{
+    "tool": "data",
+    "value": '[{"op": "add", "path": "/foo", "value": "bar"}]',
+    "operation": "jsonpatch",
+    "scope": "project"
+}]
+```
+
+If the data attached to a project was `{"aaa": "bbb"}`, then after the
+execution of this step, it will be updated to `{"aaa": "bbb", "foo":
+"bar"}`. The step utilizes a JSON Patch expression that adds the
+specified value under the specified path.
+
+More examples can be found on the following GitHub page:
+https://github.com/Kraken-CI/workflow-examples/tree/main/dynamic-schema.
 
 ### Pylint
 
@@ -988,7 +1152,7 @@ Example:
 
 ```python
 "notification": {
-    "github": {"credentials": "#{KK_SECRET_SIMPLE_gh_status_creds}"}
+    "github": {"credentials": "#{secrets.gh_status_creds}"}
 }
 ```
 
@@ -998,6 +1162,6 @@ It is also possible to enable all notification means together:
 "notification": {
     "slack": {"channel": "kk-results"},
     "email": "godfryd@gmail.com",
-    "github": {"credentials": "#{KK_SECRET_SIMPLE_gh_status_creds}"}
+    "github": {"credentials": "#{secrets.gh_status_creds}"}
 }
 ```

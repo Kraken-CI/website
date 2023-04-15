@@ -139,18 +139,18 @@ function Home() {
       <header className={clsx('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <div className="row" style={{ alignItems: 'center' }}>
-            <div className="col col--8">
+            <div className="col col--7">
               <h1 className="hero__title">{siteConfig.title}</h1>
               <p className="hero__subtitle">{siteConfig.tagline}</p>
             </div>
-            <div className="col col--4">
+            <div className="col col--5">
               <div className={styles.blogPosts}>
                 <a href="/blog" style={{ fontSize: '1.3rem', paddingLeft: '16px', fontWeight: 'bold' }}>Recent Blog Posts</a>
+                <a href="/blog/data-and-dynamism-in-schema"><b>04/15</b> Data and Dynamism in Schema - 1.1</a>
                 <a href="/blog/further-logging-improvements"><b>03/06</b> Further Logging Improvements - 1.0</a>
                 <a href="/blog/standing-out-logs-handling"><b>02/06</b> Standing-out Logs Handling</a>
                 <a href="/blog/support-for-cctray"><b>12/12</b> Support for CCTray - 0.1097</a>
                 <a href="/blog/migration-to-newer-deps"><b>12/10</b> Migration to Newer Dependencies - 0.1091</a>
-                <a href="/blog/ldap-and-oidc-oauth"><b>11/02</b> LDAP and OIDC/OAuth - 0.1047</a>
               </div>
             </div>
 

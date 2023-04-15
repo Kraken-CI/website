@@ -82,3 +82,26 @@ of Kraken CI: https://lab.kraken.ci/branches/33/ci
 | **Ubuntu 20.04** | [krakenci/ubuntu:20.04](https://hub.docker.com/r/krakenci/ubuntu) | [Dockerfile](https://github.com/Kraken-CI/kraken/blob/master/base-images/docker-ubuntu.txt) | ubuntu:20.04 |
 | **CentOS 8**     | [krakenci/centos:8](https://hub.docker.com/r/krakenci/centos) | [Dockerfile](https://github.com/Kraken-CI/kraken/blob/master/base-images/docker-centos.txt) | centos:8 |
 | **Fedora 33**    | [krakenci/fedora:33](https://hub.docker.com/r/krakenci/fedora) | [Dockerfile](https://github.com/Kraken-CI/kraken/blob/master/base-images/docker-fedora.txt) | fedora:32 |
+
+
+### Tested Vanilla Images
+
+- fedora:32
+- fedora:33
+- fedora:34
+- fedora:35
+- fedora:36
+- fedora:37
+- rockylinux:8
+- rockylinux:9
+- almalinux:8
+- almalinux:9
+- debian:buster
+- debian:bullseye
+- debian:bookworm
+- ubuntu:18.04
+- ubuntu:20.04
+- ubuntu:22.04
+
+For details, please, check a testing workflow results:
+https://lab.kraken.ci/branches/12/ci

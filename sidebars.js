@@ -20,12 +20,12 @@ module.exports = {
           'proj-branches',
           'stages',
           'schema',
-          'schema-vars',
-          'tools',
+          'schema-data',
           'secrets',
-          'webhooks',
           'docker-executor',
           'lxd-executor',
+          'notifications',
+          'webhooks',
           'autoscale-in-cloud',
           {
               'Test Results': [
@@ -41,8 +41,9 @@ module.exports = {
                   }
               ]
           },
-          'notifications',
-          'kkci'
+          'tools',
+          'kkci',
+          'migration'
       ],
       'Testing Frameworks': [
           'tf-junit',

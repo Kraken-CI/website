@@ -100,12 +100,12 @@ A `job in run` is executed (multiplied) for each of the `environments` defined i
 
 ### Example of a Workflow Schema
 
-`Stage` is defined in Python-like syntax.
+`Stage` is defined using Python language.
 
 ```python
 def stage(ctx):
     return {
-        "parent": "Unit Tests",
+        "parent": "root",
         "triggers": {
             "parent": True,
             "cron": "1 * * * *",
@@ -114,15 +114,6 @@ def stage(ctx):
             "webhook": True
         },
         "parameters": [],
-        "configs": [{
-            "name": "c1",
-            "p1": "1",
-            "p2": "3"
-        }, {
-            "name": "c2",
-            "n3": "33",
-            "t2": "asdf"
-        }],
         "jobs": [{
             "name": "make dist",
             "steps": [{
@@ -137,7 +128,7 @@ def stage(ctx):
             "environments": [{
                 "system": "ubuntu-18.04",
                 "agents_group": "all",
-                "config": "c1"
+                "config": "default"
             }]
         }],
         "notification": {

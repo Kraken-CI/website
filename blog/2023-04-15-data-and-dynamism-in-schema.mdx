@@ -1,0 +1,64 @@
+---
+slug: data-and-dynamism-in-schema
+title: Data and Dynamism in Schema
+authors: mike
+tags: [kraken, devops, cicd]
+---
+
+import Screen from "../docs/common.jsx"
+
+import Image from '@theme/IdealImage';
+
+The Kraken version [1.1](https://github.com/Kraken-CI/kraken/releases/tag/v1.1)
+introduces even more improvements in logging.
+
+The major changes are:
+
+- added storing user data server-side
+- data of internal objects and user data are now exposed in a schema code
+- added support for several new operating systems
+
+1.1 release brings several more features - check [the release
+notes](https://github.com/Kraken-CI/kraken/releases/tag/v1.1).
+
+More details about the major features are below.
+
+<!--truncate-->
+
+### User Data
+
+This feature enables users to store data in the workflow schema code
+on the server-side. For instance, a user can prepare data in JSON
+format in one step of the schema code. Then, in the subsequent step,
+the user can upload the data from the prepared file to the Kraken Server. The
+data can be attached to a flow, branch, or project. If it is attached
+to a flow, its scope is restricted to that particular flow, and it can
+be used in the next stage of that flow. However, it will not be
+visible in a new flow. If the data is attached to a branch or project,
+it will be shared by subsequent flows.
+
+Details and examples are described in the
+[Data Tool section of the Workflow Schema documentation](/docs/schema#data).
+
+### Data in Schema Code
+
+The data stored by the user, as well as the data of other internal
+objects such as jobs, runs, flows, branches, and projects, can be
+accessed in a stage schema code.
+
+The data can be accessed via a context that is passed to the stage
+function and also through string interpolation of special variables.
+
+All of this allows for significant dynamism in a stage schema
+code. For example, the list of jobs or step details may be based on
+the data stored by a user in previous stages.
+
+Details are described in the [Data in Schema](/docs/schema-data)
+chapter in the docs.
+
+### New OSes Supported
+
+The new supported OSes include Rocky Linux 9, AlmaLinux and Debian
+Bookworm. The full list is availabled in
+[Docker Executor](/docs/docker-executor#tested-vanilla-images)
+docs.
