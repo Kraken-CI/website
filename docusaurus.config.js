@@ -188,7 +188,10 @@ module.exports = {
           customCss: require.resolve('./src/css/custom.css'),
         },
         gtag: {
-          trackingID: 'UA-152860048-1',
+          trackingID: [
+              'UA-152860048-1',
+              'G-XH68RHQVEL'
+          ],
           anonymizeIP: true,
         },
       },
