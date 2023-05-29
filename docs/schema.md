@@ -103,7 +103,7 @@ run.  There are several events: `parent`, `interval`, `date`, `cron`,
 `repo` and `manual`.
 
 Whole flow and its root stages can be also triggered manually in web UI or by a
-webhook. More about that in [Webhooks chapter](https://kraken.ci/docs/webhooks).
+webhook. More about that in [Webhooks chapter](/docs/webhooks).
 
 ### parent
 
