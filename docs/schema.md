@@ -103,7 +103,7 @@ run.  There are several events: `parent`, `interval`, `date`, `cron`,
 `repo` and `manual`.
 
 Whole flow and its root stages can be also triggered manually in web UI or by a
-webhook. More about that in [Webhooks chapter](webhooks).
+webhook. More about that in [Webhooks chapter](/docs/webhooks).
 
 ### parent
 
@@ -1146,7 +1146,7 @@ credentials can be prepared on your account developer settings page in
 GitHub (https://github.com/settings/tokens), in Personal access token
 subtab.
 
-More about GitHub integration can be found in [Webhooks chapter](webhooks).
+More about GitHub integration can be found in [Webhooks chapter](/docs/webhooks).
 
 Example:
 
