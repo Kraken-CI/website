@@ -1146,7 +1146,7 @@ credentials can be prepared on your account developer settings page in
 GitHub (https://github.com/settings/tokens), in Personal access token
 subtab.
 
-More about GitHub integration can be found in [Webhooks chapter](https://kraken.ci/docs/webhooks).
+More about GitHub integration can be found in [Webhooks chapter](/docs/webhooks).
 
 Example:
 
