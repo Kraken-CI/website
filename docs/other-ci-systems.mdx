@@ -52,7 +52,7 @@ of Kraken CI docs.
 
 But now let's discuss the differences between specific CI/CD systems.
 
-### vs Jenkins
+## Jenkins
 
 [Jenkins](https://www.jenkins.io/) is an open-source on-premises
 automation server used for building, testing, and deploying
@@ -61,7 +61,7 @@ support continuous integration and continuous delivery
 workflows. Jenkins is widely used in software development and is
 recognized for its flexibility and extensibility.
 
-#### Bright Side
+### Bright Side
 
 Jenkins has many powerful features, with one of the most prominent
 being its flexible and convenient method for defining pipelines using
@@ -71,9 +71,9 @@ Another very positive aspect of Jenkins is its community. The
 community, besides providing lots of blog posts and tutorials about
 Jenkins, also develops many plugins that greatly improve Jenkins.
 
-#### Dark Side
+### Dark Side
 
-_1. Plugin Overload and Compatibility Issues_
+#### 1. Plugin Overload and Compatibility Issues
 
 Jenkins relies heavily on plugins for extended functionality. However,
 the sheer number of plugins available can make it challenging to
@@ -88,7 +88,7 @@ extensions available to users are [tools](/docs/tools), which enable
 the integration of third-party tools with Kraken CI. This is similar
 to third-party actions in GitHub Actions.
 
-_2. Bad User Experience in UI_
+#### 2. Bad User Experience in UI
 
 Jenkins' user interface (UI) is often criticized for being outdated
 and not user-friendly. There is a dichotomy between the classic UI and
@@ -123,7 +123,7 @@ test results, and so on. In Kraken CI, all of these aspects were
 thoughtfully reevaluated and engineered with user experience (UX) in
 mind.
 
-_3. Reliance on Groovy Scripting_
+#### 3. Reliance on Groovy Scripting
 
 Jenkins pipelines, which are used to define CI/CD workflows, are
 written in Groovy scripting language. While this provides flexibility
@@ -137,7 +137,7 @@ Python is ranked number 1, making it the most popular programming language,
 while Groovy is ranked 44th.
 
 
-### vs GitHub Actions
+## GitHub Actions
 
 GitHub Actions is a powerful and flexible automation platform that
 allows you to streamline and optimize your software development
@@ -145,7 +145,7 @@ workflows. With GitHub Actions, you can automate tasks, build, test,
 and deploy your applications directly from your GitHub
 repositories.
 
-#### Bright Side
+### Bright Side
 
 The biggest advantage of GH Actions is that it is integrated with
 GitHub repositories, and it is free up to a certain usage level. In
@@ -163,9 +163,9 @@ can be triggered for various project events, such as a new issue being
 submitted, a new comment being added to an issue, a repository being
 forked, a release being created, and more.
 
-#### Dark Side
+### Dark Side
 
-_1. Poor, not Scalable UI/UX_
+#### 1. Poor, not Scalable UI/UX
 
 The user interface is cluttered and does not scale well for larger
 projects. When a workflow reuses other workflows, the job names become
@@ -198,7 +198,7 @@ filtering and sorting jobs, and presenting workflows, even those that
 are more complicated and involve multiple forks, in a more scalable
 way than GH Actions.
 
-_2. Reusability Is Quite Hard_
+#### 2. Reusability Is Quite Hard
 
 Initially, it seems that reusability is well supported in GH Actions
 workflow using third-party actions and reusable workflows. However,
@@ -234,7 +234,7 @@ relevant repository. Furthermore, the entire workflow definition can
 be extracted to a separate repository and reused in multiple other
 repositories.
 
-_3. Cloud and Security_
+#### 3. Cloud and Security
 
 GitHub Actions is a cloud-based CI/CD tool, which means that its
 reliability and availability are out of your control. If an outage
@@ -249,7 +249,7 @@ compliance needs must evaluate GitHub Actions' security features
 carefully and ensure that they align with their requirements.
 
 
-### vs GitLab CI
+## GitLab CI
 
 GitLab is a comprehensive DevOps platform that combines source code
 management, CI/CD pipelines, issue tracking, and more in a single
@@ -257,7 +257,7 @@ integrated solution. It enables organizations to streamline their
 software development processes, promote collaboration, and achieve
 faster and more efficient delivery of high-quality software.
 
-#### Bright Side
+### Bright Side
 
 GitLab CI/CD enables the definition of pipelines as code by using a
 YAML configuration file. This approach makes the CI/CD process
@@ -276,9 +276,9 @@ code quality checks. Another strong aspect of GitLab is its
 reusability, as it is easy to reuse fragments of YAML definitions
 thanks to anchors in the language.
 
-#### Dark Side
+### Dark Side
 
-_1. Too complex in advanced cases_
+#### 1. Too complex in advanced cases
 
 The learning curve for GitLab CI/CD is rather steep, and some poor
 design decisions have made configuring CI/CD pipelines in the
