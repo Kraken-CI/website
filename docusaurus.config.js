@@ -15,10 +15,11 @@ module.exports = {
         src: 'img/logo-big2.svg',
       },
       items: [{
-          to: 'docs/philosophy',
-          label: 'Philosophy',
-          position: 'left'
-      }, {
+// commented out as navbar is too crowded
+//          to: 'docs/philosophy',
+//          label: 'Philosophy',
+//          position: 'left'
+//      }, {
           to: 'docs/',
           //activeBasePath: 'docs',
           label: 'Docs',
@@ -32,18 +33,27 @@ module.exports = {
           label: 'Quick Start',
           position: 'left',
       }, {
-          href: 'https://groups.google.com/g/kraken-ci',
-          label: 'Discussion Group',
-          position: 'left',
-      }, {
-          to: 'docs/contrib-kraken',
-          //activeBasePath: 'docs',
-          label: 'Contributing',
-          position: 'left',
-      }, {
           to: 'blog',
           label: 'Blog',
           position: 'left'
+      }, {
+          type: 'dropdown',
+          label: 'Community',
+          position: 'left',
+          items: [{
+              to: '/docs/contrib-kraken',
+              //activeBasePath: 'docs',
+              label: 'Contributing'
+          }, {
+              href: 'https://discord.gg/bEw7Pemn',
+              label: 'Discord Server',
+          }, {
+              href: 'https://github.com/Kraken-CI/kraken/discussions',
+              label: 'GitHub Discussions',
+          }, {
+              href: 'https://groups.google.com/g/kraken-ci',
+              label: 'Google Discussion Group'
+          }]
       }, {
           href: 'https://github.com/sponsors/godfryd',
           label: 'Sponsor Us',
@@ -78,21 +88,43 @@ module.exports = {
               to: 'docs/',
             },
             {
-              label: 'Installation',
-              to: 'docs/installation/',
+              label: 'Quick Start',
+              to: '/docs/quick-start/',
+            },
+            {
+              label: 'Usage',
+              to: '/docs/proj-branches/',
+            },
+            {
+              label: 'Administration',
+              to: '/docs/agents/',
+            },
+            {
+              label: 'Guides',
+              to: '/docs/guide-intro/',
+            },
+            {
+              label: 'Reference',
+              to: '/docs/schema-ref/',
             },
           ],
         },
         {
             title: 'Community',
             items: [{
-                label: 'Discussion Group',
-                href: 'https://groups.google.com/g/kraken-ci'
+                to: '/docs/contrib-kraken',
+                //activeBasePath: 'docs',
+                label: 'Contributing'
             }, {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/kraken-ci',
-            },
-          ],
+                href: 'https://discord.gg/bEw7Pemn',
+                label: 'Discord Server',
+            }, {
+                href: 'https://github.com/Kraken-CI/kraken/discussions',
+                label: 'GitHub Discussions',
+            }, {
+                href: 'https://groups.google.com/g/kraken-ci',
+                label: 'Google Discussion Group'
+            }],
         },
         {
             title: 'Business',

@@ -1,0 +1,302 @@
+---
+id: other-ci-systems
+title: Other CI Systems
+---
+
+import Screen from "./common.jsx"
+
+
+## Introduction
+
+In this section, three CI/CD tools will be compared with Kraken
+CI. These tools are among the most popular systems:
+
+1. Jenkins
+2. GitHub Actions
+3. GitLab CI
+
+The most significant difference between Kraken CI and these three
+systems, as well as other CI/CD systems, is that they lack test result
+analytics. All three systems barely touch upon the topic and are only
+able to report results acquired during a build.
+
+Having only information about passes and failures, it is difficult to
+make a decision. It is not known if this failure has appeared
+before. Maybe it has been failing for several months, or perhaps it is
+sporadic and only fails from time to time. Alternatively, it could be
+a significant regression that requires urgent fixing.
+
+This requires either using other third-party tools that can fill this
+gap or developing custom scripts that can analyze the results and
+generate comprehensive reports.
+
+In contrast, Kraken CI focuses on this topic and excels in both
+execution and results analytics. It can show:
+
+- fixes and regressions,
+- age of test result,
+- stability of a test case,
+- importance of negative test result,
+- history of a test case in a table and in a chart,
+- total results chart ie. pass ratio over time,
+- pass ratio chart for selected subset of tests (e.g. tests results obtain on particular operating system).
+
+Furthermore, it allows users to comment on test results, such as
+referencing a submitted bug or identifying the root cause, among other
+things.
+
+The details are presented
+in [Test Results Basics](/docs/test-results-basics)
+and [Test Results Tracking](/docs/test-results-tracking)
+of Kraken CI docs.
+
+But now let's discuss the differences between specific CI/CD systems.
+
+### vs Jenkins
+
+[Jenkins](https://www.jenkins.io/) is an open-source on-premises
+automation server used for building, testing, and deploying
+software. It offers a broad range of plugins and integrations that
+support continuous integration and continuous delivery
+workflows. Jenkins is widely used in software development and is
+recognized for its flexibility and extensibility.
+
+#### Bright Side
+
+Jenkins has many powerful features, with one of the most prominent
+being its flexible and convenient method for defining pipelines using
+scripting code.
+
+Another very positive aspect of Jenkins is its community. The
+community, besides providing lots of blog posts and tutorials about
+Jenkins, also develops many plugins that greatly improve Jenkins.
+
+#### Dark Side
+
+_1. Plugin Overload and Compatibility Issues_
+
+Jenkins relies heavily on plugins for extended functionality. However,
+the sheer number of plugins available can make it challenging to
+select, manage, and maintain the right set of plugins. Plugin
+compatibility and stability issues can also arise, leading often to
+conflicts or performance problems.
+
+Kraken CI has a different approach. All of its features are built-in,
+which ensures compatibility and thorough cross testing. Users are
+encouraged to contribute directly to the core of Kraken CI. The only
+extensions available to users are [tools](/docs/tools), which enable
+the integration of third-party tools with Kraken CI. This is similar
+to third-party actions in GitHub Actions.
+
+_2. Bad User Experience in UI_
+
+Jenkins' user interface (UI) is often criticized for being outdated
+and not user-friendly. There is a dichotomy between the classic UI and
+the Ocean Blue UI. Both show more or less the same things, but one is
+better in some areas, while the other is better in other areas. This
+leads to confusion.
+
+Many UI pages in Jenkins lack usability. Some areas are exceptionally
+bad, such as presenting logs. When the logs are very large, Jenkins
+shows them very slowly, especially if timestamps are
+enabled. Sometimes the UI freezes completely and cannot show
+anything. There is also a page called `Pipeline Steps` that shows logs
+for each step separately, but there are so many internal steps
+presented that it is very hard to navigate.
+
+Presenting logs in Kraken CI is impressive. They are divided by
+default into steps that the user has defined in a workflow, or they
+are displayed in a flat format. Users can enable internal logs to see
+details, and loading logs is paged, so it is not necessary to load the
+entire log at once. However, it is still possible to download the
+entire log in raw format. Logs can be filtered by multiple fields and
+viewed at the individual step level, job level, run, flow, branch, or
+project levels. ANSI codes are colored, and there are many more
+features. Check out these two blog posts that present these features:
+
+[Standing out Logs Handling](/blog/standing-out-logs-handling)
+and
+[Further Logging Improvements](/blog/further-logging-improvements).
+
+There are more examples like that. For instance, navigation, browsing
+test results, and so on. In Kraken CI, all of these aspects were
+thoughtfully reevaluated and engineered with user experience (UX) in
+mind.
+
+_3. Reliance on Groovy Scripting_
+
+Jenkins pipelines, which are used to define CI/CD workflows, are
+written in Groovy scripting language. While this provides flexibility
+and extensibility, it requires from developers to learn and use Groovy,
+which can be an additional learning curve for teams not familiar with
+Groovy.
+
+In the case of Kraken CI, Python is used as the language to define
+workflows. According to the [TIOBE Index](https://www.tiobe.com/tiobe-index/),
+Python is ranked number 1, making it the most popular programming language,
+while Groovy is ranked 44th.
+
+
+### vs GitHub Actions
+
+GitHub Actions is a powerful and flexible automation platform that
+allows you to streamline and optimize your software development
+workflows. With GitHub Actions, you can automate tasks, build, test,
+and deploy your applications directly from your GitHub
+repositories.
+
+#### Bright Side
+
+The biggest advantage of GH Actions is that it is integrated with
+GitHub repositories, and it is free up to a certain usage level. In
+addition, it allows for the extension of defined workflows by using
+community-developed actions. The number of available third-party
+actions is quite substantial.
+
+It is also possible to expand the computing power by connecting your
+own "self-hosted" machines to the pool of all machines. Therefore,
+workflows can run on both GitHub's machine cluster and on your own
+on-premises machines.
+
+Aside from that, GitHub Actions can do more than just CI/CD. Workflows
+can be triggered for various project events, such as a new issue being
+submitted, a new comment being added to an issue, a repository being
+forked, a release being created, and more.
+
+#### Dark Side
+
+_1. Poor, not Scalable UI/UX_
+
+The user interface is cluttered and does not scale well for larger
+projects. When a workflow reuses other workflows, the job names become
+excessively long and are frequently truncated in multiple areas within
+the UI. This makes it difficult to identify which jobs we are
+currently viewing. The problem is further compounded when nested
+workflows are utilized.
+
+The UI also does not scale well for a larger number of jobs. If there
+are more than 30 jobs in a workflow, it becomes impossible to filter,
+sort, or list them in pages. Instead, all jobs are just presented to
+you in a flat list.
+
+One more weakness is the logs panel. Initially, it appears to be
+sleek. Nonetheless, if there are numerous steps and the logs are quite
+extensive, containing thousands of lines, then navigation becomes
+difficult. While jobs are in progress, the UI attempts to predict what
+to display, causing it to jump from one location to another, making it
+difficult to choose the correct step. Additionally, paging through the
+logs is not feasible. They are all displayed at once and are
+progressively loaded while scrolling down. This is a pretty
+ineffective method of finding the appropriate location in the log if
+the log contains hundreds of pages.
+
+Kraken's logging facilities in the UI were already described in the
+Jenkins section. In terms of UI scalability, this is one of Kraken's
+goals. It is designed from the ground up to handle multiple jobs, up
+to thousands or even tens of thousands. It provides means for
+filtering and sorting jobs, and presenting workflows, even those that
+are more complicated and involve multiple forks, in a more scalable
+way than GH Actions.
+
+_2. Reusability Is Quite Hard_
+
+Initially, it seems that reusability is well supported in GH Actions
+workflow using third-party actions and reusable workflows. However,
+upon closer inspection, it is not as seamless as it
+appears. Externalizing some parts of the workflow into reusable
+actions or workflows can be quite tedious. If there is a need to
+locally reuse a fragment of code, one would like to use the YAML
+feature called anchors and aliases. Unfortunately, GH Actions does not
+support this feature.
+
+The situation becomes complicated if a user needs to maintain multiple
+repositories. Certain parts of workflows can be reused, but the
+framework of the workflow, including trigger definitions, global
+environment variables, and main jobs (which may reference reusable
+workflows), must be present in every repository. Ideally, one would
+like to fully externalize the entire workflow to a single repository
+and simply reference it in every other repository.
+
+Kraken allows for defining a workflow for particular repository in
+several way. The workflow definition can be stored
+
+1. in Kraken server,
+2. in the same repository,
+3. in another repository.
+
+In the first case, the entire workflow definition resides in the
+Kraken server's database. It is then possible to link the workflow
+definition to any Git repository - whether it is the repository that
+needs to be built and tested or any other repository. This makes it
+easy to experiment with a workflow for any repository without the need
+to make changes. Later on, it is easy to transfer that workflow to the
+relevant repository. Furthermore, the entire workflow definition can
+be extracted to a separate repository and reused in multiple other
+repositories.
+
+_3. Cloud and Security_
+
+GitHub Actions is a cloud-based CI/CD tool, which means that its
+reliability and availability are out of your control. If an outage
+occurs, the only thing left for you to do is wait until GitHub's team
+fixes their services. This may last from a few minutes to a few hours.
+
+Although GitHub Actions provides security features like access
+controls, secrets management, and vulnerability scanning, it may not
+fulfill the specific security or compliance requirements of all
+organizations or industries. Organizations with stringent security or
+compliance needs must evaluate GitHub Actions' security features
+carefully and ensure that they align with their requirements.
+
+
+### vs GitLab CI
+
+GitLab is a comprehensive DevOps platform that combines source code
+management, CI/CD pipelines, issue tracking, and more in a single
+integrated solution. It enables organizations to streamline their
+software development processes, promote collaboration, and achieve
+faster and more efficient delivery of high-quality software.
+
+#### Bright Side
+
+GitLab CI/CD enables the definition of pipelines as code by using a
+YAML configuration file. This approach makes the CI/CD process
+version-controlled, easily replicable, and auditable. Infrastructure
+modifications, test scripts, and deployment steps can be defined
+alongside the code, promoting transparency and collaboration.
+
+Furthermore, GitLab is offered as software that can be installed
+on-premises, as well as a service that can be used in the cloud. This
+way, it combines the software aspect of Jenkins with the cloud service
+aspect of GitHub Actions in one solution. The choice belongs to the user.
+
+GitLab offers a wide range of features and integrations, with most of
+them only available in the Enterprise Edition. These features include
+code quality checks. Another strong aspect of GitLab is its
+reusability, as it is easy to reuse fragments of YAML definitions
+thanks to anchors in the language.
+
+#### Dark Side
+
+_1. Too complex in advanced cases_
+
+The learning curve for GitLab CI/CD is rather steep, and some poor
+design decisions have made configuring CI/CD pipelines in the
+`.gitlab-ci.yml` file quite complex. The documentation is full of
+notes that certain aspects are not obvious, discouraged, or may
+behave unexpectedly. Furthermore, the issue tracker is filled with
+problems related to excessively complicated features.
+
+One of the problems is that a CI pipeline is triggered by all possible
+events. Then it is user role to explicitly exclude which jobs should
+be run or not for particular event. Sometimes it leads to situations
+that a pipeline is triggered multiple times. There is a dedicated
+section in the docs how to avoid such cases:
+https://docs.gitlab.com/ee/ci/jobs/job_control.html#avoid-duplicate-pipelines
+
+All of these factors make developing more advanced workflows quite
+challenging.
+
+In contrast, Kraken is more deterministic. Workflows are triggered by
+user-indicated events, and it is clear why a given workflow was
+started - this information is presented in the UI.

@@ -1,0 +1,30 @@
+---
+id: migration
+title: Migration
+---
+
+## From 1.0 to 1.1
+
+The method for accessing `arguments`, `secrets`, and `sequences` has
+changed. However, the old way is still available for now, but it will
+be removed in the future.
+
+Previously, in the stage schema code, arguments were exposed only via
+their name in string interpolation. Now they are available via
+context, for example, `ctx.args.<arg-name>`, or via string
+interpolation: `#{args.<arg-name>}`. More details can be found in
+the
+[Data in Schema chapter, User Parameters section](schema-data#user-parameters).
+
+Secrets were also exposed just by their name with the prefix
+`KK_SECRET_...` in string interpolation. Now they are available via
+context, for example, `ctx.secrets.<arg-name>`, or via string
+interpolation: `#{secrets.<arg-name>}`. More details can be found in
+the [Data in Schema chapter, Secrets section](schema-data#secrets).
+
+Sequences were previously exposed through special variables, such as
+`KK_FLOW_SEQ` or `KK_CI_DEV_RUN_SEQ`, in string
+interpolation. However, they are now available through the context,
+such as `ctx.flow.seq.own`, or through string interpolation using
+`#{flow.seq.own}`. Additional details can be found in the [Flow and
+Run Sequences section of the Data in Schema chapter](schema-data#flow-and-run-sequences).
