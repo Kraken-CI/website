@@ -301,3 +301,14 @@ challenging.
 In contrast, Kraken is more deterministic. Workflows are triggered by
 user-indicated events, and it is clear why a given workflow was
 started - this information is presented in the UI.
+
+import { DiscussionEmbed } from 'disqus-react';
+
+<DiscussionEmbed
+          shortname='kraken-ci'
+          config={{
+            url: 'https://kraken.ci/docs/other-ci-systems',
+            identifier: 'other-ci-systems',
+            title: 'Other CI Systems',
+          }}
+          />
