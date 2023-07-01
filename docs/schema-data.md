@@ -376,7 +376,7 @@ in the steps, it is used via string interpolation, i.e. `#{args.count}`.
 ## User Data
 
 Instructions on how to manipulate user data can be found in
-the [Data tool section in Schema chapter](schema#data).
+the [Data tool section in Schema chapter](/docs/schema#data).
 
 User data that has already been stored can be accessed from the stage
 context and through string interpolation.
