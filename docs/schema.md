@@ -371,7 +371,9 @@ Timeout is set to 1200 seconds, i.e. 20 minutes.
 
 ## Steps in Job
 
-The steps' job field defines what an agent should executed. Each step has indicated tool that is directly executing it. Steps are executed in the same order as they are defined.
+The steps field of the job defines what an agent should execute. Each
+step has an indicated tool that directly executes it. Steps are
+executed in the same order as they are defined.
 
 Common step fields:
 
@@ -380,6 +382,7 @@ Common step fields:
 - `timeout` - a timeout in seconds that limits time of step execution; it is guareded by an agent; if it is exceeded then the step is arbitrarly terminated; it is optional - default value is 60 seconds
 - `attempts` - a number of times the step is retried if if it returns error; default is 1
 - `sleep_time_after_attempt` - a sleep time between subsequent execution attempts; default is 0
+- `when` - a condition that indicates if a step should be executed or not, more in [Conditional Steps](#conditional-steps) section
 
 Example:
 
@@ -392,6 +395,52 @@ Example:
 }]
 ```
 
+## Conditional Steps
+
+It is possible to skip the execution of a step. This is controlled by
+the `when` field. The content of this field is a [Jinja2](https://jinja.palletsprojects.com/en/3.1.x/templates/#expressions)
+expression. The expression may refer to data that is described in [Data in Schema](/docs/schema-data) section.
+There are a predefined values provided for this field:
+
+- `prev_ok` - a step is executed when the previous step succeeded,
+- `always` - a step is always executed,
+- `never` - a step is never executed,
+- `was_any_error`- a step is executed if there was an error in any of previous steps,
+- `was_no_error`- a step is executed if there was no errors in all previous steps,
+- `is_ci` - a step is executed if this is a CI flow,
+- `is_dev` - a step is executed if this is a DEV flow.
+
+#### Example 1
+
+```python
+"jobs": [{
+    "steps": [{
+        "tool": "shell",
+        "when": "is_ci"
+        ...
+    }]
+}]
+```
+
+Here, the step is executed only if this is a CI flow (ie. not a DEV flow).
+
+#### Example 2
+
+```python
+"jobs": [{
+    "steps": [{
+        "tool": "shell",
+        "when": "job.steps[step.index - 1].result.duration > 3"
+        ...
+    }]
+}]
+```
+
+This example demonstrates a more sophisticated expression in the
+`when` field. Here, the `step` object is used along with its `index`
+field, as well as the `job` object. As a result, the expression checks
+if the duration of the previous step was longer than 3 seconds. If it
+is, then the step is executed; otherwise, it is skipped.
 
 ## Built-in Step Tools
 

@@ -225,6 +225,7 @@ Available fields:
 | `id`          | Database ID of a job |
 | `created`     | Creation date and time |
 | `name`        | Name of a job |
+| `steps`       | A list of steps. More details below, in [Step](#step) section. |
 
 The example of this data can be seen in the screenshot below. This
 screen displays the Run page and the Data tab of the selected job.
@@ -242,6 +243,19 @@ Available fields:
 | `id`          | Database ID of a step |
 | `index`       | Index of a step in a steps list, starts from 0 |
 | `tool`        | A name of a tool that is used in this step |
+| `cmd`         | Command that was executed in step |
+| `job_id`      | Job ID in database |
+| `name`        | Name of the step |
+| `result`      | Result of the step execution |
+| `result.duration` | Duration of the step |
+| `result.msg`      | Error message. Present only when the step erred. |
+| `result.reason`   | Reason of the error. Present only when the step erred. |
+| `result.retcode`  | Return code of the step executing process. Present only when the step erred and returned non-zero return code. |
+| `status`  | Execution status, integer. `0` - not started, `1` - in progress, `2` - done (success), `3` - error (failure), `4` - skipped (also treated as success). |
+
+The example of this data can be seen in the screenshot above. This
+screen displays the Run page and the Data tab of the selected job.
+
 
 ### Other
 
