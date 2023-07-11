@@ -442,6 +442,8 @@ field, as well as the `job` object. As a result, the expression checks
 if the duration of the previous step was longer than 3 seconds. If it
 is, then the step is executed; otherwise, it is skipped.
 
+More examples can be found at https://github.com/Kraken-CI/workflow-examples/tree/main/conditional-steps/one.py.
+
 ## Built-in Step Tools
 
 ### Shell
