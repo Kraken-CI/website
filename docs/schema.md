@@ -406,9 +406,19 @@ There are a predefined values provided for this field:
 - `always` - a step is always executed,
 - `never` - a step is never executed,
 - `was_any_error`- a step is executed if there was an error in any of previous steps,
-- `was_no_error`- a step is executed if there was no errors in all previous steps,
+- `was_no_error`- a step is executed if there was no errors in all previous steps - this is the default condition,
 - `is_ci` - a step is executed if this is a CI flow,
 - `is_dev` - a step is executed if this is a DEV flow.
+
+If the `when` field is not defined, then the default value for the
+condition is `was_no_error`. This means that the step is executed only
+if all previous steps succeeded or were skipped.
+
+It is important to note that when the condition is just `is_ci` (like
+in the example below), then it is run when the flow type is CI
+regardless of whether the previous steps succeeded or not. If we want
+to take into account the status of the previous steps, then the
+condition should be: `was_no_errors and is_ci`.
 
 #### Example 1
 
