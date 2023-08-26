@@ -60,7 +60,6 @@ def stage(ctx):
         "jobs": [{
             "name": "job for branch #{branch.branch_name}",
             "steps": [{
-            }, {
                 "tool": "shell",
                 "cmd": "echo 'hello world'"
             }],
@@ -86,12 +85,74 @@ Then they can be accessed using their name in uppercase.
 
 There is several types of data:
 
-- workflow objects: `project`, `branch`, `stage`, `flow`, `run`, `job` and `step`
+- environment variables
 - secrets
+- workflow objects: `project`, `branch`, `stage`, `flow`, `run`, `job` and `step`
 - user parameters, these are input parameters to a stage that can be
   provided by a user manually
 - user data, data kept server-side that can be stored, update,
   manipulated and used by workflow steps
+
+## Environment Variables
+
+Environment variables are stored in a branch. They can be accessed in three ways:
+
+1. traditionally, as environment variable in a shell: `"$MY_VAR"`,
+2. via string interpolation: `"#{env.MY_VAR}"`,
+3. via context: `ctx.env.MY_VAR`.
+
+Example:
+
+```python
+def stage(ctx):
+    return {
+        "parent": "root",
+        "triggers": {
+            "parent": True,
+        },
+        "parameters": [],
+        "configs": [],
+        "jobs": [{
+            "name": "Env vars",
+            "steps": [{
+                "tool": "shell",
+                "cmd": "echo $MY_VAR"
+            }, {
+                "tool": "shell",
+                "cmd": "echo '#{env.MY_VAR}'"
+            }, {
+                "tool": "shell",
+                "cmd": "echo '" + ctx.env.MY_VAR + "'"
+            }],
+            "environments": [{
+                "system": "any",
+                "agents_group": "all",
+                "config": "default"
+            }]
+        }]
+    }
+```
+
+More about environment variables can be found in [Environment Variables chapter](env-vars).
+
+## Secrets
+
+The values of secrets defined in a project can be accessed in the
+following way:
+
+| Secret&nbsp;Type | Access                   |
+|------------------|--------------------------|
+| Simple           | From context: `ctx.secrets.<secret name>` <br/> or via string interpolation: `#{secrets.<secret name>}`, <br/> e.g. `ctx.secrets.access_token` |
+| SSH&nbsp;Key     | From context: `ctx.secrets.<secret name>.user` and `ctx.secrets.<secret name>.key` <br/> or via string interpolation: `#{secrets.<secret name>.user}` and `#{secrets.<secret name>.key}`, <br/> e.g. `ctx.secrets.github_creds.user`  |
+
+Legacy approach:
+
+| Secret&nbsp;Type | Legacy Access |
+|------------------|---------------|
+| Simple           | `#{KK_SECRET_SIMPLE_<secret name>}`, e.g. `#{KK_SECRET_SIMPLE_access_token}` |
+| SSH&nbsp;Key     | `#{KK_SECRET_USER_<secret_name>` and `#{KK_SECRET_KEY_<secret_name>}`, e.g. `#{KK_SECRET_USER_gitlab}` and `#{KK_SECRET_KEY_gitlab}` |
+
+More about secrets can be found in [Secrets chapter](secrets).
 
 ## Workflow Objects Data
 
@@ -265,25 +326,6 @@ Available fields:
 |---------------|-------------|
 | `is_ci`       | `True` if this is CI flow, otherwise `False` |
 | `is_dev`      | `True` if this is Dev flow, otherwise `False` |
-
-## Secrets
-
-The values of secrets defined in a project can be accessed in the
-following way:
-
-| Secret&nbsp;Type | Access                   |
-|------------------|--------------------------|
-| Simple           | From context: `ctx.secrets.<secret name>` <br/> or via string interpolation: `#{secrets.<secret name>}`, <br/> e.g. `ctx.secrets.access_token` |
-| SSH&nbsp;Key     | From context: `ctx.secrets.<secret name>.user` and `ctx.secrets.<secret name>.key` <br/> or via string interpolation: `#{secrets.<secret name>.user}` and `#{secrets.<secret name>.key}`, <br/> e.g. `ctx.secrets.github_creds.user`  |
-
-Legacy approach:
-
-| Secret&nbsp;Type | Legacy Access |
-|------------------|---------------|
-| Simple           | `#{KK_SECRET_SIMPLE_<secret name>}`, e.g. `#{KK_SECRET_SIMPLE_access_token}` |
-| SSH&nbsp;Key     | `#{KK_SECRET_USER_<secret_name>` and `#{KK_SECRET_KEY_<secret_name>}`, e.g. `#{KK_SECRET_USER_gitlab}` and `#{KK_SECRET_KEY_gitlab}` |
-
-More about secrets can be found in [Secrets chapter](secrets).
 
 ## User Parameters
 

@@ -26,6 +26,7 @@ module.exports = {
             'stages',
             'schema',
             'schema-data',
+            'env-vars',
             'secrets',
             'docker-executor',
             'lxd-executor',

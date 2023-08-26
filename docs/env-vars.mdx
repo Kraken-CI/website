@@ -1,0 +1,59 @@
+---
+id: env-vars
+title: Environment Variables
+---
+
+import Screen from "./common.jsx"
+
+## Variable Definition
+
+Environment variables are stored in a branch. To define a
+new variable, navigate to the branch management page and then go to
+the `Env Vars` tab.
+
+<Screen img="screen-branch-mgmt-env-vars.png" />
+
+To add a new variable, enter its name and value in the right panel.
+The left panel displays a list of already defined variables. Here, you
+can also delete a variable.
+
+## Variable Access
+
+After defining a variable, it can be used in a workflow schema.
+It can be accessed in a few ways:
+
+1. traditionally, as an environment variable in a shell: `"$MY_VAR"`,
+2. via string interpolation: `"#{env.MY_VAR}"`,
+3. via context: `ctx.env.MY_VAR`.
+
+The example of workflow schema below shows all three cases:
+
+```python
+def stage(ctx):
+    return {
+        "parent": "root",
+        "triggers": {
+            "parent": True,
+        },
+        "parameters": [],
+        "configs": [],
+        "jobs": [{
+            "name": "Env vars",
+            "steps": [{
+                "tool": "shell",
+                "cmd": "echo $MY_VAR"                   // traditional env var use
+            }, {
+                "tool": "shell",
+                "cmd": "echo '#{env.MY_VAR}'"           // string interpolation
+            }, {
+                "tool": "shell",
+                "cmd": "echo '" + ctx.env.MY_VAR + "'"  // via schema context
+            }],
+            "environments": [{
+                "system": "any",
+                "agents_group": "all",
+                "config": "default"
+            }]
+        }]
+    }
+```
