@@ -2,7 +2,7 @@ setup:
 	yarnpkg install
 
 start:
-	yarnpkg start --no-open
+	NODE_OPTIONS=--openssl-legacy-provider yarnpkg start --no-open
 
 deploy: schema server-api
 	DEPLOYMENT_BRANCH=master USE_SSH=true GIT_USER=godfryd yarn deploy
