@@ -1,0 +1,98 @@
+---
+slug: windows-support-in-agent
+title: Windows Support in Kraken Agent
+authors: mike
+tags: [kraken, devops, cicd, windows]
+---
+
+import Screen from "../docs/common.jsx"
+
+import Image from '@theme/IdealImage';
+
+Kraken version [1.5](https://github.com/Kraken-CI/kraken/releases/tag/v1.5)
+introduces support for Windows in the Kraken Agent. This means that it
+is now possible to execute jobs on Windows systems using Kraken CI.
+
+The 1.5 release brings several more changes and fixes. To see the details,
+please check the [the release notes](https://github.com/Kraken-CI/kraken/releases/tag/v1.5).
+Some of the changes included are:
+
+- fixed detecting Kraken Agent environment when it is run inside Docker that is using CGroup v2 - this solves [#303](https://github.com/Kraken-CI/kraken/issues/303)
+- fixed triggering a flow by GitHub webhook when another flow is in progress - this solves [#296](https://github.com/Kraken-CI/kraken/issues/296)
+- fixed handling multiline secrets
+- improved handling agent inactivity - now it is not needed to reenable agent when it was disabled due to inactivity
+
+More details about the support for Windows are provided below.
+
+<!--truncate-->
+
+Information about the Kraken Agent installation on Windows can be
+found in [Agent Setup Guide](/docs/agents).
+
+With enabling Kraken Agent on Windows, support for this system was also added to some Kraken tools:
+- [shell tool](/docs/schema#shell)
+- [artifacts tool](/docs/schema#artifacts)
+
+This means that now it is possible to execute windows shell commands.
+
+The following example shows how to define a shell or, rather, cmd
+batch script:
+
+```python
+  {
+    "tool": "shell",
+    "script": """
+       rem This is a windows batch comment
+       echo 'hello world'
+       dir c:\\
+    """
+  }
+```
+
+or this example showing `PowerShell` as custom shell executable:
+
+```python
+  {
+    "tool": "shell",
+    "shell_exe": "powershell.exe",
+    "script": """
+       Write-Host 'hello'
+       Get-Service kkagent
+    """
+  }
+```
+
+The Artifacts tool is now also working on Windows.
+Check the following job steps:
+
+```python
+  {
+    // create some content
+    "tool": "shell",
+    "cmd": "mkdir abc && echo 'hello world' > abc/a.txt"
+  }, {
+    // upload the content to Kraken Storage
+    "tool": "artifacts",
+    "source": "abc"
+  },
+  ...
+  {
+    // download the uploaded content
+    "tool": "artifacts",
+    "action": "download",
+    "source": "abc"
+  }, {
+    // check the content
+    "tool": "shell",
+    "script": """
+       dir
+       type abc\\a.txt
+    """
+  }
+```
+
+That's all. To get started, simply install or upgrade to the
+[1.5 version](https://github.com/Kraken-CI/kraken/releases/tag/v1.5) and
+experience all the benefits firsthand. If you have any questions or
+need assistance, submit an issue on [GitHub](https://github.com/Kraken-CI/kraken/issues)
+or ask for help on [Discord](https://discord.gg/bEw7Pemn).
