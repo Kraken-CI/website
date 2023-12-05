@@ -133,10 +133,13 @@ now on defining a job.
 }
 ```
 
-There is no much difference comparing to regular Kraken jobs. The job
-has a defined environments section where we are pointing to out
-`aws-t2-micro` Agents Group. What's is new is `system` field which
-points to `AMI` identifier - this indicates AWS EC2 image.
+There isn't much difference compared to regular Kraken jobs. The job
+has a defined "environments" section where we are pointing to our
+`aws-t2-micro` Agents Group. What's new is the `system` field, which
+points to the `AMI` identifier. This indicates the AWS EC2 image. The
+`system` field can be set to `any` as well. In such a case, the AMI ID
+will be taken from the Agents Group definition, from the `Default AMI
+Image` field.
 
 ## Run
 

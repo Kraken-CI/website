@@ -44,6 +44,9 @@ The other features can be grouped in 4 areas: [planning](#planning), [execution]
     [Swarm](https://docs.docker.com/engine/swarm/)
     or [Kubernetes](https://kubernetes.io/)
   - [LXD](https://linuxcontainers.org/lxd/introduction/) environment
+- Agents may run on several operating systems:
+  - Linux
+  - Windows
 - Agents use executors to execute; there are executors that can run jobs:
   - locally on current host
   - in Docker container

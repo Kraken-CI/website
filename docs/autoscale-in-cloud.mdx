@@ -239,6 +239,32 @@ long. It is encoded using base64, and in this form, it should be copied
   </TabItem>
 </Tabs>
 
+## Preparing VM Image
+
+In the case of VM environments, an operating system image needs to be
+prepared. For example, in the case of AWS EC2, this image is called
+AMI (Amazon Machine Image). There are certain requirements that this
+image needs to meet in order to run a Kraken Agent. It should have
+Python and Git preinstalled. Additionally, the generated image should
+be capable of running a `user data` script during the initial
+boot. This script is used to install the Kraken Agent and your own
+init script (which can be passed via Kraken).
+
+<Tabs>
+  <TabItem value="aws-ec2" label="AWS EC2" default>
+
+  This is an example Packer script for preparing AMI with Ubuntu:
+
+  https://github.com/Kraken-CI/kraken/blob/master/base-images/aws-ec2/aws-ubuntu.pkr.hcl
+
+  And here, you can find an example script for Ansible that prepares an AWS
+  AMI image for Windows with all the dependencies included:
+
+  https://github.com/Kraken-CI/kraken/tree/master/base-images/aws-ec2-win-ansible
+
+  </TabItem>
+</Tabs>
+
 
 ## Configuration in Agents Groups
 
