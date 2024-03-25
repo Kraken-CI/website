@@ -127,13 +127,15 @@ The Radicle Webhooks Adapter binary must have appropriate execute permissions.
 
 The configuration that the adapter requires is:
 
-| EnvVar                 | Description                                       | Default Value           |
-|------------------------|---------------------------------------------------|-------------------------|
-| `WEBHOOKS_RETRIES`     | Total attempts until get a successful response.   | 3                       |
-| `WEBHOOKS_TIMOUT_SECS` | Timeout for webhook request.                      | 30                      |
-| `RAD_PUBLIC_URL`       | Public URL of node. Used to generate repos' URL.  | "http://127.0.0.1:8080" |
-| `RAD_HOME`             | Path for radicle home directory.                  | "~/.radicle"            |
-| `RAD_PASSPHRASE`       | Passphrase for the radicle key.                   | ""                      |
+| EnvVar                 | Description                                          | Default Value                          |
+|------------------------|------------------------------------------------------|----------------------------------------|
+| `WEBHOOKS_RETRIES`     | Total attempts until get a successful response.      | 3                                      |
+| `WEBHOOKS_TIMOUT_SECS` | Timeout for webhook request.                         | 30                                     |
+| `RAD_HTTPD_URL`        | URL of radicle's HTTPD.                              | "127.0.0.1:8080"                       |
+| `RAD_BROWSE_URL`       | Public URL of a radicle seed to browse repositories. | "app.radicle.xyz/seeds/$RAD_HTTPD_URL" |
+| `RAD_HOME`             | Path for radicle home directory.                     | "~/.radicle"                           |
+| `RAD_PASSPHRASE`       | Passphrase for the radicle key.                      | ""                                     |
+| `WEBHOOKS_DB_PATH`     | Path for the SQLite DB to store webhooks results.    | "./webhooks-adapter.sqlite"            |
 
 More details about the radicle wbhooks adapter can be found at its
 [repository](https://app.radicle.xyz/nodes/radicle.yorgos.net.gr/rad:z2hCUNw2T1qU31LyGy7VPEiS7BkxW).

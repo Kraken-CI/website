@@ -23,7 +23,7 @@ The other features can be grouped in 4 areas: [planning](#planning), [execution]
 - environments indicate execution agent groups and operating systems that should be used for jobs
 - groups are defined by assigning execution agents to them
 - jobs can be triggered by:
-   - external triggers via [webhooks](/docs/guide-webhooks) (e.g.: from GitHub or GitLab or Gitea)
+   - external triggers via [webhooks](/docs/guide-webhooks) (e.g.: from GitHub, GitLab, Gitea or Radicle)
    - by a commit to a repository
    - on time interval
    - on CRON rule
