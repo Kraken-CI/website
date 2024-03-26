@@ -1160,6 +1160,7 @@ several communication methods supported:
 
 - `email`
 - `slack`
+- `discord`
 - `github`
 
 ### Email
@@ -1187,6 +1188,20 @@ Example:
 ```python
 "notification": {
     "slack": {"channel": "kk-results"}
+}
+```
+
+### Discord
+
+It sends notifications to indicated channel on Discord. This requires
+setting a project secret that contains a webhook generated in Discord
+in selected channel.
+
+Example:
+
+```python
+"notification": {
+    "discord": {"webhook": "#{secrets.discord_webhook}"}
 }
 ```
 

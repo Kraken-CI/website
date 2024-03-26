@@ -100,6 +100,11 @@ The other features can be grouped in 4 areas: [planning](#planning), [execution]
 - performance results are tracked over time and regressions are
   detected and reported
 - [commenting](/docs/test-results-basics#comments) test results
+- notifications using:
+  - [Email](/docs/schema#email)
+  - [Slack](/docs/schema#slack)
+  - [Discord](/docs/schema#discord)
+  - [GitHub](/docs/schema#github)
 
 ## Administration
 
