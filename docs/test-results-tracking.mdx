@@ -139,7 +139,7 @@ This `relevancy` score is calculated as follows:
 - `+1` if the result is not passed
 - `+1` if there is no comment attached to the result ie. it is not root-caused yet
 - `+1` if the result is failure
-- `+1` if the result was pretty stable (so it is the same over several test runs), ie. instability is <= 3
+- `+1` if the result was pretty stable (so it is the same over several test runs), ie. instability is `<=` 3
 - `+1` if the result is rather recent (the age is < 5) ie. ignore old failures
 - `+1` if this is a regression
 
