@@ -146,11 +146,11 @@ function Home() {
             <div className="col col--5">
               <div className={styles.blogPosts}>
                 <a href="/blog" style={{ fontSize: '1.3rem', paddingLeft: '16px', fontWeight: 'bold' }}>Recent Blog Posts</a>
+                <a href="/blog/radicle-and-discord"><b>04/18</b> Radicle and Discord support - 1.7</a>
                 <a href="/blog/windows-support-in-aws"><b>12/05</b> Windows Support in AWS - 1.6</a>
                 <a href="/blog/windows-support-in-agent"><b>10/15</b> Windows Support in Kraken Agent - 1.5</a>
                 <a href="/blog/env-vars"><b>08/31</b> Environment Variables - 1.4</a>
                 <a href="/blog/conditional-steps"><b>07/23</b> Conditional Steps - 1.3</a>
-                <a href="/docs/other-ci-systems"><b>06/14</b> Comparison with CI Competition</a>
               </div>
             </div>
 

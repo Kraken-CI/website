@@ -45,7 +45,7 @@ module.exports = {
               //activeBasePath: 'docs',
               label: 'Contributing'
           }, {
-              href: 'https://discord.gg/bEw7Pemn',
+              href: 'https://discord.gg/jUvSZ4S5m3',
               label: 'Discord Server',
           }, {
               href: 'https://github.com/Kraken-CI/kraken/discussions',
