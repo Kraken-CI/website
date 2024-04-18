@@ -17,12 +17,12 @@
     "@docusaurus/plugin-ideal-image": "^3.2.1",
     "@docusaurus/plugin-sitemap": "^3.2.1",
     "@docusaurus/preset-classic": "^3.2.1",
-    "@mdx-js/react": "^1.6.22",
-    "clsx": "^1.1.1",
+    "@mdx-js/react": "^3.0.0",
+    "clsx": "^2.0.0",
+    "prism-react-renderer": "^2.3.0",
     "disqus-react": "^1.1.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-loadable": "^18.0.0",
     "widdershins": "^4.0.1"
   },
   "browserslist": {
