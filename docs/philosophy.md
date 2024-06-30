@@ -46,7 +46,7 @@ In such environments, the time from introducing a code change that breaks someth
 
 ![Wheel](/img/wheel.png)
 
-Remember - beacuse of improvements to the pre-commit phase - engineers tend to submit **small changes frequently**, so now the cost of breaking the production code is even more minimized - because it is discovered as soon as possible, quickly targeted and can be effectively remedied. The result is a great improvement in the stability of the production code, that starts to be almost **always releasable**. An extra bonus is a big increase in engineering efficiency, who can focus their efforts on the building product value.
+Remember - because of improvements to the pre-commit phase - engineers tend to submit **small changes frequently**, so now the cost of breaking the production code is even more minimized - because it is discovered as soon as possible, quickly targeted and can be effectively remedied. The result is a great improvement in the stability of the production code, that starts to be almost **always releasable**. An extra bonus is a big increase in engineering efficiency, who can focus their efforts on the building product value.
 
 ## Impact on culture
 
