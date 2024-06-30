@@ -5,7 +5,7 @@ title: Features
 
 The main differentiators of Kraken CI are:
 
-- massive testing support: hunderds thousands of tests per build
+- massive testing support: hundreds thousands of tests per build
 - focus on hardware testing were hardware is not stable and requires monitoring, rebooting, etc.
 
 The other features can be grouped in 4 areas: [planning](#planning), [execution](#execution),
