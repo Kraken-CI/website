@@ -5,37 +5,50 @@ title: Webhooks
 
 import Screen from "./common.jsx"
 
+## Overview
 
-Webhooks allows for integration between source code versioning system
-and Kraken. This way a push to Git repository may trigger a CI or a pull/merge request a
-DEV flow. Currently the supported Git hosting services are GitHub, GitLab and Gitea.
+Webhooks allow Kraken to integrate with your source code versioning system. This enables automated workflows, such as triggering a Continuous Integration (CI) pipeline when code is pushed or initiating a DEV flow when a pull/merge request is created.
 
-Webhooks configuration is located in a project web page, under `Web
-Hooks` tab. There are switches that enable or disable receiving
-webhook requests from a selected service.
+Kraken currently supports webhooks from:
+
+- **GitHub**
+- **GitLab**
+- **Gitea**
+
+## Configuring Webhooks in Kraken
+
+You can configure webhooks in the project settings under the **Web Hooks** tab. Here, you can enable or disable webhook requests from supported services.
 
 <Screen img="screen-webhooks.png" />
 
-When a webhook for a given Git hosting service is enabled then there
-is provided a `URL` and a `secret` that should be set in a project
-settings page for webhooks in this service. In Git hosting services
-this page can be found:
+When you enable a webhook for a given Git hosting service, Kraken provides a **Webhook URL** and a **Secret**. You need to configure these in your Git hosting provider’s webhook settings.
 
-- GitHub - `https://github.com/<user>/<project>/settings/hooks`
-- GitLab - `https://gitlab.com/<user>/<project>/-/hooks`
-- Gitea - `https://try.gitea.io/<user>/<project>/settings/hooks`.
+## Setting Up Webhooks in Git Hosting Services
 
-On this page there are several fields that should be filled:
+To configure webhooks, navigate to the appropriate settings page in your Git hosting service:
 
-- `Payload URL` - set to URL from Kraken that was mentioned above,
-- `Content Type` - set to `application/json`
-- `Secret` or `Token` - take from Kraken, it was mentioned above.
+| Git Hosting Service | Webhook Settings Page |
+|---------------------|----------------------|
+| **GitHub** | `https://github.com/<user>/<project>/settings/hooks` |
+| **GitLab** | `https://gitlab.com/<user>/<project>/-/hooks` |
+| **Gitea** | `https://try.gitea.io/<user>/<project>/settings/hooks` |
 
-In section `Which events would you like to trigger this webhook?`
-select `Let me select individual events.` and then check `Pull
-requests` and `Pushes`.
+### Required Fields
 
-In the case of Radicle, the procedure is more complicated and is
-described in a dedicated article: [Integration with Radicle](/blog/integration-with-radicle)
+When adding a webhook in your Git hosting service, fill in the following details:
 
-Now webhook can be saved. You may try to trigger testing request.
+- **Payload URL**: Use the Webhook URL provided by Kraken.
+- **Content Type**: Set this to `application/json`.
+- **Secret or Token**: Use the secret provided by Kraken.
+- **Events to Trigger**: Select **Let me select individual events**, then check:
+  - **Pull Requests**
+  - **Pushes**
+
+### Special Case: Radicle
+
+For Radicle integration, the setup process differs. Refer to the dedicated article: [Integration with Radicle](/blog/integration-with-radicle).
+
+## Testing Webhooks
+
+- **Beeceptor**: Use [Beeceptor](https://beeceptor.com/) to inspect webhook requests by creating an endpoint and replacing Kraken’s Webhook URL with it.
+- **Pipedream RequestBin**: Use [Pipedream RequestBin](https://pipedream.com/requestbin) to capture and inspect webhook payloads in real time.
