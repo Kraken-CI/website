@@ -166,7 +166,13 @@ module.exports = {
     algolia: {
       appId: 'YHIPSVOLK3',
       apiKey: '15e0805c14af0bfb8b052b69f93da8ec',
-      indexName: 'kraken'
+      indexName: 'kraken',
+      askAi: {
+        appId: 'YHIPSVOLK3',
+        apiKey: '15e0805c14af0bfb8b052b69f93da8ec',
+        indexName: 'kraken',
+        assistantId: 'openai_4o_mini',
+      },
 
       // Optional: see doc section below
       // contextualSearch: true,
@@ -211,6 +217,7 @@ module.exports = {
         },
         blog: {
           showReadingTime: true,
+          onUntruncatedBlogPosts: 'ignore',
           editUrl:
             'https://github.com/kraken-ci/website/edit/master/blog/',
           blogSidebarTitle: 'All posts',
