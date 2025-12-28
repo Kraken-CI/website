@@ -171,7 +171,7 @@ module.exports = {
         appId: 'YHIPSVOLK3',
         apiKey: '15e0805c14af0bfb8b052b69f93da8ec',
         indexName: 'kraken',
-        assistantId: 'openai_4o_mini',
+        assistantId: 'JdjqyUn8Si09',
       },
 
       // Optional: see doc section below
