@@ -7,6 +7,14 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'Kraken-CI',
   projectName: 'Kraken-CI.github.io',
+  scripts: [
+    {
+      src: 'https://chatbot.webspeaker.pro/widget.js',
+//      src: 'http://localhost:8001/widget.js',
+      defer: true,
+      'data-access-key': 'M9irkZn5uy',
+    },
+  ],
   themeConfig: {
     navbar: {
       title: 'Kraken CI',
@@ -75,6 +83,10 @@ module.exports = {
           href: 'https://github.com/Kraken-CI/kraken/releases',
           label: 'Download',
           position: 'right',
+      }, {
+          type: 'html',
+          position: 'right',
+          value: '<div id="webspeaker-navbar-container"></div>',
       }],
     },
     footer: {
