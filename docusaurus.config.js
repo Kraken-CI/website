@@ -9,10 +9,8 @@ module.exports = {
   projectName: 'Kraken-CI.github.io',
   scripts: [
     {
-      src: 'https://chatbot.webspeaker.pro/widget.js',
-//      src: 'http://localhost:8001/widget.js',
+      src: 'https://chatbot.webspeaker.pro/widget-M9irkZn5uy.js',
       defer: true,
-      'data-access-key': 'M9irkZn5uy',
     },
   ],
   themeConfig: {
